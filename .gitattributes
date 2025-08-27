@@ -1,1 +1,2 @@
 *.qeax filter=gitsqlite
+*.qeax diff=gitsqlite
