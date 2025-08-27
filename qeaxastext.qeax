@@ -1,0 +1,2585 @@
+PRAGMA foreign_keys=OFF;
+BEGIN TRANSACTION;
+CREATE TABLE t_attribute
+(
+	Object_ID INTEGER NULL DEFAULT 0,
+	Name TEXT NULL COLLATE NOCASE,
+	Scope TEXT NULL COLLATE NOCASE,
+	Stereotype TEXT NULL COLLATE NOCASE,
+	Containment TEXT NULL COLLATE NOCASE,
+	IsStatic INTEGER NULL DEFAULT 0,
+	IsCollection INTEGER NULL DEFAULT 0,
+	IsOrdered INTEGER NULL DEFAULT 0,
+	AllowDuplicates INTEGER NULL DEFAULT 0,
+	LowerBound TEXT NULL COLLATE NOCASE,
+	UpperBound TEXT NULL COLLATE NOCASE,
+	Container TEXT NULL COLLATE NOCASE,
+	Notes TEXT NULL COLLATE NOCASE,
+	Derived TEXT NULL COLLATE NOCASE,
+	ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	Pos INTEGER NULL,
+	GenOption TEXT NULL COLLATE NOCASE,
+	Length INTEGER NULL,
+	Precision INTEGER NULL,
+	Scale INTEGER NULL,
+	Const INTEGER NULL,
+	Style TEXT NULL COLLATE NOCASE,
+	Classifier TEXT NULL COLLATE NOCASE,
+	'Default' TEXT NULL COLLATE NOCASE,
+	Type TEXT NULL COLLATE NOCASE,
+	ea_guid TEXT NULL COLLATE NOCASE,
+	StyleEx TEXT NULL COLLATE NOCASE
+);
+CREATE TABLE t_attributeconstraints
+(
+	Object_ID INTEGER NULL DEFAULT 0,
+	'Constraint' TEXT NOT NULL COLLATE NOCASE,
+	AttName TEXT NULL COLLATE NOCASE,
+	Type TEXT NULL COLLATE NOCASE,
+	Notes TEXT NULL COLLATE NOCASE,
+	ID INTEGER NOT NULL,
+	CONSTRAINT pk_attributeconstraints PRIMARY KEY ('Constraint',ID)
+);
+CREATE TABLE t_attributetag
+(
+	PropertyID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	ElementID INTEGER NULL DEFAULT 0,
+	Property TEXT NULL COLLATE NOCASE,
+	VALUE TEXT NULL COLLATE NOCASE,
+	NOTES TEXT NULL COLLATE NOCASE,
+	ea_guid TEXT NULL COLLATE NOCASE
+);
+CREATE TABLE t_authors
+(
+	AuthorName TEXT NOT NULL COLLATE NOCASE PRIMARY KEY,
+	Roles TEXT NULL COLLATE NOCASE,
+	Notes TEXT NULL COLLATE NOCASE
+);
+CREATE TABLE t_cardinality
+(
+	Cardinality TEXT NOT NULL COLLATE NOCASE PRIMARY KEY
+);
+INSERT INTO t_cardinality VALUES('*');
+INSERT INTO t_cardinality VALUES('0');
+INSERT INTO t_cardinality VALUES('0..*');
+INSERT INTO t_cardinality VALUES('0..1');
+INSERT INTO t_cardinality VALUES('1');
+INSERT INTO t_cardinality VALUES('1..');
+INSERT INTO t_cardinality VALUES('1..*');
+CREATE TABLE t_category
+(
+	CategoryID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	Name TEXT NULL COLLATE NOCASE,
+	Type TEXT NULL COLLATE NOCASE,
+	NOTES TEXT NULL COLLATE NOCASE
+);
+CREATE TABLE t_clients
+(
+	Name TEXT NOT NULL COLLATE NOCASE PRIMARY KEY,
+	Organisation TEXT NULL COLLATE NOCASE,
+	Phone1 TEXT NULL COLLATE NOCASE,
+	Phone2 TEXT NULL COLLATE NOCASE,
+	Mobile TEXT NULL COLLATE NOCASE,
+	Fax TEXT NULL COLLATE NOCASE,
+	Email TEXT NULL COLLATE NOCASE,
+	Roles TEXT NULL COLLATE NOCASE,
+	Notes TEXT NULL COLLATE NOCASE
+);
+CREATE TABLE t_complexitytypes
+(
+	Complexity TEXT NOT NULL COLLATE NOCASE PRIMARY KEY,
+	NumericWeight INTEGER NULL DEFAULT 0
+);
+INSERT INTO t_complexitytypes VALUES('Extreme',6);
+INSERT INTO t_complexitytypes VALUES('High',4);
+INSERT INTO t_complexitytypes VALUES('Low',2);
+INSERT INTO t_complexitytypes VALUES('Medium',3);
+INSERT INTO t_complexitytypes VALUES('V.High',5);
+INSERT INTO t_complexitytypes VALUES('V.Low',1);
+CREATE TABLE t_connector
+(
+	Connector_ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	Name TEXT NULL COLLATE NOCASE,
+	Direction TEXT NULL COLLATE NOCASE,
+	Notes TEXT NULL COLLATE NOCASE,
+	Connector_Type TEXT NULL COLLATE NOCASE,
+	SubType TEXT NULL COLLATE NOCASE,
+	SourceCard TEXT NULL COLLATE NOCASE,
+	SourceAccess TEXT NULL COLLATE NOCASE,
+	SourceElement TEXT NULL COLLATE NOCASE,
+	DestCard TEXT NULL COLLATE NOCASE,
+	DestAccess TEXT NULL COLLATE NOCASE,
+	DestElement TEXT NULL COLLATE NOCASE,
+	SourceRole TEXT NULL COLLATE NOCASE,
+	SourceRoleType TEXT NULL COLLATE NOCASE,
+	SourceRoleNote TEXT NULL COLLATE NOCASE,
+	SourceContainment TEXT NULL COLLATE NOCASE,
+	SourceIsAggregate INTEGER NULL DEFAULT 0,
+	SourceIsOrdered INTEGER NULL DEFAULT 0,
+	SourceQualifier TEXT NULL COLLATE NOCASE,
+	DestRole TEXT NULL COLLATE NOCASE,
+	DestRoleType TEXT NULL COLLATE NOCASE,
+	DestRoleNote TEXT NULL COLLATE NOCASE,
+	DestContainment TEXT NULL COLLATE NOCASE,
+	DestIsAggregate INTEGER NULL DEFAULT 0,
+	DestIsOrdered INTEGER NULL DEFAULT 0,
+	DestQualifier TEXT NULL COLLATE NOCASE,
+	Start_Object_ID INTEGER NULL DEFAULT 0,
+	End_Object_ID INTEGER NULL DEFAULT 0,
+	Top_Start_Label TEXT NULL COLLATE NOCASE,
+	Top_Mid_Label TEXT NULL COLLATE NOCASE,
+	Top_End_Label TEXT NULL COLLATE NOCASE,
+	Btm_Start_Label TEXT NULL COLLATE NOCASE,
+	Btm_Mid_Label TEXT NULL COLLATE NOCASE,
+	Btm_End_Label TEXT NULL COLLATE NOCASE,
+	Start_Edge INTEGER NULL DEFAULT 0,
+	End_Edge INTEGER NULL DEFAULT 0,
+	PtStartX INTEGER NULL DEFAULT 0,
+	PtStartY INTEGER NULL DEFAULT 0,
+	PtEndX INTEGER NULL DEFAULT 0,
+	PtEndY INTEGER NULL DEFAULT 0,
+	SeqNo INTEGER NULL DEFAULT 0,	-- For sequence diagrams - stores sequence number
+	HeadStyle INTEGER NULL DEFAULT 0,	-- Head style - filled, open ... depends on connector
+	LineStyle INTEGER NULL DEFAULT 0,	-- Line is dot, dash... depends on connector
+	RouteStyle INTEGER NULL DEFAULT 0,	-- Route line direct/auto ...user selection
+	IsBold INTEGER NULL DEFAULT 0,	-- Line style is bold or normal
+	LineColor INTEGER NULL DEFAULT 0,	-- Color of line
+	Stereotype TEXT NULL COLLATE NOCASE,
+	VirtualInheritance TEXT NULL COLLATE NOCASE,
+	LinkAccess TEXT NULL COLLATE NOCASE,
+	PDATA1 TEXT NULL COLLATE NOCASE,
+	PDATA2 TEXT NULL COLLATE NOCASE,
+	PDATA3 TEXT NULL COLLATE NOCASE,
+	PDATA4 TEXT NULL COLLATE NOCASE,
+	PDATA5 TEXT NULL COLLATE NOCASE,
+	DiagramID INTEGER NULL DEFAULT 0,
+	ea_guid TEXT NULL COLLATE NOCASE,
+	SourceConstraint TEXT NULL COLLATE NOCASE,
+	DestConstraint TEXT NULL COLLATE NOCASE,
+	SourceIsNavigable INTEGER NULL,
+	DestIsNavigable INTEGER NULL,
+	IsRoot INTEGER NULL,
+	IsLeaf INTEGER NULL,
+	IsSpec INTEGER NULL,
+	SourceChangeable TEXT NULL COLLATE NOCASE,
+	DestChangeable TEXT NULL COLLATE NOCASE,
+	SourceTS TEXT NULL COLLATE NOCASE,
+	DestTS TEXT NULL COLLATE NOCASE,
+	StateFlags TEXT NULL COLLATE NOCASE,
+	ActionFlags TEXT NULL COLLATE NOCASE,
+	IsSignal INTEGER NULL,
+	IsStimulus INTEGER NULL,
+	DispatchAction TEXT NULL COLLATE NOCASE,
+	Target2 INTEGER NULL,
+	StyleEx TEXT NULL COLLATE NOCASE,
+	SourceStereotype TEXT NULL COLLATE NOCASE,
+	DestStereotype TEXT NULL COLLATE NOCASE,
+	SourceStyle TEXT NULL COLLATE NOCASE,
+	DestStyle TEXT NULL COLLATE NOCASE,
+	EventFlags TEXT NULL COLLATE NOCASE
+);
+CREATE TABLE t_connectorconstraint
+(
+	ConnectorID INTEGER NOT NULL DEFAULT 0,
+	'Constraint' TEXT NOT NULL COLLATE NOCASE,
+	ConstraintType TEXT NULL COLLATE NOCASE,
+	Notes TEXT NULL COLLATE NOCASE,
+	CONSTRAINT pk_connectorconstraint PRIMARY KEY (ConnectorID,'Constraint')
+);
+CREATE TABLE t_connectortag
+(
+	PropertyID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	ElementID INTEGER NULL DEFAULT 0,
+	Property TEXT NULL COLLATE NOCASE,
+	VALUE TEXT NULL COLLATE NOCASE,
+	NOTES TEXT NULL COLLATE NOCASE,
+	ea_guid TEXT NULL COLLATE NOCASE
+);
+CREATE TABLE t_connectortypes
+(
+	Connector_Type TEXT NOT NULL COLLATE NOCASE PRIMARY KEY,
+	Description TEXT NULL COLLATE NOCASE
+);
+INSERT INTO t_connectortypes VALUES('Abstraction','Abstraction');
+INSERT INTO t_connectortypes VALUES('Aggregation','Aggregation');
+INSERT INTO t_connectortypes VALUES('Assembly','Assembly');
+INSERT INTO t_connectortypes VALUES('Association','Association');
+INSERT INTO t_connectortypes VALUES('Collaboration','Collaboration');
+INSERT INTO t_connectortypes VALUES('CommunicationPath','CommunicationPath');
+INSERT INTO t_connectortypes VALUES('Connector','Composite Connector');
+INSERT INTO t_connectortypes VALUES('ControlFlow','ControlFlow');
+INSERT INTO t_connectortypes VALUES('Delegate','Delegate');
+INSERT INTO t_connectortypes VALUES('Dependency','Dependency');
+INSERT INTO t_connectortypes VALUES('Deployment','Deployment');
+INSERT INTO t_connectortypes VALUES('ERLink','ERLink');
+INSERT INTO t_connectortypes VALUES('Extension','Extension');
+INSERT INTO t_connectortypes VALUES('Generalization','Generalization');
+INSERT INTO t_connectortypes VALUES('InformationFlow','InformationFlow');
+INSERT INTO t_connectortypes VALUES('Instantiation','Instantiation');
+INSERT INTO t_connectortypes VALUES('InterruptFlow','InterruptFlow');
+INSERT INTO t_connectortypes VALUES('Manifest','Manifest');
+INSERT INTO t_connectortypes VALUES('Nesting','Nesting');
+INSERT INTO t_connectortypes VALUES('NoteLink','NoteLink');
+INSERT INTO t_connectortypes VALUES('ObjectFlow','ObjectFlow');
+INSERT INTO t_connectortypes VALUES('Package','Package');
+INSERT INTO t_connectortypes VALUES('ProtocolConformance','ProtocolConformance');
+INSERT INTO t_connectortypes VALUES('ProtocolTransition','ProtocolTransition');
+INSERT INTO t_connectortypes VALUES('Realisation','Realisation');
+INSERT INTO t_connectortypes VALUES('Sequence','Sequence');
+INSERT INTO t_connectortypes VALUES('StateFlow','StateFlow');
+INSERT INTO t_connectortypes VALUES('Substitution','Substitution');
+INSERT INTO t_connectortypes VALUES('Usage','Usage');
+INSERT INTO t_connectortypes VALUES('UseCase','UseCase');
+CREATE TABLE t_constants
+(
+	ConstantName TEXT NOT NULL COLLATE NOCASE PRIMARY KEY,
+	ConstantValue TEXT NULL COLLATE NOCASE
+);
+INSERT INTO t_constants VALUES('CompanyName','Sparx Systems');
+INSERT INTO t_constants VALUES('ECF_EC','1.400000000');
+INSERT INTO t_constants VALUES('ECF_EWF','-0.030000000');
+INSERT INTO t_constants VALUES('HoursPerUCP','20');
+INSERT INTO t_constants VALUES('ProjectName','DOJ');
+INSERT INTO t_constants VALUES('TCF_TC','0.600000000');
+INSERT INTO t_constants VALUES('TCF_TWF','0.010000000');
+CREATE TABLE t_constrainttypes
+(
+	'Constraint' TEXT NOT NULL COLLATE NOCASE PRIMARY KEY,
+	Description TEXT NULL COLLATE NOCASE,	-- Description of Constraint
+	Notes TEXT NULL COLLATE NOCASE	-- Further notes
+);
+INSERT INTO t_constrainttypes VALUES('Invariant','A state the object must always be in','1');
+INSERT INTO t_constrainttypes VALUES('Post-condition','An ending state that must be met','1');
+INSERT INTO t_constrainttypes VALUES('Pre-condition','A starting state that must be met','1');
+INSERT INTO t_constrainttypes VALUES('Process','A process that must occur','1');
+CREATE TABLE t_datatypes
+(
+	Type TEXT NULL COLLATE NOCASE,
+	ProductName TEXT NULL COLLATE NOCASE,
+	DataType TEXT NULL COLLATE NOCASE,
+	Size INTEGER NULL,
+	MaxLen INTEGER NULL,
+	MaxPrec INTEGER NULL,
+	MaxScale INTEGER NULL DEFAULT 0,
+	DefaultLen INTEGER NULL,
+	DefaultPrec INTEGER NULL,
+	DefaultScale INTEGER NULL,
+	User INTEGER NULL,
+	PDATA1 TEXT NULL COLLATE NOCASE,
+	PDATA2 TEXT NULL COLLATE NOCASE,
+	PDATA3 TEXT NULL COLLATE NOCASE,
+	PDATA4 TEXT NULL COLLATE NOCASE,
+	HasLength TEXT NULL COLLATE NOCASE,
+	GenericType TEXT NULL COLLATE NOCASE,
+	DatatypeID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT
+);
+INSERT INTO t_datatypes VALUES('DDL','Oracle','CHAR',1,2000,0,0,1,0,0,0,'1','1','1','1','1','char',1);
+INSERT INTO t_datatypes VALUES('DDL','Oracle','VARCHAR2',1,4000,0,0,50,0,0,0,'1','1','1','1','1','varchar',2);
+INSERT INTO t_datatypes VALUES('DDL','Oracle','VARCHAR',1,4000,0,0,50,0,0,0,'1','1','1','1','1','varchar',3);
+INSERT INTO t_datatypes VALUES('DDL','Oracle','NCHAR',1,2000,0,0,50,0,0,0,'1','1','1','1','1','nchar',4);
+INSERT INTO t_datatypes VALUES('DDL','Oracle','NVARCHAR',1,4000,0,0,50,0,0,0,'1','1','1','1','1','nvarchar',5);
+INSERT INTO t_datatypes VALUES('DDL','Oracle','FLOAT',1,126,0,0,126,0,0,0,'1','1','1','1','1','float',6);
+INSERT INTO t_datatypes VALUES('DDL','Oracle','NUMBER',2,0,38,0,0,8,2,0,'1','1','1','1','1','number',7);
+INSERT INTO t_datatypes VALUES('DDL','Oracle','DATE',0,0,0,0,0,0,0,0,'1','1','1','1','1','datetime',8);
+INSERT INTO t_datatypes VALUES('DDL','Oracle','ROWID',0,0,0,0,0,0,0,0,'1','1','1','1','1','uniqueidentifier',9);
+INSERT INTO t_datatypes VALUES('DDL','Oracle','RAW',1,2000,0,0,2000,0,0,0,'1','1','1','1','1','binary',10);
+INSERT INTO t_datatypes VALUES('DDL','Oracle','LONG RAW',0,0,0,0,0,0,0,0,'1','1','1','1','1','binary',11);
+INSERT INTO t_datatypes VALUES('DDL','Oracle','CLOB',0,0,0,0,0,0,0,0,'1','1','1','1','1','text',12);
+INSERT INTO t_datatypes VALUES('DDL','Oracle','LONG',0,0,0,0,0,0,0,0,'1','1','1','1','1','long',13);
+INSERT INTO t_datatypes VALUES('DDL','Oracle','NCLOB',0,0,0,0,0,0,0,0,'1','1','1','1','1','ntext',15);
+INSERT INTO t_datatypes VALUES('DDL','Oracle','BLOB',0,0,0,0,0,0,0,0,'1','1','1','1','1','blob',16);
+INSERT INTO t_datatypes VALUES('DDL','Oracle','BFILE',0,0,0,0,0,0,0,0,'1','1','1','1','1','blob',17);
+INSERT INTO t_datatypes VALUES('DDL','SQLServer7','binary',1,8000,0,0,10,0,0,0,'1','1','1','1','1','binary',18);
+INSERT INTO t_datatypes VALUES('DDL','SQLServer7','bit',0,0,0,0,0,0,0,0,'1','1','1','1','1','boolean',19);
+INSERT INTO t_datatypes VALUES('DDL','SQLServer7','char',1,8000,0,0,1,0,0,0,'1','1','1','1','1','char',20);
+INSERT INTO t_datatypes VALUES('DDL','SQLServer7','datetime',0,0,0,0,0,0,0,0,'1','1','1','1','1','DateTime',21);
+INSERT INTO t_datatypes VALUES('DDL','SQLServer7','decimal',2,0,38,0,0,18,0,0,'1','1','1','1','1','decimal',22);
+INSERT INTO t_datatypes VALUES('DDL','SQLServer7','float',1,53,0,0,53,0,0,0,'1','1','1','1','1','float',23);
+INSERT INTO t_datatypes VALUES('DDL','SQLServer7','image',0,0,0,0,0,0,0,0,'1','1','1','1','1','binary',24);
+INSERT INTO t_datatypes VALUES('DDL','SQLServer7','int',0,0,0,0,0,0,0,0,'1','1','1','1','1','integer',25);
+INSERT INTO t_datatypes VALUES('DDL','SQLServer7','money',0,0,0,0,0,0,0,0,'1','1','1','1','1','currency',26);
+INSERT INTO t_datatypes VALUES('DDL','SQLServer7','nchar',1,4000,0,0,10,0,0,0,'1','1','1','1','1','nchar',27);
+INSERT INTO t_datatypes VALUES('DDL','SQLServer7','ntext',0,0,0,0,0,0,0,0,'1','1','1','1','1','ntext',28);
+INSERT INTO t_datatypes VALUES('DDL','SQLServer7','nvarchar',1,4000,0,0,50,0,0,0,'1','1','1','1','1','nvarchar',29);
+INSERT INTO t_datatypes VALUES('DDL','SQLServer7','numeric',2,0,38,0,0,18,0,0,'1','1','1','1','1','numeric',30);
+INSERT INTO t_datatypes VALUES('DDL','SQLServer7','real',0,0,0,0,0,0,0,0,'1','1','1','1','1','real',31);
+INSERT INTO t_datatypes VALUES('DDL','SQLServer7','smalldatetime',0,0,0,0,0,0,0,0,'1','1','1','1','1','datetime',32);
+INSERT INTO t_datatypes VALUES('DDL','SQLServer7','smallint',0,0,0,0,0,0,0,0,'1','1','1','1','1','smallint',33);
+INSERT INTO t_datatypes VALUES('DDL','SQLServer7','smallmoney',0,0,0,0,0,0,0,0,'1','1','1','1','1','money',34);
+INSERT INTO t_datatypes VALUES('DDL','SQLServer7','text',0,0,0,0,0,0,0,0,'1','1','1','1','1','text',35);
+INSERT INTO t_datatypes VALUES('DDL','SQLServer7','timestamp',0,0,0,0,0,0,0,0,'1','1','1','1','1','timestamp',36);
+INSERT INTO t_datatypes VALUES('DDL','SQLServer7','tinyint',0,0,0,0,0,0,0,0,'1','1','1','1','1','tinyint',37);
+INSERT INTO t_datatypes VALUES('DDL','SQLServer7','varchar',1,8000,0,0,50,0,0,0,'1','1','1','1','1','varchar',38);
+INSERT INTO t_datatypes VALUES('DDL','SQLServer7','varbinary',1,8000,0,0,50,0,0,0,'1','1','1','1','1','varbinary',39);
+INSERT INTO t_datatypes VALUES('DDL','SQLServer7','uniqueidentifier',0,0,0,0,0,0,0,0,'1','1','1','1','1','uniqueidentifier',40);
+INSERT INTO t_datatypes VALUES('DDL','MSAccess','Text',1,255,0,0,50,0,0,0,'1','1','1','1','1','char',41);
+INSERT INTO t_datatypes VALUES('DDL','MSAccess','Memo',0,65535,0,0,0,0,0,0,'1','1','1','1','1','text',42);
+INSERT INTO t_datatypes VALUES('DDL','MSAccess','DateTime',0,0,0,0,0,0,0,0,'1','1','1','1','1','datetime',43);
+INSERT INTO t_datatypes VALUES('DDL','MSAccess','Currency',2,0,15,0,0,15,4,0,'1','1','1','1','1','currency',44);
+INSERT INTO t_datatypes VALUES('DDL','MSAccess','Integer',0,0,0,0,0,0,0,0,'1','1','1','1','1','integer',45);
+INSERT INTO t_datatypes VALUES('DDL','MSAccess','Long',0,0,0,0,0,0,0,0,'1','1','1','1','1','long',46);
+INSERT INTO t_datatypes VALUES('DDL','MSAccess','Single',0,0,7,0,0,0,7,0,'1','1','1','1','1','float',47);
+INSERT INTO t_datatypes VALUES('DDL','MSAccess','Double',0,0,0,0,0,0,0,0,'1','1','1','1','1','double',48);
+INSERT INTO t_datatypes VALUES('DDL','MSAccess','Counter',0,0,0,0,0,0,0,0,'1','1','1','1','1','counter',49);
+INSERT INTO t_datatypes VALUES('DDL','MSAccess','YesNo',0,0,0,0,0,0,0,0,'1','1','1','1','1','boolean',50);
+INSERT INTO t_datatypes VALUES('Code','Visual Basic','Boolean',0,0,0,0,0,0,0,0,'1','1','1','1','1','Boolean',51);
+INSERT INTO t_datatypes VALUES('Code','Visual Basic','Byte',0,0,0,0,0,0,0,0,'1','1','1','1','1','Byte',52);
+INSERT INTO t_datatypes VALUES('Code','Visual Basic','Currency',0,0,0,0,0,0,0,0,'1','1','1','1','1','Currency',53);
+INSERT INTO t_datatypes VALUES('Code','Visual Basic','Date',0,0,0,0,0,0,0,0,'1','1','1','1','1','DateTime',54);
+INSERT INTO t_datatypes VALUES('Code','Visual Basic','Double',0,0,0,0,0,0,0,0,'1','1','1','1','1','Double',55);
+INSERT INTO t_datatypes VALUES('Code','Visual Basic','Integer',0,0,0,0,0,0,0,0,'1','1','1','1','1','Integer',56);
+INSERT INTO t_datatypes VALUES('Code','Visual Basic','Long',0,0,0,0,0,0,0,0,'1','1','1','1','1','Long',57);
+INSERT INTO t_datatypes VALUES('Code','Visual Basic','Object',0,0,0,0,0,0,0,0,'1','1','1','1','1','1',58);
+INSERT INTO t_datatypes VALUES('Code','Visual Basic','Single',0,0,0,0,0,0,0,0,'1','1','1','1','1','1',59);
+INSERT INTO t_datatypes VALUES('Code','Visual Basic','String',0,0,0,0,0,0,0,0,'1','1','1','1','1','String',60);
+INSERT INTO t_datatypes VALUES('Code','Visual Basic','Variant',0,0,0,0,0,0,0,0,'1','1','1','1','1','Variant',61);
+INSERT INTO t_datatypes VALUES('Code','C++','char',0,0,0,0,0,0,0,0,'1','1','1','1','1','Char',62);
+INSERT INTO t_datatypes VALUES('Code','C++','int',0,0,0,0,0,0,0,0,'1','1','1','1','1','Integer',63);
+INSERT INTO t_datatypes VALUES('Code','C++','short',0,0,0,0,0,0,0,0,'1','1','1','1','1','Short',64);
+INSERT INTO t_datatypes VALUES('Code','C++','long',0,0,0,0,0,0,0,0,'1','1','1','1','1','Long',65);
+INSERT INTO t_datatypes VALUES('Code','C++','float',0,0,0,0,0,0,0,0,'1','1','1','1','1','Float',66);
+INSERT INTO t_datatypes VALUES('Code','C++','double',0,0,0,0,0,0,0,0,'1','1','1','1','1','Double',67);
+INSERT INTO t_datatypes VALUES('Code','C++','void',0,0,0,0,0,0,0,0,'1','1','1','1','1','1',68);
+INSERT INTO t_datatypes VALUES('Code','C++','unsigned char',0,0,0,0,0,0,0,0,'1','1','1','1','1','1',69);
+INSERT INTO t_datatypes VALUES('Code','C++','unsigned int',0,0,0,0,0,0,0,0,'1','1','1','1','1','Uint',70);
+INSERT INTO t_datatypes VALUES('Code','C++','unsigned short',0,0,0,0,0,0,0,0,'1','1','1','1','1','1',71);
+INSERT INTO t_datatypes VALUES('Code','C++','unsigned long',0,0,0,0,0,0,0,0,'1','1','1','1','1','Ulong',72);
+INSERT INTO t_datatypes VALUES('Code','Java','byte',0,0,0,0,0,0,0,0,'1','1','1','1','1','Byte',73);
+INSERT INTO t_datatypes VALUES('Code','Java','char',0,0,0,0,0,0,0,0,'1','1','1','1','1','Char',74);
+INSERT INTO t_datatypes VALUES('Code','Java','int',0,0,0,0,0,0,0,0,'1','1','1','1','1','Integer',75);
+INSERT INTO t_datatypes VALUES('Code','Java','short',0,0,0,0,0,0,0,0,'1','1','1','1','1','Short',76);
+INSERT INTO t_datatypes VALUES('Code','Java','boolean',0,0,0,0,0,0,0,0,'1','1','1','1','1','Boolean',77);
+INSERT INTO t_datatypes VALUES('Code','Java','long',0,0,0,0,0,0,0,0,'1','1','1','1','1','Long',78);
+INSERT INTO t_datatypes VALUES('Code','Java','float',0,0,0,0,0,0,0,0,'1','1','1','1','1','Float',79);
+INSERT INTO t_datatypes VALUES('Code','Java','double',0,0,0,0,0,0,0,0,'1','1','1','1','1','Double',80);
+INSERT INTO t_datatypes VALUES('Code','Delphi','Boolean',0,0,0,0,0,0,0,0,'1','1','1','1','1','Boolean',81);
+INSERT INTO t_datatypes VALUES('Code','Delphi','Byte',0,0,0,0,0,0,0,0,'1','1','1','1','1','Byte',82);
+INSERT INTO t_datatypes VALUES('Code','Delphi','Cardinal',0,0,0,0,0,0,0,0,'1','1','1','1','1','1',83);
+INSERT INTO t_datatypes VALUES('Code','Delphi','Char',0,0,0,0,0,0,0,0,'1','1','1','1','1','Char',84);
+INSERT INTO t_datatypes VALUES('Code','Delphi','Currency',0,0,0,0,0,0,0,0,'1','1','1','1','1','Currency',85);
+INSERT INTO t_datatypes VALUES('Code','Delphi','Double',0,0,0,0,0,0,0,0,'1','1','1','1','1','Double',86);
+INSERT INTO t_datatypes VALUES('Code','Delphi','Extended',0,0,0,0,0,0,0,0,'1','1','1','1','1','1',87);
+INSERT INTO t_datatypes VALUES('Code','Delphi','Integer',0,0,0,0,0,0,0,0,'1','1','1','1','1','Integer',88);
+INSERT INTO t_datatypes VALUES('Code','Delphi','LongInt',0,0,0,0,0,0,0,0,'1','1','1','1','1','1',89);
+INSERT INTO t_datatypes VALUES('Code','Delphi','LongWord',0,0,0,0,0,0,0,0,'1','1','1','1','1','Ulong',90);
+INSERT INTO t_datatypes VALUES('Code','Delphi','Single',0,0,0,0,0,0,0,0,'1','1','1','1','1','1',91);
+INSERT INTO t_datatypes VALUES('Code','Delphi','ShortInt',0,0,0,0,0,0,0,0,'1','1','1','1','1','1',92);
+INSERT INTO t_datatypes VALUES('Code','Delphi','SmallInt',0,0,0,0,0,0,0,0,'1','1','1','1','1','1',93);
+INSERT INTO t_datatypes VALUES('Code','Delphi','String',0,0,0,0,0,0,0,0,'1','1','1','1','1','String',94);
+INSERT INTO t_datatypes VALUES('Code','Delphi','Real',0,0,0,0,0,0,0,0,'1','1','1','1','1','1',95);
+INSERT INTO t_datatypes VALUES('Code','Delphi','Variant',0,0,0,0,0,0,0,0,'1','1','1','1','1','Variant',96);
+INSERT INTO t_datatypes VALUES('Code','Delphi','Word',0,0,0,0,0,0,0,0,'1','1','1','1','1','Word',98);
+INSERT INTO t_datatypes VALUES('Code','C#','void',0,0,0,0,0,0,0,0,'1','1','1','1','1','1',99);
+INSERT INTO t_datatypes VALUES('Code','C#','sbyte',0,0,0,0,0,0,0,0,'1','1','1','1','1','1',100);
+INSERT INTO t_datatypes VALUES('Code','C#','byte',0,0,0,0,0,0,0,0,'1','1','1','1','1','Byte',101);
+INSERT INTO t_datatypes VALUES('Code','C#','short',0,0,0,0,0,0,0,0,'1','1','1','1','1','Short',102);
+INSERT INTO t_datatypes VALUES('Code','C#','ushort',0,0,0,0,0,0,0,0,'1','1','1','1','1','Ushort',103);
+INSERT INTO t_datatypes VALUES('Code','C#','int',0,0,0,0,0,0,0,0,'1','1','1','1','1','Integer',104);
+INSERT INTO t_datatypes VALUES('Code','C#','uint',0,0,0,0,0,0,0,0,'1','1','1','1','1','Uint',105);
+INSERT INTO t_datatypes VALUES('Code','C#','long',0,0,0,0,0,0,0,0,'1','1','1','1','1','Long',106);
+INSERT INTO t_datatypes VALUES('Code','C#','ulong',0,0,0,0,0,0,0,0,'1','1','1','1','1','Ulong',107);
+INSERT INTO t_datatypes VALUES('Code','C#','char',0,0,0,0,0,0,0,0,'1','1','1','1','1','Char',108);
+INSERT INTO t_datatypes VALUES('Code','C#','float',0,0,0,0,0,0,0,0,'1','1','1','1','1','Float',109);
+INSERT INTO t_datatypes VALUES('Code','C#','double',0,0,0,0,0,0,0,0,'1','1','1','1','1','Double',110);
+INSERT INTO t_datatypes VALUES('Code','C#','bool',0,0,0,0,0,0,0,0,'1','1','1','1','1','Boolean',111);
+INSERT INTO t_datatypes VALUES('Code','C#','decimal',0,0,0,0,0,0,0,0,'1','1','1','1','1','Float',112);
+INSERT INTO t_datatypes VALUES('Code','VBNet','Integer',0,0,0,0,0,0,0,0,'1','1','1','1','1','Integer',113);
+INSERT INTO t_datatypes VALUES('Code','VBNet','String',0,0,0,0,0,0,0,0,'1','1','1','1','1','String',114);
+INSERT INTO t_datatypes VALUES('Code','VBNet','Short',0,0,0,0,0,0,0,0,'1','1','1','1','1','Short',115);
+INSERT INTO t_datatypes VALUES('Code','VBNet','Long',0,0,0,0,0,0,0,0,'1','1','1','1','1','Long',116);
+INSERT INTO t_datatypes VALUES('Code','VBNet','Char',0,0,0,0,0,0,0,0,'1','1','1','1','1','Char',117);
+INSERT INTO t_datatypes VALUES('Code','VBNet','Byte',0,0,0,0,0,0,0,0,'1','1','1','1','1','Byte',118);
+INSERT INTO t_datatypes VALUES('Code','VBNet','Boolean',0,0,0,0,0,0,0,0,'1','1','1','1','1','Boolean',119);
+INSERT INTO t_datatypes VALUES('Code','VBNet','Double',0,0,0,0,0,0,0,0,'1','1','1','1','1','Double',120);
+INSERT INTO t_datatypes VALUES('Code','VBNet','Date',0,0,0,0,0,0,0,0,'1','1','1','1','1','Date',121);
+INSERT INTO t_datatypes VALUES('Code','VBNet','Object',0,0,0,0,0,0,0,0,'1','1','1','1','1','1',122);
+INSERT INTO t_datatypes VALUES('Code','VBNet','Single',0,0,0,0,0,0,0,0,'1','1','1','1','1','Single',123);
+INSERT INTO t_datatypes VALUES('Code','VBNet','Datetime',0,0,0,0,0,0,0,0,'1','1','1','1','1','DateTime',124);
+INSERT INTO t_datatypes VALUES('Code','VBNet','Decimal',0,0,0,0,0,0,0,0,'1','1','1','1','1','1',125);
+INSERT INTO t_datatypes VALUES('DDL','DB2','BIGINT',0,0,0,0,0,0,0,0,'1','1','1','1','1','bigint',126);
+INSERT INTO t_datatypes VALUES('DDL','DB2','BLOB',1,2097152,0,0,0,0,0,0,'1','1','1','1','1','blob',127);
+INSERT INTO t_datatypes VALUES('DDL','DB2','CHARACTER',1,254,0,0,10,0,0,0,'1','1','1','1','1','char',128);
+INSERT INTO t_datatypes VALUES('DDL','DB2','CLOB',0,0,0,0,0,0,0,0,'1','1','1','1','1','text',129);
+INSERT INTO t_datatypes VALUES('DDL','DB2','DATE',0,0,0,0,0,0,0,0,'1','1','1','1','1','date',130);
+INSERT INTO t_datatypes VALUES('DDL','DB2','DECIMAL',2,31,31,0,0,5,0,0,'1','1','1','1','1','decimal',131);
+INSERT INTO t_datatypes VALUES('DDL','DB2','DOUBLE',0,0,0,0,0,0,0,0,'1','1','1','1','1','double',132);
+INSERT INTO t_datatypes VALUES('DDL','DB2','INTEGER',0,0,0,0,0,0,0,0,'1','1','1','1','1','integer',133);
+INSERT INTO t_datatypes VALUES('DDL','DB2','LONG VARCHAR',0,0,0,0,0,0,0,0,'1','1','1','1','1','text',134);
+INSERT INTO t_datatypes VALUES('DDL','DB2','REAL',0,0,0,0,0,0,0,0,'1','1','1','1','1','real',135);
+INSERT INTO t_datatypes VALUES('DDL','DB2','TIME',0,0,0,0,0,0,0,0,'1','1','1','1','1','time',137);
+INSERT INTO t_datatypes VALUES('DDL','DB2','TIMESTAMP',0,0,0,0,0,0,0,0,'1','1','1','1','1','timestamp',138);
+INSERT INTO t_datatypes VALUES('DDL','DB2','VARCHAR',1,4000,0,0,10,0,0,0,'1','1','1','1','1','varchar',139);
+INSERT INTO t_datatypes VALUES('DDL','MySql','BIT',1,64,0,0,1,0,0,0,'1','1','1','1','1','bit',140);
+INSERT INTO t_datatypes VALUES('DDL','MySql','BOOL',0,0,0,0,0,0,0,0,'1','1','1','1','1','boolean',141);
+INSERT INTO t_datatypes VALUES('DDL','MySql','TINYINT',0,0,0,0,0,0,0,0,'1','1','1','1','1','tinyint',142);
+INSERT INTO t_datatypes VALUES('DDL','MySql','SMALLINT',0,0,0,0,0,0,0,0,'1','1','1','1','1','smallint',143);
+INSERT INTO t_datatypes VALUES('DDL','MySql','INTEGER',0,0,0,0,0,0,0,0,'1','1','1','1','1','integer',144);
+INSERT INTO t_datatypes VALUES('DDL','MySql','MEDIUMINT',0,0,0,0,0,0,0,0,'1','1','1','1','1','mediumint',145);
+INSERT INTO t_datatypes VALUES('DDL','MySql','BIGINT',0,0,0,0,0,0,0,0,'1','1','1','1','1','bigint',146);
+INSERT INTO t_datatypes VALUES('DDL','MySql','FLOAT',2,0,24,0,0,0,0,0,'1','1','1','1','1','float',147);
+INSERT INTO t_datatypes VALUES('DDL','MySql','DOUBLE',2,0,53,30,0,10,2,0,'1','1','1','1','1','double',148);
+INSERT INTO t_datatypes VALUES('DDL','MySql','DOUBLE PRECISION',2,0,53,30,0,10,2,0,'1','1','1','1','1','double',149);
+INSERT INTO t_datatypes VALUES('DDL','MySql','REAL',2,0,53,30,0,10,2,0,'1','1','1','1','1','real',150);
+INSERT INTO t_datatypes VALUES('DDL','MySql','NUMERIC',2,0,65,30,0,10,2,0,'1','1','1','1','1','numeric',151);
+INSERT INTO t_datatypes VALUES('DDL','MySql','DECIMAL',2,0,65,30,0,10,2,0,'1','1','1','1','1','decimal',152);
+INSERT INTO t_datatypes VALUES('DDL','MySql','DATE',0,0,0,0,0,0,0,0,'1','1','1','1','1','date',153);
+INSERT INTO t_datatypes VALUES('DDL','MySql','DATETIME',1,6,0,0,0,0,0,0,'1','1','1','1','1','datetime',154);
+INSERT INTO t_datatypes VALUES('DDL','MySql','TIME',1,6,0,0,0,0,0,0,'1','1','1','1','1','time',155);
+INSERT INTO t_datatypes VALUES('DDL','MySql','TIMESTAMP',1,6,0,0,0,0,0,0,'1','1','1','1','1','timestamp',156);
+INSERT INTO t_datatypes VALUES('DDL','MySql','CHAR',1,255,0,0,10,0,0,0,'1','1','1','1','1','char',157);
+INSERT INTO t_datatypes VALUES('DDL','MySql','VARCHAR',1,65535,0,0,50,0,0,0,'1','1','1','1','1','varchar',158);
+INSERT INTO t_datatypes VALUES('DDL','MySql','BLOB',0,0,0,0,0,0,0,0,'1','1','1','1','1','blob',159);
+INSERT INTO t_datatypes VALUES('DDL','MySql','TEXT',0,0,0,0,0,0,0,0,'1','1','1','1','1','text',160);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2000','decimal',2,38,38,38,0,10,2,0,'1','1','1','1','1','decimal',161);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2000','sql_variant',0,0,0,0,0,0,0,0,'1','1','1','1','1','sqlvariant',162);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2000','numeric',2,38,38,38,0,10,2,0,'1','1','1','1','1','numeric',163);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2000','varbinary',1,8000,0,0,50,0,0,0,'1','1','1','1','1','varbinary',164);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2000','bit',0,0,0,0,0,0,0,0,'1','1','1','1','1','boolean',165);
+INSERT INTO t_datatypes VALUES('DDL','InterBase','integer',0,0,0,0,10,0,0,0,'1','1','1','1','1','integer',167);
+INSERT INTO t_datatypes VALUES('DDL','InterBase','smallint',0,0,0,0,10,0,0,0,'1','1','1','1','1','smallint',168);
+INSERT INTO t_datatypes VALUES('DDL','MySql','NCHAR',1,255,0,0,10,0,0,0,'1','1','1','1','1','nchar',169);
+INSERT INTO t_datatypes VALUES('DDL','InterBase','timestamp',0,0,0,0,0,0,0,0,'1','1','1','1','1','datetime',170);
+INSERT INTO t_datatypes VALUES('DDL','PostgreSQL','real',1,53,0,0,53,0,0,0,'1','1','1','1','1','real',171);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2000','char',1,8000,0,0,10,0,0,0,'1','1','1','1','1','char',174);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2000','timestamp',0,0,0,0,0,0,0,0,'1','1','1','1','1','timestamp',175);
+INSERT INTO t_datatypes VALUES('DDL','InterBase','double precision',0,0,0,0,0,0,0,0,'1','1','1','1','1','double',178);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2000','binary',1,8000,0,0,10,0,0,0,'1','1','1','1','1','Binary',179);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2000','image',0,0,0,0,0,0,0,0,'1','1','1','1','1','blob',180);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2000','nvarchar',1,4000,0,0,50,0,0,0,'1','1','1','1','1','nvarchar',181);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2000','smalldatetime',0,0,0,0,0,0,0,0,'1','1','1','1','1','datetime',182);
+INSERT INTO t_datatypes VALUES('DDL','PostgreSQL','numeric',2,0,1000,1000,0,0,0,0,'1','1','1','1','1','numeric',183);
+INSERT INTO t_datatypes VALUES('DDL','DB2','FLOAT',0,0,0,0,0,0,0,0,'1','1','1','1','1','float',184);
+INSERT INTO t_datatypes VALUES('DDL','PostgreSQL','integer',0,0,0,0,0,0,0,0,'1','1','1','1','1','integer',185);
+INSERT INTO t_datatypes VALUES('DDL','PostgreSQL','varchar',1,1048576,0,0,50,0,0,0,'1','1','1','1','1','varchar',186);
+INSERT INTO t_datatypes VALUES('DDL','InterBase','blob sub_type 0',0,0,0,0,0,0,0,0,'1','1','1','1','1','blob',188);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2000','money',0,0,0,0,0,19,4,0,'1','1','1','1','1','currency',190);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2000','ntext',0,0,0,0,0,0,0,0,'1','1','1','1','1','ntext',191);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2000','uniqueidentifier',0,0,0,0,0,0,0,0,'1','1','1','1','1','guid',192);
+INSERT INTO t_datatypes VALUES('DDL','PostgreSQL','bigint',0,0,0,0,0,0,0,0,'1','1','1','1','1','bigint',195);
+INSERT INTO t_datatypes VALUES('DDL','DB2','SMALLINT',0,0,0,0,0,0,0,0,'1','1','1','1','1','smallint',196);
+INSERT INTO t_datatypes VALUES('DDL','MSAccess','OLEObject',0,0,0,0,0,0,0,0,'1','1','1','1','1','blob',199);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2000','int',0,0,0,0,0,0,0,0,'1','1','1','1','1','integer',201);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2000','datetime',0,0,0,0,0,0,0,0,'1','1','1','1','1','datetime',203);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2000','float',0,53,0,0,53,0,0,0,'1','1','1','1','1','float',204);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2000','nchar',1,4000,0,0,10,0,0,0,'1','1','1','1','1','nchar',205);
+INSERT INTO t_datatypes VALUES('DDL','Oracle','NVARCHAR2',1,4000,0,0,50,0,0,0,'1','1','1','1','1','nvarchar',206);
+INSERT INTO t_datatypes VALUES('DDL','InterBase','varchar',1,32767,0,0,50,0,0,0,'1','1','1','1','1','varchar',209);
+INSERT INTO t_datatypes VALUES('DDL','MSAccess','Byte',0,0,0,0,0,0,0,0,'1','1','1','1','1','tinyint',210);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2000','real',0,53,0,0,53,0,0,0,'1','1','1','1','1','double',211);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2000','text',0,0,0,0,0,0,0,0,'1','1','1','1','1','text',212);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2000','tinyint',0,0,0,0,0,0,0,0,'1','1','1','1','1','tinyint',213);
+INSERT INTO t_datatypes VALUES('DDL','PostgreSQL','smallint',0,0,0,0,0,0,0,0,'1','1','1','1','1','smallint',214);
+INSERT INTO t_datatypes VALUES('DDL','PostgreSQL','number',0,0,0,0,0,0,0,0,'1','1','1','1','1','currency',215);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2000','smallint',0,0,0,0,0,0,0,0,'1','1','1','1','1','smallint',216);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2000','varchar',1,8000,0,0,50,0,0,0,'1','1','1','1','1','varchar',217);
+INSERT INTO t_datatypes VALUES('DDL','DB2','CHAR',1,254,0,0,10,0,0,0,'1','1','1','1','1','char',218);
+INSERT INTO t_datatypes VALUES('DDL','PostgreSQL','char',1,1048576,0,0,1,0,0,0,'1','1','1','1','1','char',219);
+INSERT INTO t_datatypes VALUES('DDL','PostgreSQL','decimal',2,0,1000,1000,0,0,0,0,'1','1','1','1','1','decimal',220);
+INSERT INTO t_datatypes VALUES('DDL','PostgreSQL','text',0,0,0,0,0,0,0,0,'1','1','1','1','1','text',221);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2000','bigint',0,0,0,0,0,0,0,0,'1','1','1','1','1','bigint',222);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2000','smallmoney',0,0,0,0,0,0,0,0,'1','1','1','1','1','money',226);
+INSERT INTO t_datatypes VALUES('DDL','InterBase','blob sub_type 1',0,0,0,0,0,0,0,0,'1','1','1','1','1','text',227);
+INSERT INTO t_datatypes VALUES('DDL','InterBase','char',1,32767,0,0,10,0,0,0,'1','1','1','1','1','char',228);
+INSERT INTO t_datatypes VALUES('DDL','PostgreSQL','boolean',0,0,0,0,0,0,0,0,'1','1','1','1','1','boolean',230);
+INSERT INTO t_datatypes VALUES('DDL','PostgreSQL','timestamp',1,6,0,0,0,0,0,0,'1','1','1','1','1','datetime',231);
+INSERT INTO t_datatypes VALUES('DDL','MySql','NVARCHAR',1,65535,0,0,50,0,0,0,'1','1','1','1','1','nvarchar',232);
+INSERT INTO t_datatypes VALUES('DDL','PostgreSQL','bytea',0,0,0,0,0,0,0,0,'1','1','1','1','1','blob',233);
+INSERT INTO t_datatypes VALUES('DDL','InterBase','decimal',2,0,64,64,0,10,2,0,'1','1','1','1','1','decimal',235);
+INSERT INTO t_datatypes VALUES('Code','PHP','var',0,1,1,0,1,1,1,1,'1','1','1','1','1','var',236);
+INSERT INTO t_datatypes VALUES('Code','C#','string',0,1,1,0,1,1,1,1,'1','1','1','1','1','String',237);
+INSERT INTO t_datatypes VALUES('Code','C++','wchar_t',0,1,1,0,1,1,1,1,'1','1','1','1','1','Char',238);
+INSERT INTO t_datatypes VALUES('Code','C++','bool',0,1,1,0,1,1,1,1,'1','1','1','1','1','Boolean',239);
+INSERT INTO t_datatypes VALUES('DDL','Sybase ASE','tinyint',0,0,0,0,0,0,0,0,'1','1','1','1','1','tinyint',240);
+INSERT INTO t_datatypes VALUES('DDL','Sybase ASE','smallint',0,0,0,0,0,0,0,0,'1','1','1','1','1','smallint',241);
+INSERT INTO t_datatypes VALUES('DDL','Sybase ASE','int',0,0,0,0,0,0,0,0,'1','1','1','1','1','integer',242);
+INSERT INTO t_datatypes VALUES('DDL','Sybase ASE','numeric',2,0,38,38,0,18,0,0,'1','1','1','1','1','numeric',243);
+INSERT INTO t_datatypes VALUES('DDL','Sybase ASE','decimal',2,0,38,38,0,18,0,0,'1','1','1','1','1','decimal',244);
+INSERT INTO t_datatypes VALUES('DDL','Sybase ASE','float',0,0,0,0,0,0,0,0,'1','1','1','1','1','float',245);
+INSERT INTO t_datatypes VALUES('DDL','Sybase ASE','double precision',0,0,0,0,0,0,0,0,'1','1','1','1','1','double',246);
+INSERT INTO t_datatypes VALUES('DDL','Sybase ASE','real',0,0,0,0,0,0,0,0,'1','1','1','1','1','real',247);
+INSERT INTO t_datatypes VALUES('DDL','Sybase ASE','smallmoney',0,0,0,0,0,0,0,0,'1','1','1','1','1','money',248);
+INSERT INTO t_datatypes VALUES('DDL','Sybase ASE','money',0,0,0,0,0,0,0,0,'1','1','1','1','1','money',249);
+INSERT INTO t_datatypes VALUES('DDL','Sybase ASE','smalldatetime',0,0,0,0,0,0,0,0,'1','1','1','1','1','datetime',250);
+INSERT INTO t_datatypes VALUES('DDL','Sybase ASE','datetime',0,0,0,0,0,0,0,0,'1','1','1','1','1','datetime',251);
+INSERT INTO t_datatypes VALUES('DDL','Sybase ASE','char',1,16384,0,0,50,0,0,0,'1','1','1','1','1','char',252);
+INSERT INTO t_datatypes VALUES('DDL','Sybase ASE','varchar',1,16384,0,0,100,0,0,0,'1','1','1','1','1','varchar',253);
+INSERT INTO t_datatypes VALUES('DDL','Sybase ASE','unichar',1,0,0,0,50,0,0,0,'1','1','1','1','1','char',254);
+INSERT INTO t_datatypes VALUES('DDL','Sybase ASE','univarchar',1,0,0,0,50,0,0,0,'1','1','1','1','1','varchar',255);
+INSERT INTO t_datatypes VALUES('DDL','Sybase ASE','nchar',1,16384,0,0,50,0,0,0,'1','1','1','1','1','nchar',256);
+INSERT INTO t_datatypes VALUES('DDL','Sybase ASE','nvarchar',1,16384,0,0,50,0,0,0,'1','1','1','1','1','nvarchar',257);
+INSERT INTO t_datatypes VALUES('DDL','Sybase ASE','text',0,0,0,0,50,0,0,0,'1','1','1','1','1','text',258);
+INSERT INTO t_datatypes VALUES('DDL','Sybase ASE','binary',1,255,0,0,1,0,0,0,'1','1','1','1','1','binary',259);
+INSERT INTO t_datatypes VALUES('DDL','Sybase ASE','image',0,0,0,0,0,0,0,0,'1','1','1','1','1','blob',261);
+INSERT INTO t_datatypes VALUES('DDL','Sybase ASE','bit',0,0,0,0,0,0,0,0,'1','1','1','1','1','boolean',262);
+INSERT INTO t_datatypes VALUES('DDL','Informix','INTEGER',0,0,0,0,0,0,0,0,'1','1','1','1','1','integer',263);
+INSERT INTO t_datatypes VALUES('DDL','Informix','INT',0,0,0,0,0,0,0,0,'1','1','1','1','1','integer',264);
+INSERT INTO t_datatypes VALUES('DDL','Informix','SMALLINT',0,0,0,0,0,0,0,0,'1','1','1','1','1','smallint',265);
+INSERT INTO t_datatypes VALUES('DDL','Informix','INT8',0,0,0,0,0,0,0,0,'1','1','1','1','1','bigint',266);
+INSERT INTO t_datatypes VALUES('DDL','Informix','SERIAL',0,0,0,0,0,0,0,0,'1','1','1','1','1','integer',267);
+INSERT INTO t_datatypes VALUES('DDL','Informix','SERIAL8',0,0,0,0,0,0,0,0,'1','1','1','1','1','integer',268);
+INSERT INTO t_datatypes VALUES('DDL','Informix','FLOAT',0,0,0,0,0,0,0,0,'1','1','1','1','1','float',269);
+INSERT INTO t_datatypes VALUES('DDL','Informix','SMALLFLOAT',0,4,0,0,4,0,0,0,'1','1','1','1','1','float',270);
+INSERT INTO t_datatypes VALUES('DDL','Informix','DECIMAL',2,0,32,32,0,8,3,0,'1','1','1','1','1','decimal',271);
+INSERT INTO t_datatypes VALUES('DDL','Informix','DEC',2,0,32,32,0,8,3,0,'1','1','1','1','1','decimal',272);
+INSERT INTO t_datatypes VALUES('DDL','Informix','MONEY',2,0,32,3,0,8,3,0,'1','1','1','1','1','money',273);
+INSERT INTO t_datatypes VALUES('DDL','Informix','DATE',0,0,0,0,0,0,0,0,'1','1','1','1','1','date',274);
+INSERT INTO t_datatypes VALUES('DDL','Informix','DATETIME HOUR TO MINUTE',0,0,0,0,0,0,0,0,'1','1','1','1','1','datetime',275);
+INSERT INTO t_datatypes VALUES('DDL','Informix','DATETIME YEAR TO YEAR',0,0,0,0,0,0,0,0,'1','1','1','1','1','datetime',276);
+INSERT INTO t_datatypes VALUES('DDL','Informix','DATETIME YEAR TO MONTH',0,0,0,0,0,0,0,0,'1','1','1','1','1','datetime',277);
+INSERT INTO t_datatypes VALUES('DDL','Informix','DATETIME YEAR TO DAY',0,0,0,0,0,0,0,0,'1','1','1','1','1','datetime',278);
+INSERT INTO t_datatypes VALUES('DDL','Informix','DATETIME YEAR TO HOUR',0,0,0,0,0,0,0,0,'1','1','1','1','1','datetime',279);
+INSERT INTO t_datatypes VALUES('DDL','Informix','DATETIME YEAR TO MINUTE',0,0,0,0,0,0,0,0,'1','1','1','1','1','datetime',280);
+INSERT INTO t_datatypes VALUES('DDL','Informix','DATETIME YEAR TO SECOND',0,0,0,0,0,0,0,0,'1','1','1','1','1','datetime',281);
+INSERT INTO t_datatypes VALUES('DDL','Informix','DATETIME YEAR TO FRACTION',1,5,0,0,3,0,0,0,'1','1','1','1','1','datetime',282);
+INSERT INTO t_datatypes VALUES('DDL','Informix','DATETIME MONTH TO MONTH',0,0,0,0,0,0,0,0,'1','1','1','1','1','datetime',283);
+INSERT INTO t_datatypes VALUES('DDL','Informix','DATETIME MONTH TO DAY',0,0,0,0,0,0,0,0,'1','1','1','1','1','datetime',284);
+INSERT INTO t_datatypes VALUES('DDL','Informix','DATETIME MONTH TO HOUR',0,0,0,0,0,0,0,0,'1','1','1','1','1','datetime',285);
+INSERT INTO t_datatypes VALUES('DDL','Informix','DATETIME MONTH TO MINUTE',0,0,0,0,0,0,0,0,'1','1','1','1','1','datetime',286);
+INSERT INTO t_datatypes VALUES('DDL','Informix','DATETIME MONTH TO SECOND',0,0,0,0,0,0,0,0,'1','1','1','1','1','datetime',287);
+INSERT INTO t_datatypes VALUES('DDL','Informix','DATETIME MONTH TO FRACTION',1,5,0,0,3,0,0,0,'1','1','1','1','1','datetime',288);
+INSERT INTO t_datatypes VALUES('DDL','Informix','DATETIME DAY TO DAY',0,0,0,0,0,0,0,0,'1','1','1','1','1','datetime',289);
+INSERT INTO t_datatypes VALUES('DDL','Informix','DATETIME DAY TO HOUR',0,0,0,0,0,0,0,0,'1','1','1','1','1','datetime',290);
+INSERT INTO t_datatypes VALUES('DDL','Informix','DATETIME DAY TO MINUTE',0,0,0,0,0,0,0,0,'1','1','1','1','1','datetime',291);
+INSERT INTO t_datatypes VALUES('DDL','Informix','DATETIME DAY TO SECOND',0,0,0,0,0,0,0,0,'1','1','1','1','1','datetime',292);
+INSERT INTO t_datatypes VALUES('DDL','Informix','DATETIME DAY TO FRACTION',1,5,0,0,3,0,0,0,'1','1','1','1','1','datetime',293);
+INSERT INTO t_datatypes VALUES('DDL','Informix','DATETIME HOUR TO HOUR',0,0,0,0,0,0,0,0,'1','1','1','1','1','datetime',294);
+INSERT INTO t_datatypes VALUES('DDL','Informix','DATETIME HOUR TO FRACTION',1,5,0,0,3,0,0,0,'1','1','1','1','1','datetime',295);
+INSERT INTO t_datatypes VALUES('DDL','Informix','DATETIME HOUR TO SECOND',0,0,0,0,0,0,0,0,'1','1','1','1','1','datetime',296);
+INSERT INTO t_datatypes VALUES('DDL','Informix','DATETIME MINUTE TO MINUTE',0,0,0,0,0,0,0,0,'1','1','1','1','1','datetime',297);
+INSERT INTO t_datatypes VALUES('DDL','Informix','DATETIME MINUTE TO SECOND',0,0,0,0,0,0,0,0,'1','1','1','1','1','datetime',298);
+INSERT INTO t_datatypes VALUES('DDL','Informix','DATETIME MINUTE TO FRACTION',1,5,0,0,3,0,0,0,'1','1','1','1','1','datetime',299);
+INSERT INTO t_datatypes VALUES('DDL','Informix','DATETIME SECOND TO SECOND',0,0,0,0,0,0,0,0,'1','1','1','1','1','datetime',300);
+INSERT INTO t_datatypes VALUES('DDL','Informix','DATETIME SECOND TO FRACTION',1,5,0,0,3,0,0,0,'1','1','1','1','1','datetime',301);
+INSERT INTO t_datatypes VALUES('DDL','Informix','DATETIME FRACTION TO FRACTION',1,5,0,0,3,0,0,0,'1','1','1','1','1','datetime',302);
+INSERT INTO t_datatypes VALUES('DDL','Informix','BOOLEAN',0,0,0,0,0,0,0,0,'1','1','1','1','1','boolean',303);
+INSERT INTO t_datatypes VALUES('DDL','Informix','CHAR',1,32767,0,0,10,0,0,0,'1','1','1','1','1','char',304);
+INSERT INTO t_datatypes VALUES('DDL','Informix','CHARACTER',1,32767,0,0,10,0,0,0,'1','1','1','1','1','char',305);
+INSERT INTO t_datatypes VALUES('DDL','Informix','NCHAR',1,32767,0,0,50,0,0,0,'1','1','1','1','1','nchar',306);
+INSERT INTO t_datatypes VALUES('DDL','Informix','CHARACTER VARYING',1,255,0,0,0,0,0,0,'1','1','1','1','1','char',307);
+INSERT INTO t_datatypes VALUES('DDL','Informix','VARCHAR',1,255,0,0,10,0,0,0,'1','1','1','1','1','varchar',308);
+INSERT INTO t_datatypes VALUES('DDL','Informix','NVARCHAR',1,255,0,0,50,0,0,0,'1','1','1','1','1','nvarchar',309);
+INSERT INTO t_datatypes VALUES('DDL','Informix','LVARCHAR',1,32767,0,0,2048,0,0,0,'1','1','1','1','1','char',310);
+INSERT INTO t_datatypes VALUES('DDL','Informix','TEXT',0,0,0,0,0,0,0,0,'1','1','1','1','1','text',311);
+INSERT INTO t_datatypes VALUES('DDL','Informix','BYTE',0,0,0,0,0,0,0,0,'1','1','1','1','1','Binary',312);
+INSERT INTO t_datatypes VALUES('DDL','Informix','BLOB',0,0,0,0,0,0,0,0,'1','1','1','1','1','blob',313);
+INSERT INTO t_datatypes VALUES('DDL','Informix','CLOB',0,0,0,0,0,0,0,0,'1','1','1','1','1','ntext',314);
+INSERT INTO t_datatypes VALUES('DDL','Ingres','ansidate',0,0,0,0,0,0,0,0,'1','1','1','1','1','ansidate',315);
+INSERT INTO t_datatypes VALUES('DDL','Ingres','bigint',0,0,0,0,0,0,0,0,'1','1','1','1','1','bigint',316);
+INSERT INTO t_datatypes VALUES('DDL','Ingres','byte',1,32000,0,0,0,0,0,0,'1','1','1','1','1','Binary',317);
+INSERT INTO t_datatypes VALUES('DDL','Ingres','byte var',1,32000,0,0,0,0,0,0,'1','1','1','1','1','Binary',318);
+INSERT INTO t_datatypes VALUES('DDL','Ingres','c',1,32000,0,0,0,0,0,0,'1','1','1','1','1','char',319);
+INSERT INTO t_datatypes VALUES('DDL','Ingres','char',1,32000,0,0,0,0,0,0,'1','1','1','1','1','char',320);
+INSERT INTO t_datatypes VALUES('DDL','Ingres','date',0,0,0,0,0,0,0,0,'1','1','1','1','1','date',321);
+INSERT INTO t_datatypes VALUES('DDL','Ingres','decimal',2,0,31,10,0,5,0,0,'1','1','1','1','1','decimal',322);
+INSERT INTO t_datatypes VALUES('DDL','Ingres','float',1,53,0,0,8,0,0,0,'1','1','1','1','1','float',323);
+INSERT INTO t_datatypes VALUES('DDL','Ingres','float4',0,0,0,0,0,0,0,0,'1','1','1','1','1','real',324);
+INSERT INTO t_datatypes VALUES('DDL','Ingres','float8',0,0,0,0,0,0,0,0,'1','1','1','1','1','float',325);
+INSERT INTO t_datatypes VALUES('DDL','Ingres','ingresdate',0,0,0,0,0,0,0,0,'1','1','1','1','1','date',326);
+INSERT INTO t_datatypes VALUES('DDL','Ingres','int1',0,0,0,0,0,0,0,0,'1','1','1','1','1','integer1',327);
+INSERT INTO t_datatypes VALUES('DDL','Ingres','int2',0,0,0,0,0,0,0,0,'1','1','1','1','1','smallint',328);
+INSERT INTO t_datatypes VALUES('DDL','Ingres','int4',0,0,0,0,0,0,0,0,'1','1','1','1','1','int',329);
+INSERT INTO t_datatypes VALUES('DDL','Ingres','int8',0,0,0,0,0,0,0,0,'1','1','1','1','1','bigint',330);
+INSERT INTO t_datatypes VALUES('DDL','Ingres','integer',0,0,0,0,0,0,0,0,'1','1','1','1','1','integer',331);
+INSERT INTO t_datatypes VALUES('DDL','Ingres','interval day to second',0,0,0,0,0,0,0,0,'1','1','1','1','1','interval day to second',332);
+INSERT INTO t_datatypes VALUES('DDL','Ingres','interval year to month',0,0,0,0,0,0,0,0,'1','1','1','1','1','interval year to month',333);
+INSERT INTO t_datatypes VALUES('DDL','Ingres','long byte',0,0,0,0,0,0,0,0,'1','1','1','1','1','long byte',334);
+INSERT INTO t_datatypes VALUES('DDL','Ingres','long nvarchar',0,0,0,0,0,0,0,0,'1','1','1','1','1','long nvarchar',335);
+INSERT INTO t_datatypes VALUES('DDL','Ingres','long varchar',0,0,0,0,0,0,0,0,'1','1','1','1','1','long varchar',336);
+INSERT INTO t_datatypes VALUES('DDL','Ingres','money',0,0,0,0,0,0,0,0,'1','1','1','1','1','money',337);
+INSERT INTO t_datatypes VALUES('DDL','Ingres','nchar',1,16000,0,0,0,0,0,0,'1','1','1','1','1','nchar',338);
+INSERT INTO t_datatypes VALUES('DDL','Ingres','nvarchar',1,16000,0,0,0,0,0,0,'1','1','1','1','1','nvarchar',339);
+INSERT INTO t_datatypes VALUES('DDL','Ingres','Object Key',0,0,0,0,0,0,0,0,'1','1','1','1','1','OBJECT_KEY',340);
+INSERT INTO t_datatypes VALUES('DDL','Ingres','Table Key',0,0,0,0,0,0,0,0,'1','1','1','1','1','TABLE_KEY',341);
+INSERT INTO t_datatypes VALUES('DDL','Ingres','text',1,32000,0,0,0,0,0,0,'1','1','1','1','1','text',342);
+INSERT INTO t_datatypes VALUES('DDL','Ingres','time with local time zone',0,0,0,0,0,0,0,0,'1','1','1','1','1','time',343);
+INSERT INTO t_datatypes VALUES('DDL','Ingres','time with time zone',0,0,0,0,0,0,0,0,'1','1','1','1','1','time',344);
+INSERT INTO t_datatypes VALUES('DDL','Ingres','time without time zone',0,0,0,0,0,0,0,0,'1','1','1','1','1','TABLE_KEY',345);
+INSERT INTO t_datatypes VALUES('DDL','Ingres','timestamp with local time zone',0,0,0,0,0,0,0,0,'1','1','1','1','1','timestampt',346);
+INSERT INTO t_datatypes VALUES('DDL','Ingres','timestamp with time zone',0,0,0,0,0,0,0,0,'1','1','1','1','1','timestampt',347);
+INSERT INTO t_datatypes VALUES('DDL','Ingres','timestamp without time zone',0,0,0,0,0,0,0,0,'1','1','1','1','1','timestampt',348);
+INSERT INTO t_datatypes VALUES('DDL','Ingres','varchar',1,32000,0,0,0,0,0,0,'1','1','1','1','1','varchar',349);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2005','bigint',0,0,0,0,0,0,0,0,'1','1','1','1','1','bigint',350);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2005','int',0,0,0,0,0,0,0,0,'1','1','1','1','1','integer',351);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2005','smallint',0,0,0,0,0,0,0,0,'1','1','1','1','1','smallint',352);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2005','tinyint',0,0,0,0,0,0,0,0,'1','1','1','1','1','tinyint',353);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2005','bit',0,0,0,0,0,0,0,0,'1','1','1','1','1','boolean',354);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2005','decimal',2,38,38,38,0,10,2,0,'1','1','1','1','1','decimal',355);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2005','numeric',2,38,38,38,0,10,2,0,'1','1','1','1','1','numeric',356);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2005','money',0,0,0,0,0,19,4,0,'1','1','1','1','1','currency',357);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2005','smallmoney',0,0,0,0,0,0,0,0,'1','1','1','1','1','money',358);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2005','float',0,53,0,0,53,0,0,0,'1','1','1','1','1','float',359);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2005','real',0,53,0,0,53,0,0,0,'1','1','1','1','1','double',360);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2005','datetime',0,0,0,0,0,0,0,0,'1','1','1','1','1','datetime',361);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2005','smalldatetime',0,0,0,0,0,0,0,0,'1','1','1','1','1','datetime',362);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2005','char',1,8000,0,0,10,0,0,0,'1','1','1','1','1','char',363);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2005','varchar',1,8000,0,0,50,0,0,0,'1','1','1','1','1','varchar',364);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2005','text',0,0,0,0,0,0,0,0,'1','1','1','1','1','text',365);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2005','nchar',1,4000,0,0,10,0,0,0,'1','1','1','1','1','nchar',366);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2005','nvarchar',1,4000,0,0,50,0,0,0,'1','1','1','1','1','nvarchar',367);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2005','ntext',0,0,0,0,0,0,0,0,'1','1','1','1','1','ntext',368);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2005','binary',1,8000,0,0,10,0,0,0,'1','1','1','1','1','Binary',369);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2005','varbinary',1,8000,0,0,50,0,0,0,'1','1','1','1','1','varbinary',370);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2005','image',0,0,0,0,0,0,0,0,'1','1','1','1','1','blob',371);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2005','sql_variant',0,0,0,0,0,0,0,0,'1','1','1','1','1','sqlvariant',372);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2005','timestamp',0,0,0,0,0,0,0,0,'1','1','1','1','1','timestamp',373);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2005','uniqueidentifier',0,0,0,0,0,0,0,0,'1','1','1','1','1','guid',374);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2005','xml',0,0,0,0,0,0,0,0,'1','1','1','1','1','text',375);
+INSERT INTO t_datatypes VALUES('DDL','Informix','INTERVAL YEAR TO YEAR',0,9,0,0,0,0,0,0,'1','1','1','1','1','interval',376);
+INSERT INTO t_datatypes VALUES('DDL','Informix','INTERVAL YEAR TO MONTH',0,9,0,0,0,0,0,0,'1','1','1','1','1','interval',377);
+INSERT INTO t_datatypes VALUES('DDL','Informix','INTERVAL MONTH TO MONTH',0,9,0,0,0,0,0,0,'1','1','1','1','1','interval',378);
+INSERT INTO t_datatypes VALUES('DDL','Informix','INTERVAL DAY TO DAY',0,9,0,0,0,0,0,0,'1','1','1','1','1','interval',379);
+INSERT INTO t_datatypes VALUES('DDL','Informix','INTERVAL DAY TO HOUR',0,9,0,0,0,0,0,0,'1','1','1','1','1','interval',380);
+INSERT INTO t_datatypes VALUES('DDL','Informix','INTERVAL DAY TO MINUTE',0,9,0,0,0,0,0,0,'1','1','1','1','1','interval',381);
+INSERT INTO t_datatypes VALUES('DDL','Informix','INTERVAL DAY TO SECOND',0,9,0,0,0,0,0,0,'1','1','1','1','1','interval',382);
+INSERT INTO t_datatypes VALUES('DDL','Informix','INTERVAL DAY TO FRACTION',1,5,0,0,0,0,0,0,'1','1','1','1','1','interval',383);
+INSERT INTO t_datatypes VALUES('DDL','Informix','INTERVAL HOUR TO HOUR',0,9,0,0,0,0,0,0,'1','1','1','1','1','interval',384);
+INSERT INTO t_datatypes VALUES('DDL','Informix','INTERVAL HOUR TO MINUTE',0,9,0,0,0,0,0,0,'1','1','1','1','1','interval',385);
+INSERT INTO t_datatypes VALUES('DDL','Informix','INTERVAL HOUR TO SECOND',0,9,0,0,0,0,0,0,'1','1','1','1','1','interval',386);
+INSERT INTO t_datatypes VALUES('DDL','Informix','INTERVAL HOUR TO FRACTION',1,5,0,0,0,0,0,0,'1','1','1','1','1','interval',387);
+INSERT INTO t_datatypes VALUES('DDL','Informix','INTERVAL MINUTE TO MINUTE',0,9,0,0,0,0,0,0,'1','1','1','1','1','interval',388);
+INSERT INTO t_datatypes VALUES('DDL','Informix','INTERVAL MINUTE TO SECOND',0,9,0,0,0,0,0,0,'1','1','1','1','1','interval',389);
+INSERT INTO t_datatypes VALUES('DDL','Informix','INTERVAL MINUTE TO FRACTION',1,5,0,0,0,0,0,0,'1','1','1','1','1','interval',390);
+INSERT INTO t_datatypes VALUES('DDL','Informix','INTERVAL SECOND TO SECOND',0,9,0,0,0,0,0,0,'1','1','1','1','1','interval',391);
+INSERT INTO t_datatypes VALUES('DDL','Informix','INTERVAL SECOND TO FRACTION',1,5,0,0,0,0,0,0,'1','1','1','1','1','interval',392);
+INSERT INTO t_datatypes VALUES('DDL','Informix','INTERVAL FRACTION TO FRACTION',1,5,0,0,0,0,0,0,'1','1','1','1','1','interval',393);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2005','varchar(max)',0,0,0,0,0,0,0,0,'1','1','1','1','1','varchar',394);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2005','varbinary(max)',0,0,0,0,0,0,0,0,'1','1','1','1','1','varbinary',395);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2008','bigint',0,0,0,0,0,0,0,0,'1','1','1','1','1','bigint',396);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2008','bit',0,0,0,0,0,0,0,0,'1','1','1','1','1','boolean',397);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2008','decimal',2,38,38,38,0,10,2,0,'1','1','1','1','1','decimal',398);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2008','int',0,0,0,0,0,0,0,0,'1','1','1','1','1','integer',399);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2008','money',0,0,0,0,0,19,4,0,'1','1','1','1','1','currency',400);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2008','numeric',2,38,38,38,0,10,2,0,'1','1','1','1','1','numeric',401);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2008','smallint',0,0,0,0,0,0,0,0,'1','1','1','1','1','smallint',402);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2008','smallmoney',0,0,0,0,0,0,0,0,'1','1','1','1','1','money',403);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2008','tinyint',0,0,0,0,0,0,0,0,'1','1','1','1','1','tinyint',404);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2008','float',0,53,0,0,53,0,0,0,'1','1','1','1','1','float',405);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2008','real',0,53,0,0,53,0,0,0,'1','1','1','1','1','double',406);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2008','date',0,0,0,0,0,0,0,0,'1','1','1','1','1','date',407);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2008','datetime2',1,7,0,0,7,0,0,0,'1','1','1','1','1','datetime',408);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2008','datetime',0,0,0,0,0,0,0,0,'1','1','1','1','1','datetime',409);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2008','datetimeoffset',1,7,0,0,7,0,0,0,'1','1','1','1','1','datetime',410);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2008','smalldatetime',0,0,0,0,0,0,0,0,'1','1','1','1','1','datetime',411);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2008','time',1,7,0,0,7,0,0,0,'1','1','1','1','1','time',412);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2008','char',1,8000,0,0,10,0,0,0,'1','1','1','1','1','char',413);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2008','varchar',1,8000,0,0,50,0,0,0,'1','1','1','1','1','varchar',414);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2008','varchar(max)',0,0,0,0,0,0,0,0,'1','1','1','1','1','varchar',415);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2008','text',0,0,0,0,0,0,0,0,'1','1','1','1','1','text',416);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2008','nchar',1,4000,0,0,10,0,0,0,'1','1','1','1','1','nchar',417);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2008','nvarchar',1,4000,0,0,50,0,0,0,'1','1','1','1','1','nvarchar',418);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2008','nvarchar(max)',0,0,0,0,0,0,0,0,'1','1','1','1','1','varchar',419);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2008','ntext',0,0,0,0,0,0,0,0,'1','1','1','1','1','ntext',420);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2008','binary',1,8000,0,0,10,0,0,0,'1','1','1','1','1','Binary',421);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2008','varbinary',1,8000,0,0,50,0,0,0,'1','1','1','1','1','varbinary',422);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2008','varbinary(max)',0,0,0,0,0,0,0,0,'1','1','1','1','1','varbinary',423);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2008','image',0,0,0,0,0,0,0,0,'1','1','1','1','1','blob',424);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2008','timestamp',0,0,0,0,0,0,0,0,'1','1','1','1','1','timestamp',425);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2008','uniqueidentifier',0,0,0,0,0,0,0,0,'1','1','1','1','1','guid',426);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2008','sql_variant',0,0,0,0,0,0,0,0,'1','1','1','1','1','sqlvariant',427);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2008','xml',0,0,0,0,0,0,0,0,'1','1','1','1','1','text',428);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2008','hierarchyid',0,0,0,0,0,0,0,0,'1','1','1','1','1','text',429);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2008','geometry',0,0,0,0,0,0,0,0,'1','1','1','1','1','text',430);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2008','geography',0,0,0,0,0,0,0,0,'1','1','1','1','1','text',431);
+INSERT INTO t_datatypes VALUES('DDL','MSAccess 2007','Text',1,255,0,0,50,0,0,0,'1','1','1','1','1','char',432);
+INSERT INTO t_datatypes VALUES('DDL','MSAccess 2007','Memo',0,0,0,0,0,0,0,0,'1','1','1','1','1','text',433);
+INSERT INTO t_datatypes VALUES('DDL','MSAccess 2007','DateTime',0,0,0,0,0,0,0,0,'1','1','1','1','1','datetime',434);
+INSERT INTO t_datatypes VALUES('DDL','MSAccess 2007','Currency',0,0,0,0,0,0,0,0,'1','1','1','1','1','currency',435);
+INSERT INTO t_datatypes VALUES('DDL','MSAccess 2007','Integer',0,0,0,0,0,0,0,0,'1','1','1','1','1','integer',436);
+INSERT INTO t_datatypes VALUES('DDL','MSAccess 2007','Long',0,0,0,0,0,0,0,0,'1','1','1','1','1','long',437);
+INSERT INTO t_datatypes VALUES('DDL','MSAccess 2007','Single',0,0,0,0,0,0,0,0,'1','1','1','1','1','float',438);
+INSERT INTO t_datatypes VALUES('DDL','MSAccess 2007','Double',0,0,0,0,0,0,0,0,'1','1','1','1','1','double',439);
+INSERT INTO t_datatypes VALUES('DDL','MSAccess 2007','Counter',0,0,0,0,0,0,0,0,'1','1','1','1','1','counter',440);
+INSERT INTO t_datatypes VALUES('DDL','MSAccess 2007','YesNo',0,0,0,0,0,0,0,0,'1','1','1','1','1','boolean',441);
+INSERT INTO t_datatypes VALUES('DDL','MSAccess 2007','OLEObject',0,0,0,0,0,0,0,0,'1','1','1','1','1','blob',442);
+INSERT INTO t_datatypes VALUES('DDL','MSAccess 2007','Byte',0,0,0,0,0,0,0,0,'1','1','1','1','1','tinyint',443);
+INSERT INTO t_datatypes VALUES('DDL','MSAccess 2007','Decimal',0,0,0,0,0,0,0,0,'1','1','1','1','1','decimal',445);
+INSERT INTO t_datatypes VALUES('DDL','SQLite','INTEGER',0,0,0,0,0,0,0,0,'1','1','1','1','1','integer',447);
+INSERT INTO t_datatypes VALUES('DDL','SQLite','NUMERIC',0,0,0,0,0,0,0,0,'1','1','1','1','1','numeric',448);
+INSERT INTO t_datatypes VALUES('DDL','SQLite','TEXT',0,0,0,0,0,0,0,0,'1','1','1','1','1','text',449);
+INSERT INTO t_datatypes VALUES('DDL','SQLite','BLOB',0,0,0,0,0,0,0,0,'1','1','1','1','1','blob',450);
+INSERT INTO t_datatypes VALUES('DDL','SQLite','REAL',0,0,0,0,0,0,0,0,'1','1','1','1','1','real',451);
+INSERT INTO t_datatypes VALUES('DDL','InterBase','numeric',2,0,64,64,0,10,2,0,'1','1','1','1','1','numeric',452);
+INSERT INTO t_datatypes VALUES('DDL','InterBase','float',0,0,0,0,0,0,0,0,'1','1','1','1','1','float',453);
+INSERT INTO t_datatypes VALUES('DDL','Oracle','BINARY_FLOAT',0,0,0,0,0,0,0,0,'1','1','1','1','1','float',454);
+INSERT INTO t_datatypes VALUES('DDL','Oracle','BINARY_DOUBLE',0,0,0,0,0,0,0,0,'1','1','1','1','1','double',455);
+INSERT INTO t_datatypes VALUES('DDL','Oracle','TIMESTAMP',1,9,0,0,6,0,0,0,'1','1','1','1','1','timestamp',456);
+INSERT INTO t_datatypes VALUES('DDL','Oracle','TIMESTAMP WITH TIME ZONE',1,9,0,0,6,0,0,0,'1','1','1','1','1','timestamp with time zone',457);
+INSERT INTO t_datatypes VALUES('DDL','Oracle','TIMESTAMP WITH LOCAL TIME ZONE',1,9,0,0,6,0,0,0,'1','1','1','1','1','timestamp with local time zone',458);
+INSERT INTO t_datatypes VALUES('DDL','Oracle','INTERVAL YEAR TO MONTH',1,9,0,0,2,0,0,0,'1','1','1','1','1','interval year to month',459);
+INSERT INTO t_datatypes VALUES('DDL','Oracle','INTERVAL DAY TO SECOND',2,0,9,9,0,2,6,0,'1','1','1','1','1','interval day to second',460);
+INSERT INTO t_datatypes VALUES('DDL','Oracle','ANYDATA',0,0,0,0,0,0,0,0,'1','1','1','1','1','text',461);
+INSERT INTO t_datatypes VALUES('DDL','Oracle','ANYTYPE',0,0,0,0,0,0,0,0,'1','1','1','1','1','text',462);
+INSERT INTO t_datatypes VALUES('DDL','Oracle','ANYDATASET',0,0,0,0,0,0,0,0,'1','1','1','1','1','text',463);
+INSERT INTO t_datatypes VALUES('DDL','Oracle','URITYPE',0,0,0,0,0,0,0,0,'1','1','1','1','1','uri',464);
+INSERT INTO t_datatypes VALUES('DDL','Oracle','DBURITYPE',0,0,0,0,0,0,0,0,'1','1','1','1','1','uri',465);
+INSERT INTO t_datatypes VALUES('DDL','Oracle','XDBURITYPE',0,0,0,0,0,0,0,0,'1','1','1','1','1','uri',466);
+INSERT INTO t_datatypes VALUES('DDL','Oracle','HTTPURITYPE',0,0,0,0,0,0,0,0,'1','1','1','1','1','uri',467);
+INSERT INTO t_datatypes VALUES('DDL','Oracle','XMLTYPE',0,0,0,0,0,0,0,0,'1','1','1','1','1','xml',468);
+INSERT INTO t_datatypes VALUES('DDL','Oracle','SDO_GEOMETRY',0,0,0,0,0,0,0,0,'1','1','1','1','1','spatial',469);
+INSERT INTO t_datatypes VALUES('DDL','Oracle','SDO_TOPO_GEOMETRY',0,0,0,0,0,0,0,0,'1','1','1','1','1','spatial',470);
+INSERT INTO t_datatypes VALUES('DDL','Oracle','SDO_GEORASTER',0,0,0,0,0,0,0,0,'1','1','1','1','1','spatial',471);
+INSERT INTO t_datatypes VALUES('DDL','Oracle','ORDAUDIO',0,0,0,0,0,0,0,0,'1','1','1','1','1','media',472);
+INSERT INTO t_datatypes VALUES('DDL','Oracle','ORDIMAGE',0,0,0,0,0,0,0,0,'1','1','1','1','1','media',473);
+INSERT INTO t_datatypes VALUES('DDL','Oracle','ORDVIDEO',0,0,0,0,0,0,0,0,'1','1','1','1','1','media',474);
+INSERT INTO t_datatypes VALUES('DDL','Oracle','ORDDOC',0,0,0,0,0,0,0,0,'1','1','1','1','1','media',475);
+INSERT INTO t_datatypes VALUES('DDL','Oracle','ORDDICOM',0,0,0,0,0,0,0,0,'1','1','1','1','1','media',476);
+INSERT INTO t_datatypes VALUES('DDL','Oracle','SI_STILLIMAGE',0,0,0,0,0,0,0,0,'1','1','1','1','1','image',477);
+INSERT INTO t_datatypes VALUES('DDL','Oracle','SI_COLOR',0,0,0,0,0,0,0,0,'1','1','1','1','1','image',478);
+INSERT INTO t_datatypes VALUES('DDL','Oracle','SI_AVERAGECOLOR',0,0,0,0,0,0,0,0,'1','1','1','1','1','image',479);
+INSERT INTO t_datatypes VALUES('DDL','Oracle','SI_COLORHISTOGRAM',0,0,0,0,0,0,0,0,'1','1','1','1','1','image',480);
+INSERT INTO t_datatypes VALUES('DDL','Oracle','SI_POSITIONALCOLOR',0,0,0,0,0,0,0,0,'1','1','1','1','1','image',481);
+INSERT INTO t_datatypes VALUES('DDL','Oracle','SI_TEXTURE',0,0,0,0,0,0,0,0,'1','1','1','1','1','image',482);
+INSERT INTO t_datatypes VALUES('DDL','Oracle','SI_FEATURELIST',0,0,0,0,0,0,0,0,'1','1','1','1','1','image',483);
+INSERT INTO t_datatypes VALUES('DDL','MySql','BINARY',1,255,0,0,50,0,0,0,'1','1','1','1','1','binary',484);
+INSERT INTO t_datatypes VALUES('DDL','MySql','ENUM',0,0,0,0,0,0,0,0,'1','1','1','1','1','enum',485);
+INSERT INTO t_datatypes VALUES('DDL','MySql','GEOMETRY',0,0,0,0,0,0,0,0,'1','1','1','1','1','geometry',486);
+INSERT INTO t_datatypes VALUES('DDL','MySql','GEOMETRYCOLLECTION',0,0,0,0,0,0,0,0,'1','1','1','1','1','geometrycollection',487);
+INSERT INTO t_datatypes VALUES('DDL','MySql','INT',0,0,0,0,0,0,0,0,'1','1','1','1','1','integer',488);
+INSERT INTO t_datatypes VALUES('DDL','MySql','LINESTRING',0,0,0,0,0,0,0,0,'1','1','1','1','1','linestring',489);
+INSERT INTO t_datatypes VALUES('DDL','MySql','LONGBLOB',0,0,0,0,0,0,0,0,'1','1','1','1','1','longblob',490);
+INSERT INTO t_datatypes VALUES('DDL','MySql','LONGTEXT',0,0,0,0,0,0,0,0,'1','1','1','1','1','longtext',491);
+INSERT INTO t_datatypes VALUES('DDL','MySql','MEDIUMBLOB',0,0,0,0,0,0,0,0,'1','1','1','1','1','mediumblob',492);
+INSERT INTO t_datatypes VALUES('DDL','MySql','MEDIUMTEXT',0,0,0,0,0,0,0,0,'1','1','1','1','1','mediumtext',493);
+INSERT INTO t_datatypes VALUES('DDL','MySql','MULTILINESTRING',0,0,0,0,0,0,0,0,'1','1','1','1','1','multilinestring',494);
+INSERT INTO t_datatypes VALUES('DDL','MySql','MULTIPOINT',0,0,0,0,0,0,0,0,'1','1','1','1','1','multipoint',495);
+INSERT INTO t_datatypes VALUES('DDL','MySql','MULTIPOLYGON',0,0,0,0,0,0,0,0,'1','1','1','1','1','multipolygon',496);
+INSERT INTO t_datatypes VALUES('DDL','MySql','POINT',0,0,0,0,0,0,0,0,'1','1','1','1','1','point',497);
+INSERT INTO t_datatypes VALUES('DDL','MySql','POLYGON',0,0,0,0,0,0,0,0,'1','1','1','1','1','polygon',498);
+INSERT INTO t_datatypes VALUES('DDL','MySql','SET',0,0,0,0,0,0,0,0,'1','1','1','1','1','set',499);
+INSERT INTO t_datatypes VALUES('DDL','MySql','TINYBLOB',0,0,0,0,0,0,0,0,'1','1','1','1','1','tinyblob',500);
+INSERT INTO t_datatypes VALUES('DDL','MySql','TINYTEXT',0,0,0,0,0,0,0,0,'1','1','1','1','1','tinytext',501);
+INSERT INTO t_datatypes VALUES('DDL','MySql','VARBINARY',1,65535,0,0,50,0,0,0,'1','1','1','1','1','varbinary',502);
+INSERT INTO t_datatypes VALUES('DDL','MySql','YEAR',1,4,0,0,4,0,0,0,'1','1','1','1','1','date',503);
+INSERT INTO t_datatypes VALUES('DDL','PostgreSQL','xml',0,0,0,0,0,0,0,0,'1','1','1','1','1','xml',504);
+INSERT INTO t_datatypes VALUES('DDL','PostgreSQL','uuid',0,0,0,0,0,0,0,0,'1','1','1','1','1','guid',505);
+INSERT INTO t_datatypes VALUES('DDL','PostgreSQL','date',0,0,0,0,0,0,0,0,'1','1','1','1','1','date',506);
+INSERT INTO t_datatypes VALUES('DDL','PostgreSQL','interval',1,6,0,0,0,0,0,0,'1','1','1','1','1','interval',507);
+INSERT INTO t_datatypes VALUES('DDL','PostgreSQL','time',1,6,0,0,0,0,0,0,'1','1','1','1','1','time',508);
+INSERT INTO t_datatypes VALUES('DDL','PostgreSQL','time with time zone',1,6,0,0,0,0,0,0,'1','1','1','1','1','time',509);
+INSERT INTO t_datatypes VALUES('DDL','PostgreSQL','time without time zone',1,6,0,0,0,0,0,0,'1','1','1','1','1','time',510);
+INSERT INTO t_datatypes VALUES('DDL','PostgreSQL','timestamp with time zone',1,6,0,0,0,0,0,0,'1','1','1','1','1','datetime',511);
+INSERT INTO t_datatypes VALUES('DDL','PostgreSQL','timestamp without time zone',1,6,0,0,0,0,0,0,'1','1','1','1','1','datetime',512);
+INSERT INTO t_datatypes VALUES('DDL','PostgreSQL','inet',0,0,0,0,0,0,0,0,'1','1','1','1','1','inet',513);
+INSERT INTO t_datatypes VALUES('DDL','PostgreSQL','cidr',0,0,0,0,0,0,0,0,'1','1','1','1','1','cidr',514);
+INSERT INTO t_datatypes VALUES('DDL','PostgreSQL','macaddr',0,0,0,0,0,0,0,0,'1','1','1','1','1','macaddr',515);
+INSERT INTO t_datatypes VALUES('DDL','PostgreSQL','money',0,0,0,0,0,0,0,0,'1','1','1','1','1','currency',516);
+INSERT INTO t_datatypes VALUES('DDL','PostgreSQL','bit',1,83886080,0,0,1,0,0,0,'1','1','1','1','1','bit',517);
+INSERT INTO t_datatypes VALUES('DDL','PostgreSQL','bit varying',1,83886080,0,0,0,0,0,0,'1','1','1','1','1','varbit',518);
+INSERT INTO t_datatypes VALUES('DDL','PostgreSQL','double precision',0,0,0,0,0,0,0,0,'1','1','1','1','1','double',519);
+INSERT INTO t_datatypes VALUES('DDL','PostgreSQL','serial',0,0,0,0,0,0,0,0,'1','1','1','1','1','serial',520);
+INSERT INTO t_datatypes VALUES('DDL','PostgreSQL','bigserial',0,0,0,0,0,0,0,0,'1','1','1','1','1','serial',521);
+INSERT INTO t_datatypes VALUES('DDL','PostgreSQL','smallserial',0,0,0,0,0,0,0,0,'1','1','1','1','1','smallserial',522);
+INSERT INTO t_datatypes VALUES('DDL','PostgreSQL','point',0,0,0,0,0,0,0,0,'1','1','1','1','1','point',523);
+INSERT INTO t_datatypes VALUES('DDL','PostgreSQL','line',0,0,0,0,0,0,0,0,'1','1','1','1','1','line',524);
+INSERT INTO t_datatypes VALUES('DDL','PostgreSQL','lseg',0,0,0,0,0,0,0,0,'1','1','1','1','1','lseg',525);
+INSERT INTO t_datatypes VALUES('DDL','PostgreSQL','box',0,0,0,0,0,0,0,0,'1','1','1','1','1','box',526);
+INSERT INTO t_datatypes VALUES('DDL','PostgreSQL','path',0,0,0,0,0,0,0,0,'1','1','1','1','1','path',527);
+INSERT INTO t_datatypes VALUES('DDL','PostgreSQL','polygon',0,0,0,0,0,0,0,0,'1','1','1','1','1','polygon',528);
+INSERT INTO t_datatypes VALUES('DDL','PostgreSQL','circle',0,0,0,0,0,0,0,0,'1','1','1','1','1','circle',529);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2012','bigint',0,0,0,0,0,0,0,0,'1','1','1','1','1','bigint',549);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2012','binary',1,8000,0,0,10,0,0,0,'1','1','1','1','1','binary',550);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2012','bit',0,0,0,0,0,0,0,0,'1','1','1','1','1','boolean',551);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2012','char',1,8000,0,0,10,0,0,0,'1','1','1','1','1','char',552);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2012','date',0,0,0,0,0,0,0,0,'1','1','1','1','1','date',553);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2012','datetime',0,0,0,0,0,0,0,0,'1','1','1','1','1','datetime',554);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2012','datetime2',1,7,0,0,7,0,0,0,'1','1','1','1','1','datetime',555);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2012','datetimeoffset',1,7,0,0,7,0,0,0,'1','1','1','1','1','datetime',556);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2012','decimal',2,38,38,38,0,18,0,0,'1','1','1','1','1','decimal',557);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2012','float',0,53,0,0,53,0,0,0,'1','1','1','1','1','float',558);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2012','geography',0,0,0,0,0,0,0,0,'1','1','1','1','1','text',559);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2012','geometry',0,0,0,0,0,0,0,0,'1','1','1','1','1','text',560);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2012','hierarchyid',0,0,0,0,0,0,0,0,'1','1','1','1','1','text',561);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2012','image',0,0,0,0,0,0,0,0,'1','1','1','1','1','blob',562);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2012','int',0,0,0,0,0,0,0,0,'1','1','1','1','1','integer',563);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2012','money',0,0,0,0,0,19,4,0,'1','1','1','1','1','currency',564);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2012','nchar',1,4000,0,0,10,0,0,0,'1','1','1','1','1','nchar',565);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2012','ntext',0,0,0,0,0,0,0,0,'1','1','1','1','1','ntext',566);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2012','numeric',2,38,38,38,0,18,0,0,'1','1','1','1','1','numeric',567);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2012','nvarchar',1,4000,0,0,50,0,0,0,'1','1','1','1','1','nvarchar',568);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2012','nvarchar(max)',0,0,0,0,0,0,0,0,'1','1','1','1','1','varchar',569);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2012','real',0,53,0,0,53,0,0,0,'1','1','1','1','1','double',570);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2012','smalldatetime',0,0,0,0,0,0,0,0,'1','1','1','1','1','datetime',571);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2012','smallint',0,0,0,0,0,0,0,0,'1','1','1','1','1','smallint',572);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2012','smallmoney',0,0,0,0,0,0,0,0,'1','1','1','1','1','money',573);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2012','sql_variant',0,0,0,0,0,0,0,0,'1','1','1','1','1','sqlvariant',574);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2012','text',0,0,0,0,0,0,0,0,'1','1','1','1','1','text',575);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2012','time',1,7,0,0,7,0,0,0,'1','1','1','1','1','time',576);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2012','timestamp',0,0,0,0,0,0,0,0,'1','1','1','1','1','timestamp',577);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2012','tinyint',0,0,0,0,0,0,0,0,'1','1','1','1','1','tinyint',578);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2012','uniqueidentifier',0,0,0,0,0,0,0,0,'1','1','1','1','1','guid',579);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2012','varbinary',1,8000,0,0,50,0,0,0,'1','1','1','1','1','varbinary',580);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2012','varbinary(max)',0,0,0,0,0,0,0,0,'1','1','1','1','1','varbinary',581);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2012','varchar',1,8000,0,0,50,0,0,0,'1','1','1','1','1','varchar',582);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2012','varchar(max)',0,0,0,0,0,0,0,0,'1','1','1','1','1','varchar',583);
+INSERT INTO t_datatypes VALUES('DDL','SQL Server 2012','xml',0,0,0,0,0,0,0,0,'1','1','1','1','1','text',584);
+INSERT INTO t_datatypes VALUES('DDL','Sybase','bigint',0,0,0,0,0,0,0,0,'1','1','1','1','1','int8',741);
+INSERT INTO t_datatypes VALUES('DDL','Sybase','binary',1,32767,0,0,50,0,0,0,'1','1','1','1','1','binary',742);
+INSERT INTO t_datatypes VALUES('DDL','Sybase','bit',0,0,0,0,0,0,0,0,'1','1','1','1','1','bit',743);
+INSERT INTO t_datatypes VALUES('DDL','Sybase','char',1,32767,0,0,10,0,0,0,'1','1','1','1','1','char',744);
+INSERT INTO t_datatypes VALUES('DDL','Sybase','date',0,0,0,0,0,0,0,0,'1','1','1','1','1','date4',745);
+INSERT INTO t_datatypes VALUES('DDL','Sybase','datetime',0,0,0,0,0,0,0,0,'1','1','1','1','1','datetime8',746);
+INSERT INTO t_datatypes VALUES('DDL','Sybase','datetimeoffset',0,0,0,0,0,0,0,0,'1','1','1','1','1','datetimeoffset',747);
+INSERT INTO t_datatypes VALUES('DDL','Sybase','decimal',2,0,127,127,0,30,6,0,'1','1','1','1','1','decimal',748);
+INSERT INTO t_datatypes VALUES('DDL','Sybase','double',1,15,0,0,0,15,0,0,'1','1','1','1','1','double',749);
+INSERT INTO t_datatypes VALUES('DDL','Sybase','float',1,15,0,0,0,15,0,0,'1','1','1','1','1','float',750);
+INSERT INTO t_datatypes VALUES('DDL','Sybase','integer',0,0,0,0,0,0,0,0,'1','1','1','1','1','int4',751);
+INSERT INTO t_datatypes VALUES('DDL','Sybase','image',0,0,0,0,0,0,0,0,'1','1','1','1','1','long binary',752);
+INSERT INTO t_datatypes VALUES('DDL','Sybase','long binary',0,0,0,0,0,0,0,0,'1','1','1','1','1','long binary',753);
+INSERT INTO t_datatypes VALUES('DDL','Sybase','long nvarchar',0,0,0,0,0,0,0,0,'1','1','1','1','1','longnvarchar',754);
+INSERT INTO t_datatypes VALUES('DDL','Sybase','long varbit',1,32767,0,0,1,0,0,0,'1','1','1','1','1','varbit',755);
+INSERT INTO t_datatypes VALUES('DDL','Sybase','long varchar',0,0,0,0,0,0,0,0,'1','1','1','1','1','longvarchar',756);
+INSERT INTO t_datatypes VALUES('DDL','Sybase','money',0,0,0,0,0,0,0,0,'1','1','1','1','1','money',757);
+INSERT INTO t_datatypes VALUES('DDL','Sybase','nchar',1,32767,0,0,10,0,0,0,'1','1','1','1','1','nchar',758);
+INSERT INTO t_datatypes VALUES('DDL','Sybase','ntext',0,0,0,0,0,0,0,0,'1','1','1','1','1','ntext',759);
+INSERT INTO t_datatypes VALUES('DDL','Sybase','numeric',2,0,127,127,0,30,6,0,'1','1','1','1','1','numeric',760);
+INSERT INTO t_datatypes VALUES('DDL','Sybase','nvarchar',1,32767,0,0,50,0,0,0,'1','1','1','1','1','nvarchar',761);
+INSERT INTO t_datatypes VALUES('DDL','Sybase','real',2,0,127,127,0,30,6,0,'1','1','1','1','1','decimal',762);
+INSERT INTO t_datatypes VALUES('DDL','Sybase','smalldatetime',0,0,0,0,0,0,0,0,'1','1','1','1','1','datetime4',763);
+INSERT INTO t_datatypes VALUES('DDL','Sybase','smallint',0,0,0,0,0,0,0,0,'1','1','1','1','1','int2',764);
+INSERT INTO t_datatypes VALUES('DDL','Sybase','smallmoney',0,0,0,0,0,0,0,0,'1','1','1','1','1','smallmoney',765);
+INSERT INTO t_datatypes VALUES('DDL','Sybase','ST_Geometry',0,0,0,0,0,0,0,0,'1','1','1','1','1','geometry',766);
+INSERT INTO t_datatypes VALUES('DDL','Sybase','ST_GeomCollection',0,0,0,0,0,0,0,0,'1','1','1','1','1','geometrycollection',767);
+INSERT INTO t_datatypes VALUES('DDL','Sybase','ST_Point',0,0,0,0,0,0,0,0,'1','1','1','1','1','point',768);
+INSERT INTO t_datatypes VALUES('DDL','Sybase','ST_Polygon',0,0,0,0,0,0,0,0,'1','1','1','1','1','polygon',769);
+INSERT INTO t_datatypes VALUES('DDL','Sybase','ST_LineString',0,0,0,0,0,0,0,0,'1','1','1','1','1','linestring',770);
+INSERT INTO t_datatypes VALUES('DDL','Sybase','ST_MultiLineString',0,0,0,0,0,0,0,0,'1','1','1','1','1','multilinestring',771);
+INSERT INTO t_datatypes VALUES('DDL','Sybase','ST_MultiPoint',0,0,0,0,0,0,0,0,'1','1','1','1','1','multipoint',772);
+INSERT INTO t_datatypes VALUES('DDL','Sybase','ST_MultiPolygon',0,0,0,0,0,0,0,0,'1','1','1','1','1','multipolygon',773);
+INSERT INTO t_datatypes VALUES('DDL','Sybase','text',0,0,0,0,0,0,0,0,'1','1','1','1','1','text',774);
+INSERT INTO t_datatypes VALUES('DDL','Sybase','tinyint',0,0,0,0,0,0,0,0,'1','1','1','1','1','int1',775);
+INSERT INTO t_datatypes VALUES('DDL','Sybase','time',0,0,0,0,0,0,0,0,'1','1','1','1','1','time',776);
+INSERT INTO t_datatypes VALUES('DDL','Sybase','timestamp',0,0,0,0,0,0,0,0,'1','1','1','1','1','timestamp8',777);
+INSERT INTO t_datatypes VALUES('DDL','Sybase','timestamp with time zone',0,0,0,0,0,0,0,0,'1','1','1','1','1','timestamptz',778);
+INSERT INTO t_datatypes VALUES('DDL','Sybase','uniqueidentifer',0,0,0,0,0,0,0,0,'1','1','1','1','1','uniqueidentifier',779);
+INSERT INTO t_datatypes VALUES('DDL','Sybase','uniqueidentiferstr',0,0,0,0,0,0,0,0,'1','1','1','1','1','uniqueidentifier',780);
+INSERT INTO t_datatypes VALUES('DDL','Sybase','varbinary',1,32767,0,0,1,0,0,0,'1','1','1','1','1','varbinary',781);
+INSERT INTO t_datatypes VALUES('DDL','Sybase','varbit',1,32767,0,0,1,0,0,0,'1','1','1','1','1','varbit',782);
+INSERT INTO t_datatypes VALUES('DDL','Sybase','varchar',1,32767,0,0,50,0,0,0,'1','1','1','1','1','varchar',783);
+INSERT INTO t_datatypes VALUES('DDL','Sybase','xml',0,0,0,0,0,0,0,0,'1','1','1','1','1','xml',784);
+INSERT INTO t_datatypes VALUES('DDL','DB2','ST_GEOMETRY',0,0,0,0,0,0,0,0,'1','1','1','1','1','geometry',785);
+INSERT INTO t_datatypes VALUES('DDL','DB2','ST_GEOMCOLLECTION',0,0,0,0,0,0,0,0,'1','1','1','1','1','geometrycollection',786);
+INSERT INTO t_datatypes VALUES('DDL','DB2','ST_POINT',0,0,0,0,0,0,0,0,'1','1','1','1','1','point',787);
+INSERT INTO t_datatypes VALUES('DDL','DB2','ST_POLYGON',0,0,0,0,0,0,0,0,'1','1','1','1','1','polygon',788);
+INSERT INTO t_datatypes VALUES('DDL','DB2','ST_LINESTRING',0,0,0,0,0,0,0,0,'1','1','1','1','1','linestring',789);
+INSERT INTO t_datatypes VALUES('DDL','DB2','ST_MULTILINESTRING',0,0,0,0,0,0,0,0,'1','1','1','1','1','multilinestring',790);
+INSERT INTO t_datatypes VALUES('DDL','DB2','ST_MULTIPOINT',0,0,0,0,0,0,0,0,'1','1','1','1','1','multipoint',791);
+INSERT INTO t_datatypes VALUES('DDL','DB2','ST_MULTIPOLYGON',0,0,0,0,0,0,0,0,'1','1','1','1','1','multipolygon',792);
+INSERT INTO t_datatypes VALUES('DDL','Oracle','MDSYS.ST_GEOMETRY',0,0,0,0,0,0,0,0,'1','1','1','1','1','geometry',793);
+INSERT INTO t_datatypes VALUES('DDL','Oracle','MDSYS.ST_GEOMCOLLECTION',0,0,0,0,0,0,0,0,'1','1','1','1','1','geometrycollection',794);
+INSERT INTO t_datatypes VALUES('DDL','Oracle','MDSYS.ST_POINT',0,0,0,0,0,0,0,0,'1','1','1','1','1','point',795);
+INSERT INTO t_datatypes VALUES('DDL','Oracle','MDSYS.ST_POLYGON',0,0,0,0,0,0,0,0,'1','1','1','1','1','polygon',796);
+INSERT INTO t_datatypes VALUES('DDL','Oracle','MDSYS.ST_LINESTRING',0,0,0,0,0,0,0,0,'1','1','1','1','1','linestring',797);
+INSERT INTO t_datatypes VALUES('DDL','Oracle','MDSYS.ST_MULTILINESTRING',0,0,0,0,0,0,0,0,'1','1','1','1','1','multilinestring',798);
+INSERT INTO t_datatypes VALUES('DDL','Oracle','MDSYS.ST_MULTIPOINT',0,0,0,0,0,0,0,0,'1','1','1','1','1','multipoint',799);
+INSERT INTO t_datatypes VALUES('DDL','Oracle','MDSYS.ST_MULTIPOLYGON',0,0,0,0,0,0,0,0,'1','1','1','1','1','multipolygon',800);
+INSERT INTO t_datatypes VALUES('DDL','PostgreSQL','box2d',0,0,0,0,0,0,0,0,'1','1','1','1','1','box',801);
+INSERT INTO t_datatypes VALUES('DDL','PostgreSQL','box3d',0,0,0,0,0,0,0,0,'1','1','1','1','1','box3d',802);
+INSERT INTO t_datatypes VALUES('DDL','PostgreSQL','geometry',0,0,0,0,0,0,0,0,'1','1','1','1','1','geometry',803);
+INSERT INTO t_datatypes VALUES('DDL','PostgreSQL','geometry(point)',0,0,0,0,0,0,0,0,'1','1','1','1','1','point',804);
+INSERT INTO t_datatypes VALUES('DDL','PostgreSQL','geometry(polygon)',0,0,0,0,0,0,0,0,'1','1','1','1','1','polygon',805);
+INSERT INTO t_datatypes VALUES('DDL','PostgreSQL','geometry(linestring)',0,0,0,0,0,0,0,0,'1','1','1','1','1','linestring',806);
+INSERT INTO t_datatypes VALUES('DDL','PostgreSQL','geometry(geometrycollection)',0,0,0,0,0,0,0,0,'1','1','1','1','1','geometrycollection',807);
+INSERT INTO t_datatypes VALUES('DDL','PostgreSQL','geometry(multipoint)',0,0,0,0,0,0,0,0,'1','1','1','1','1','multipoint',808);
+INSERT INTO t_datatypes VALUES('DDL','PostgreSQL','geometry(multipolygon)',0,0,0,0,0,0,0,0,'1','1','1','1','1','multipolygon',809);
+INSERT INTO t_datatypes VALUES('DDL','PostgreSQL','geometry(multilinestring)',0,0,0,0,0,0,0,0,'1','1','1','1','1','multilinestring',810);
+INSERT INTO t_datatypes VALUES('DDL','PostgreSQL','geometry_dump',0,0,0,0,0,0,0,0,'1','1','1','1','1','geometry_dump',811);
+INSERT INTO t_datatypes VALUES('DDL','PostgreSQL','geography',0,0,0,0,0,0,0,0,'1','1','1','1','1','geography',812);
+INSERT INTO t_datatypes VALUES('DDL','PostgreSQL','geography(point)',0,0,0,0,0,0,0,0,'1','1','1','1','1','point2',813);
+INSERT INTO t_datatypes VALUES('DDL','PostgreSQL','geography(polygon)',0,0,0,0,0,0,0,0,'1','1','1','1','1','polygon2',814);
+INSERT INTO t_datatypes VALUES('DDL','PostgreSQL','geography(linestring)',0,0,0,0,0,0,0,0,'1','1','1','1','1','linestring2',815);
+INSERT INTO t_datatypes VALUES('DDL','PostgreSQL','geography(geometrycollection)',0,0,0,0,0,0,0,0,'1','1','1','1','1','geometrycollection2',816);
+INSERT INTO t_datatypes VALUES('DDL','PostgreSQL','geography(multipoint)',0,0,0,0,0,0,0,0,'1','1','1','1','1','multipoint2',817);
+INSERT INTO t_datatypes VALUES('DDL','PostgreSQL','geography(multipolygon)',0,0,0,0,0,0,0,0,'1','1','1','1','1','multipolygon2',818);
+INSERT INTO t_datatypes VALUES('DDL','PostgreSQL','geography(multilinestring)',0,0,0,0,0,0,0,0,'1','1','1','1','1','multilinestring2',819);
+INSERT INTO t_datatypes VALUES('DDL','MSAccess','GUID',0,0,0,0,0,0,0,0,'1','1','1','1','1','guid',820);
+INSERT INTO t_datatypes VALUES('DDL','MSAccess 2007','GUID',0,0,0,0,0,0,0,0,'1','1','1','1','1','guid',821);
+INSERT INTO t_datatypes VALUES('DDL','DB2','DBCLOB',1,1073741823,0,0,1,0,0,0,'1','1','1','1','1','dbclob',822);
+INSERT INTO t_datatypes VALUES('DDL','DB2','GRAPHIC',1,127,0,0,1,0,0,0,'1','1','1','1','1','graphic',823);
+INSERT INTO t_datatypes VALUES('DDL','DB2','LONG VARGRAPHIC',0,0,0,0,0,0,0,0,'1','1','1','1','1','longvargraphic',824);
+INSERT INTO t_datatypes VALUES('DDL','DB2','VARGRAPHIC',1,16336,0,0,1,0,0,0,'1','1','1','1','1','vargraphic',825);
+INSERT INTO t_datatypes VALUES('DDL','Sybase ASE','varbinary',1,255,0,0,1,0,0,0,'1','1','1','1','1','varbinary',826);
+CREATE TABLE t_diagram
+(
+	Diagram_ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	Package_ID INTEGER NULL DEFAULT 1,	-- Diagram belongs in this package
+	ParentID INTEGER NULL DEFAULT 0,
+	Diagram_Type TEXT NULL COLLATE NOCASE,
+	Name TEXT NULL COLLATE NOCASE,
+	Version TEXT NULL DEFAULT '1.0' COLLATE NOCASE,
+	Author TEXT NULL COLLATE NOCASE,
+	ShowDetails INTEGER NULL DEFAULT 0,
+	Notes TEXT NULL COLLATE NOCASE,
+	Stereotype TEXT NULL COLLATE NOCASE,
+	AttPub INTEGER NOT NULL DEFAULT 1,
+	AttPri INTEGER NOT NULL DEFAULT 1,
+	AttPro INTEGER NOT NULL DEFAULT 1,
+	Orientation TEXT NULL DEFAULT 'P' COLLATE NOCASE,
+	cx INTEGER NULL DEFAULT 0,
+	cy INTEGER NULL DEFAULT 0,
+	Scale INTEGER NULL DEFAULT 100,
+	CreatedDate TEXT NULL DEFAULT (datetime('now','localtime')) COLLATE NOCASE,
+	ModifiedDate TEXT NULL DEFAULT (datetime('now','localtime')) COLLATE NOCASE,
+	HTMLPath TEXT NULL COLLATE NOCASE,
+	ShowForeign INTEGER NOT NULL DEFAULT 1,
+	ShowBorder INTEGER NOT NULL DEFAULT 1,
+	ShowPackageContents INTEGER NOT NULL DEFAULT 1,
+	PDATA TEXT NULL COLLATE NOCASE,
+	Locked INTEGER NOT NULL DEFAULT 0,
+	ea_guid TEXT NULL COLLATE NOCASE,
+	TPos INTEGER NULL,
+	Swimlanes TEXT NULL COLLATE NOCASE,
+	StyleEx TEXT NULL COLLATE NOCASE
+);
+CREATE TABLE t_diagramlinks
+(
+	DiagramID INTEGER NULL,
+	ConnectorID INTEGER NULL DEFAULT 0,
+	Geometry TEXT NULL COLLATE NOCASE,
+	Style TEXT NULL COLLATE NOCASE,
+	Hidden INTEGER NOT NULL DEFAULT 0,
+	Path TEXT NULL COLLATE NOCASE,
+	Instance_ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT
+);
+CREATE TABLE t_diagramobjects
+(
+	Diagram_ID INTEGER NULL DEFAULT 0,
+	Object_ID INTEGER NULL DEFAULT 0,
+	RectTop INTEGER NULL DEFAULT 0,
+	RectLeft INTEGER NULL DEFAULT 0,
+	RectRight INTEGER NULL DEFAULT 0,
+	RectBottom INTEGER NULL DEFAULT 0,
+	Sequence INTEGER NULL DEFAULT 0,
+	ObjectStyle TEXT NULL COLLATE NOCASE,
+	Instance_ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT
+);
+CREATE TABLE t_diagramtypes
+(
+	Diagram_Type TEXT NOT NULL COLLATE NOCASE PRIMARY KEY,
+	Name TEXT NULL COLLATE NOCASE,
+	Package_ID INTEGER NULL DEFAULT 0
+);
+INSERT INTO t_diagramtypes VALUES('Activity','Activity',1);
+INSERT INTO t_diagramtypes VALUES('Analysis','Analysis',1);
+INSERT INTO t_diagramtypes VALUES('Collaboration','Collaboration',1);
+INSERT INTO t_diagramtypes VALUES('Component','Component',1);
+INSERT INTO t_diagramtypes VALUES('CompositeStructure','CompositeStructure',1);
+INSERT INTO t_diagramtypes VALUES('Custom','Custom',1);
+INSERT INTO t_diagramtypes VALUES('Deployment','Deployment',1);
+INSERT INTO t_diagramtypes VALUES('InteractionOverview','InteractionOverview',1);
+INSERT INTO t_diagramtypes VALUES('Logical','Logical View',1);
+INSERT INTO t_diagramtypes VALUES('Object','Object',1);
+INSERT INTO t_diagramtypes VALUES('Package','Package',1);
+INSERT INTO t_diagramtypes VALUES('Sequence','Sequence',1);
+INSERT INTO t_diagramtypes VALUES('Statechart','Statechart',1);
+INSERT INTO t_diagramtypes VALUES('Timing','Timing',1);
+INSERT INTO t_diagramtypes VALUES('Use Case','Use Case View',1);
+CREATE TABLE t_document
+(
+	DocID TEXT NOT NULL COLLATE NOCASE PRIMARY KEY,
+	DocName TEXT NULL COLLATE NOCASE,
+	Notes TEXT NULL COLLATE NOCASE,
+	Style TEXT NULL COLLATE NOCASE,
+	ElementID TEXT NOT NULL COLLATE NOCASE,
+	ElementType TEXT NOT NULL COLLATE NOCASE,
+	StrContent TEXT NULL COLLATE NOCASE,
+	BinContent BLOB NULL,
+	DocType TEXT NULL COLLATE NOCASE,
+	Author TEXT NULL COLLATE NOCASE,
+	Version TEXT NULL COLLATE NOCASE,
+	IsActive INTEGER NULL DEFAULT 1,
+	Sequence INTEGER NULL DEFAULT 0,
+	DocDate TEXT NULL COLLATE NOCASE
+);
+CREATE TABLE t_ecf
+(
+	ECFID TEXT NOT NULL COLLATE NOCASE PRIMARY KEY,	-- Technical Factor Code
+	Description TEXT NULL COLLATE NOCASE,	-- Description of TCF
+	Weight REAL NULL DEFAULT 1,	-- Weighting
+	Value REAL NULL DEFAULT 0,
+	Notes TEXT NULL COLLATE NOCASE
+);
+INSERT INTO t_ecf VALUES('ECF01','Familiar with Rational Unified Process',1.500000000,4.000000000,'1');
+INSERT INTO t_ecf VALUES('ECF02','Application experience',0.500000000,3.000000000,'1');
+INSERT INTO t_ecf VALUES('ECF03','Object-oriented experience',1.000000000,4.000000000,'1');
+INSERT INTO t_ecf VALUES('ECF04','Lead analyst capability',0.500000000,4.000000000,'1');
+INSERT INTO t_ecf VALUES('ECF05','Motivation',1.000000000,3.000000000,'1');
+INSERT INTO t_ecf VALUES('ECF06','Stable requirements',2.000000000,4.000000000,'1');
+INSERT INTO t_ecf VALUES('ECF07','Part-time workers',-1.000000000,0.000000000,'1');
+INSERT INTO t_ecf VALUES('ECF08','Difficult programming language',-1.000000000,3.000000000,'1');
+CREATE TABLE t_efforttypes
+(
+	EffortType TEXT NOT NULL COLLATE NOCASE PRIMARY KEY,	-- Effort Code
+	Description TEXT NULL COLLATE NOCASE,	-- Description of Effort
+	NumericWeight REAL NULL DEFAULT 0,	-- Numeric factor to apply to effort - accepts decimal fractions
+	Notes TEXT NULL COLLATE NOCASE	-- Further Notes
+);
+INSERT INTO t_efforttypes VALUES('Analysis','Analyzing System',1.000000000,'Analysis');
+INSERT INTO t_efforttypes VALUES('Coding','Developing code',1.000000000,'Code writing');
+INSERT INTO t_efforttypes VALUES('Construction','Design and build system components',1.000000000,'The construction phase is concerned with designing and building the components necessary to implement the system as specified.');
+INSERT INTO t_efforttypes VALUES('Design','Designing specifications',1.000000000,'Process of developing system design');
+INSERT INTO t_efforttypes VALUES('Elaboration','Refine specification. Set up project',1.000000000,'The elaboration phase is concerned with refining the system specification, setting up project infrastructure and agreeing on the body of work to be completed.');
+INSERT INTO t_efforttypes VALUES('Transition','Implementation, acceptance testing',1.000000000,'The Transition phase revolves around the implementation of the project and the acceptance testing carried out by the end user');
+CREATE TABLE t_files
+(
+	FileID TEXT NOT NULL COLLATE NOCASE PRIMARY KEY,
+	AppliesTo TEXT NULL COLLATE NOCASE,
+	Category TEXT NULL COLLATE NOCASE,
+	Name TEXT NULL COLLATE NOCASE,
+	File TEXT NULL COLLATE NOCASE,
+	Notes TEXT NULL COLLATE NOCASE,
+	FileDate TEXT NULL COLLATE NOCASE,
+	FileSize INTEGER NULL
+);
+CREATE TABLE t_genopt
+(
+	AppliesTo TEXT NULL COLLATE NOCASE,
+	Option TEXT NULL COLLATE NOCASE
+);
+INSERT INTO t_genopt VALUES('CMACRO','_AFX_NO_DEBUG_CRT;_AFX_NO_OCC_SUPPORT;_AFX_OLD_EXCEPTIONS;_AFX_PACKING;_AFXDLL;_DEBUG;_MSC_VER;_UNICODE;AFX_CDECL;AFX_COMDAT;AFX_DATA;AFX_DATADEF;AFX_NOVTABLE;AFXAPI;APICALL;BEGIN_INTERFACE_PART ^ END_INTERFACE_PART;BEGIN_PARAM_MAP ^ END_PARAM_MAP;CONTROLLER_API;DECLARE_DYNAMIC();DECLARE_DYNCREATE();DECLARE_INTERFACE_MAP();DECLARE_MESSAGE_MAP();defined();PASCAL;SWLAPI;WINAPI;');
+INSERT INTO t_genopt VALUES('Status','1');
+INSERT INTO t_genopt VALUES('class',unistr('nKill=0;nLang=1;sLang=Java;bConstructor=1;bConInline=0;sConScope=Public;bCpyConstructor=0;bCpyConInline=0;sCpyConScope=Public;bDestructor=1;bDesVirtual=1;bDesInline=0;sDesScope=Public;CHeader=.h;CBody=.cpp;JBody=.java;VBody=.cls;VBNetBody=.vb;WFSBody=.vbs;JavaScriptBody=.js;ModelicaBody=.mo;MDGBPSimExecutionEngineExtensionBody=;sAssocName=m_$LinkClass;bGetSet=1;bGenInterfaces=1;JCol=Vector;CCol=[];VCol=Collection;bVMultiuse=1;bVPersist=0;bVDatabind=0;bVDatasource=0;bVGlobal=0;bVCreatable=1;bVExposed=0;sMTS=0;sCRefType=*;sCGetPrefix=Get;sCSetPrefix=Set;sJGetPrefix=get;sJSetPrefix=set;sCSGetPrefix=Get;sCSSetPrefix=Set;sVVersion=6.000000000;CSBody=.cs;DBody=.pas;bJInnerClasses=1;sJCollection=;sCodePage=;sPHPBody=.php;sPHPVersion=;sPHPGetPrefix=get;sPHPSetPrefix=set;ASBody=.as;PyBody=.py;CPPVersion=;ASVersion=2.000000000;ANSICHeader=.h;ANSICBody=.c;ANSIC_OOSupport=0;ANSIC_NSDLMT=_;ANSIC_RefParam=1;ANSIC_RefStyle=*;ANSIC_RefName=this;ANSIC_ConstructorName=new;ANSIC_DestructorName=delete;CPPCollections=CArray<#TYPE#>\u001fCMap<CString,LPCTSTR,#TYPE#*,#TYPE#*>\u001f;CSCollections=List<#TYPE#>\u001fStack<#TYPE#>\u001fQueue<#TYPE#>\u001f;JCollections=HashSet<#TYPE#>\u001fMap<String,#TYPE#>\u001fList<#TYPE#>\u001f;CPPWrappers=unique_ptr<#TYPE#>\u001fshared_ptr<#TYPE#>\u001fweak_ptr<#TYPE#>\u001f;'));
+INSERT INTO t_genopt VALUES('statemachine','STM_Java_UseNewTemplate=1;STM_Java_ObjectOrientedSupport=0;STM_Java_GenerateTrace=1;STM_CPP_UseNewTemplate=1;STM_CPP_ObjectOrientedSupport=0;STM_CPP_GenerateTrace=1;STM_C_UseNewTemplate=1;STM_C_GenerateTrace=1;STM_CS_UseNewTemplate=1;STM_CS_ObjectOrientedSupport=0;STM_CS_GenerateTrace=1;STM_SYSTEMC_UseNewTemplate=0;STM_SYSTEMC_GenerateTrace=1;');
+CREATE TABLE t_glossary
+(
+	Term TEXT NULL COLLATE NOCASE,
+	Type TEXT NULL COLLATE NOCASE,
+	Meaning TEXT NULL COLLATE NOCASE,
+	GlossaryID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT
+);
+CREATE TABLE t_html
+(
+	Type TEXT NULL COLLATE NOCASE,
+	Template TEXT NULL COLLATE NOCASE
+);
+CREATE TABLE t_image
+(
+	ImageID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	Name TEXT NULL COLLATE NOCASE,
+	Type TEXT NULL COLLATE NOCASE,
+	Image BLOB NULL
+);
+CREATE TABLE t_implement
+(
+	Type TEXT NULL COLLATE NOCASE
+);
+INSERT INTO t_implement VALUES('Requirement');
+INSERT INTO t_implement VALUES('UseCase');
+INSERT INTO t_implement VALUES('Component');
+CREATE TABLE t_issues
+(
+	Issue TEXT NULL COLLATE NOCASE,
+	IssueDate TEXT NULL DEFAULT (datetime('now','localtime')) COLLATE NOCASE,
+	Owner TEXT NULL COLLATE NOCASE,
+	Status TEXT NULL COLLATE NOCASE,
+	Notes TEXT NULL COLLATE NOCASE,
+	Resolver TEXT NULL COLLATE NOCASE,
+	DateResolved TEXT NULL COLLATE NOCASE,
+	Resolution TEXT NULL COLLATE NOCASE,
+	IssueID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	Category TEXT NULL COLLATE NOCASE,
+	Priority TEXT NULL COLLATE NOCASE,
+	Severity TEXT NULL COLLATE NOCASE,
+	IssueType TEXT NULL COLLATE NOCASE
+);
+CREATE TABLE t_lists
+(
+	ListID TEXT NOT NULL COLLATE NOCASE PRIMARY KEY,
+	Category TEXT NULL COLLATE NOCASE,
+	Name TEXT NULL COLLATE NOCASE,
+	NVal INTEGER NULL,
+	Notes TEXT NULL COLLATE NOCASE
+);
+INSERT INTO t_lists VALUES('{1E9843C4-0788-4948-8FCA-EF9E0D9B9369}','ConstStatusType','Build',1,'1');
+INSERT INTO t_lists VALUES('{4C61C3E6-B721-41a7-BFB3-699DF50BC4D9}','ConstStatusType','Validated',1,'1');
+INSERT INTO t_lists VALUES('{5A276B14-D271-431f-A63C-D76B5572F829}','ConstStatusType','Proposed',1,'1');
+INSERT INTO t_lists VALUES('{AC15A9A3-8278-4e4e-AA88-23DF5EA35B43}','ConstStatusType','Approved',1,'1');
+INSERT INTO t_lists VALUES('{CD22EDBC-4F15-4b1c-A8D9-EAC780A2CE98}','ConstStatusType','Mandatory',1,'1');
+INSERT INTO t_lists VALUES('{FDF9A368-23F8-4730-9637-D43E35628A12}','ConstStatusType','Implemented',1,'1');
+CREATE TABLE t_mainttypes
+(
+	MaintType TEXT NOT NULL COLLATE NOCASE PRIMARY KEY,	-- Maintenance Type
+	Description TEXT NULL COLLATE NOCASE,	-- Description of the maintenance
+	NumericWeight REAL NULL DEFAULT 1,	-- Numeric weight to apply to this type of problem type
+	Notes TEXT NULL COLLATE NOCASE
+);
+CREATE TABLE t_method
+(
+	Object_ID INTEGER NOT NULL DEFAULT 0,
+	Name TEXT NOT NULL COLLATE NOCASE,
+	Scope TEXT NULL COLLATE NOCASE,
+	Type TEXT NULL COLLATE NOCASE,
+	CONSTRAINT pk_method PRIMARY KEY (Object_ID,Name)
+);
+CREATE TABLE t_metrictypes
+(
+	Metric TEXT NOT NULL COLLATE NOCASE PRIMARY KEY,	-- Metric Code
+	Description TEXT NULL COLLATE NOCASE,	-- Description of Metric
+	NumericWeight REAL NULL DEFAULT 1,	-- Numeric factor to apply to metric - accepts decimal fractions
+	Notes TEXT NULL COLLATE NOCASE
+);
+INSERT INTO t_metrictypes VALUES('Breakage','Convergence, rework, software scrap',1.000000000,'Reworked SLOC per change. ');
+INSERT INTO t_metrictypes VALUES('Change','Change control, stability',1.000000000,'Change requests, ');
+INSERT INTO t_metrictypes VALUES('Cost','Budget, cost, expenditure',1.000000000,'Cost per day, percentage expended.');
+INSERT INTO t_metrictypes VALUES('Progress','Iteration, planning, actuals',1.000000000,'Measures such as function points, SLOC, scenarios, test cases.');
+INSERT INTO t_metrictypes VALUES('Team','Staffing, team dynamics',1.000000000,'Resource turnover');
+CREATE TABLE t_object
+(
+	Object_ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,	-- The object unique ID
+	Object_Type TEXT NULL COLLATE NOCASE,	-- The object Type
+	Diagram_ID INTEGER NULL DEFAULT 0,	-- Diagram ID
+	Name TEXT NULL COLLATE NOCASE,	-- Object Name
+	Alias TEXT NULL COLLATE NOCASE,
+	Author TEXT NULL COLLATE NOCASE,
+	Version TEXT NULL DEFAULT '1.0' COLLATE NOCASE,
+	Note TEXT NULL COLLATE NOCASE,
+	Package_ID INTEGER NULL DEFAULT 0,
+	Stereotype TEXT NULL COLLATE NOCASE,
+	NType INTEGER NULL DEFAULT 0,
+	Complexity TEXT NULL DEFAULT '2' COLLATE NOCASE,	-- Subjective Measure of object complexity
+	Effort INTEGER NULL DEFAULT 0,	-- Estimated Effort
+	Style TEXT NULL COLLATE NOCASE,
+	Backcolor INTEGER NULL DEFAULT 0,
+	BorderStyle INTEGER NULL DEFAULT 0,	-- Dash, dot ... depends on object - default = solid
+	BorderWidth INTEGER NULL DEFAULT 0,
+	Fontcolor INTEGER NULL DEFAULT 0,
+	Bordercolor INTEGER NULL DEFAULT 0,
+	CreatedDate TEXT NULL DEFAULT (datetime('now','localtime')) COLLATE NOCASE,
+	ModifiedDate TEXT NULL DEFAULT (datetime('now','localtime')) COLLATE NOCASE,
+	Status TEXT NULL COLLATE NOCASE,
+	Abstract TEXT NULL COLLATE NOCASE,
+	Tagged INTEGER NULL DEFAULT 0,
+	PDATA1 TEXT NULL COLLATE NOCASE,
+	PDATA2 TEXT NULL COLLATE NOCASE,
+	PDATA3 TEXT NULL COLLATE NOCASE,
+	PDATA4 TEXT NULL COLLATE NOCASE,
+	PDATA5 TEXT NULL COLLATE NOCASE,
+	Concurrency TEXT NULL COLLATE NOCASE,
+	Visibility TEXT NULL COLLATE NOCASE,
+	Persistence TEXT NULL COLLATE NOCASE,
+	Cardinality TEXT NULL COLLATE NOCASE,
+	GenType TEXT NULL COLLATE NOCASE,
+	GenFile TEXT NULL COLLATE NOCASE,
+	Header1 TEXT NULL COLLATE NOCASE,
+	Header2 TEXT NULL COLLATE NOCASE,
+	Phase TEXT NULL COLLATE NOCASE,
+	Scope TEXT NULL COLLATE NOCASE,
+	GenOption TEXT NULL COLLATE NOCASE,
+	GenLinks TEXT NULL COLLATE NOCASE,
+	Classifier INTEGER NULL,
+	ea_guid TEXT NULL COLLATE NOCASE,
+	ParentID INTEGER NULL,
+	RunState TEXT NULL COLLATE NOCASE,
+	Classifier_guid TEXT NULL COLLATE NOCASE,
+	TPos INTEGER NULL,
+	IsRoot INTEGER NULL DEFAULT 0,
+	IsLeaf INTEGER NULL DEFAULT 0,
+	IsSpec INTEGER NULL DEFAULT 0,
+	IsActive INTEGER NULL DEFAULT 0,
+	StateFlags TEXT NULL COLLATE NOCASE,
+	PackageFlags TEXT NULL COLLATE NOCASE,
+	Multiplicity TEXT NULL COLLATE NOCASE,
+	StyleEx TEXT NULL COLLATE NOCASE,
+	ActionFlags TEXT NULL COLLATE NOCASE,
+	EventFlags TEXT NULL COLLATE NOCASE
+);
+INSERT INTO t_object VALUES(1,'Package',0,'Package1',NULL,'dsiegl','1.000000000',NULL,1,NULL,0,'1',0,NULL,-1,0,-1,-1,-1,'2025-08-27 20:24:58','2025-08-27 20:24:58','Proposed','0',0,'2',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Java',NULL,NULL,NULL,'1.000000000','Public',NULL,NULL,0,'{E5734173-9F9B-4c4f-B514-96771A5B84DA}',0,NULL,NULL,NULL,0,0,0,0,NULL,NULL,NULL,NULL,NULL,NULL);
+INSERT INTO t_object VALUES(2,'Actor',0,'Actor 1',NULL,'dsiegl','1.000000000',NULL,2,NULL,0,'1',0,NULL,-1,0,-1,-1,-1,'2025-08-27 20:25:20','2025-08-27 20:25:20','Proposed','0',0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'<none>',NULL,NULL,NULL,'1.000000000','Public',NULL,NULL,0,'{49001171-A51A-44b7-8407-BE6D53A6EEF7}',0,NULL,NULL,NULL,0,0,0,0,NULL,NULL,NULL,NULL,NULL,NULL);
+CREATE TABLE t_objectconstraint
+(
+	Object_ID INTEGER NOT NULL DEFAULT 0,
+	'Constraint' TEXT NOT NULL COLLATE NOCASE,
+	ConstraintType TEXT NOT NULL COLLATE NOCASE,
+	Weight REAL NULL DEFAULT 0,
+	Notes TEXT NULL COLLATE NOCASE,
+	Status TEXT NULL COLLATE NOCASE,
+	CONSTRAINT pk_objectconstraint PRIMARY KEY (Object_ID,ConstraintType,'Constraint')
+);
+CREATE TABLE t_objecteffort
+(
+	Object_ID INTEGER NOT NULL DEFAULT 0,
+	Effort TEXT NOT NULL COLLATE NOCASE,
+	EffortType TEXT NULL COLLATE NOCASE,
+	EValue REAL NULL DEFAULT 0,
+	Notes TEXT NULL COLLATE NOCASE,
+	CONSTRAINT pk_objecteffort PRIMARY KEY (Object_ID,Effort)
+);
+CREATE TABLE t_objectfiles
+(
+	Object_ID INTEGER NOT NULL DEFAULT 0,
+	FileName TEXT NOT NULL COLLATE NOCASE,
+	Type TEXT NULL COLLATE NOCASE,
+	Note TEXT NULL COLLATE NOCASE,
+	FileSize TEXT NULL COLLATE NOCASE,
+	FileDate TEXT NULL COLLATE NOCASE,
+	CONSTRAINT pk_objectfiles PRIMARY KEY (Object_ID,FileName)
+);
+CREATE TABLE t_objectmetrics
+(
+	Object_ID INTEGER NOT NULL DEFAULT 0,	-- Object metric applies to
+	Metric TEXT NOT NULL COLLATE NOCASE,
+	MetricType TEXT NULL COLLATE NOCASE,	-- Metric code
+	EValue REAL NULL DEFAULT 1,
+	Notes TEXT NULL COLLATE NOCASE,
+	CONSTRAINT pk_objectmetrics PRIMARY KEY (Object_ID,Metric)
+);
+CREATE TABLE t_objectproblems
+(
+	Object_ID INTEGER NOT NULL DEFAULT 0,
+	Problem TEXT NOT NULL COLLATE NOCASE,
+	ProblemType TEXT NOT NULL COLLATE NOCASE,
+	DateReported TEXT NULL COLLATE NOCASE,
+	Status TEXT NULL COLLATE NOCASE,
+	ProblemNotes TEXT NULL COLLATE NOCASE,
+	ReportedBy TEXT NULL COLLATE NOCASE,
+	ResolvedBy TEXT NULL COLLATE NOCASE,
+	DateResolved TEXT NULL COLLATE NOCASE,
+	Version TEXT NULL COLLATE NOCASE,
+	ResolverNotes TEXT NULL COLLATE NOCASE,
+	Priority TEXT NULL COLLATE NOCASE,
+	Severity TEXT NULL COLLATE NOCASE,
+	CONSTRAINT pk_objectproblems PRIMARY KEY (Object_ID,ProblemType,Problem)
+);
+CREATE TABLE t_objectproperties
+(
+	PropertyID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	Object_ID INTEGER NULL DEFAULT 0,
+	Property TEXT NULL COLLATE NOCASE,
+	Value TEXT NULL COLLATE NOCASE,
+	Notes TEXT NULL COLLATE NOCASE,
+	ea_guid TEXT NULL COLLATE NOCASE
+);
+CREATE TABLE t_objectrequires
+(
+	ReqID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	Object_ID INTEGER NULL DEFAULT 0,
+	Requirement TEXT NULL COLLATE NOCASE,
+	ReqType TEXT NULL COLLATE NOCASE,
+	Status TEXT NULL COLLATE NOCASE,
+	Notes TEXT NULL COLLATE NOCASE,
+	Stability TEXT NULL COLLATE NOCASE,
+	Difficulty TEXT NULL COLLATE NOCASE,
+	Priority TEXT NULL COLLATE NOCASE,
+	LastUpdate TEXT NULL DEFAULT (datetime('now','localtime')) COLLATE NOCASE
+);
+CREATE TABLE t_objectresource
+(
+	Object_ID INTEGER NOT NULL DEFAULT 0,
+	Resource TEXT NOT NULL COLLATE NOCASE,
+	Role TEXT NOT NULL COLLATE NOCASE,
+	Time REAL NULL DEFAULT 0,
+	Notes TEXT NULL COLLATE NOCASE,
+	PercentComplete INTEGER NULL DEFAULT 0,
+	DateStart TEXT NULL COLLATE NOCASE,
+	DateEnd TEXT NULL COLLATE NOCASE,
+	History TEXT NULL COLLATE NOCASE,
+	ExpectedHours INTEGER NULL DEFAULT 0,
+	ActualHours INTEGER NULL DEFAULT 0,
+	CONSTRAINT pk_objectresource PRIMARY KEY (Object_ID,Resource,Role)
+);
+CREATE TABLE t_objectrisks
+(
+	Object_ID INTEGER NOT NULL DEFAULT 0,
+	Risk TEXT NOT NULL COLLATE NOCASE,
+	RiskType TEXT NULL COLLATE NOCASE,
+	EValue REAL NULL DEFAULT 0,
+	Notes TEXT NULL COLLATE NOCASE,
+	CONSTRAINT pk_objectrisks PRIMARY KEY (Object_ID,Risk)
+);
+CREATE TABLE t_objectscenarios
+(
+	Object_ID INTEGER NOT NULL DEFAULT 0,
+	Scenario TEXT NOT NULL COLLATE NOCASE,
+	ScenarioType TEXT NULL COLLATE NOCASE,
+	EValue REAL NULL DEFAULT 0,
+	Notes TEXT NULL COLLATE NOCASE,
+	XMLContent TEXT NULL COLLATE NOCASE,
+	ea_guid TEXT NULL COLLATE NOCASE,
+	CONSTRAINT pk_objectscenarios PRIMARY KEY (Object_ID,Scenario)
+);
+CREATE TABLE t_objecttests
+(
+	Object_ID INTEGER NOT NULL DEFAULT 0,
+	Test TEXT NOT NULL COLLATE NOCASE,
+	TestClass INTEGER NOT NULL DEFAULT 0,
+	TestType TEXT NULL COLLATE NOCASE,
+	Notes TEXT NULL COLLATE NOCASE,
+	InputData TEXT NULL COLLATE NOCASE,
+	AcceptanceCriteria TEXT NULL COLLATE NOCASE,
+	Status TEXT NULL COLLATE NOCASE,
+	DateRun TEXT NULL DEFAULT (datetime('now','localtime')) COLLATE NOCASE,
+	Results TEXT NULL COLLATE NOCASE,
+	RunBy TEXT NULL COLLATE NOCASE,
+	CheckBy TEXT NULL COLLATE NOCASE,
+	CONSTRAINT pk_objecttests PRIMARY KEY (Object_ID,Test,TestClass)
+);
+CREATE TABLE t_objecttrx
+(
+	Object_ID INTEGER NOT NULL DEFAULT 0,
+	TRX TEXT NOT NULL COLLATE NOCASE,
+	TRXType TEXT NOT NULL COLLATE NOCASE,
+	Weight REAL NULL DEFAULT 0,
+	Notes TEXT NULL COLLATE NOCASE,
+	CONSTRAINT pk_objecttrx PRIMARY KEY (Object_ID,TRXType,TRX)
+);
+CREATE TABLE t_objecttypes
+(
+	Object_Type TEXT NOT NULL COLLATE NOCASE PRIMARY KEY,
+	Description TEXT NULL COLLATE NOCASE,
+	DesignObject INTEGER NULL,
+	ImageID INTEGER NULL DEFAULT 0
+);
+INSERT INTO t_objecttypes VALUES('Action','Action',1,8);
+INSERT INTO t_objecttypes VALUES('ActionPin','ActionPin',1,8);
+INSERT INTO t_objecttypes VALUES('Activity','Activity',0,21);
+INSERT INTO t_objecttypes VALUES('ActivityParameter','ActivityParameter',1,8);
+INSERT INTO t_objecttypes VALUES('ActivityPartition','ActivityPartition',1,8);
+INSERT INTO t_objecttypes VALUES('ActivityRegion','ActivityRegion',1,8);
+INSERT INTO t_objecttypes VALUES('Actor','Actor',0,6);
+INSERT INTO t_objecttypes VALUES('Artifact','UML Artifact',1,8);
+INSERT INTO t_objecttypes VALUES('Association','Association',0,0);
+INSERT INTO t_objecttypes VALUES('Boundary','Boundary',0,0);
+INSERT INTO t_objecttypes VALUES('CentralBufferNode','CentralBufferNode',1,8);
+INSERT INTO t_objecttypes VALUES('Change','Change',1,19);
+INSERT INTO t_objecttypes VALUES('Class','Class',1,5);
+INSERT INTO t_objecttypes VALUES('Collaboration','Collaboration',0,7);
+INSERT INTO t_objecttypes VALUES('CollaborationOccurrence','CollaborationOccurrence',1,8);
+INSERT INTO t_objecttypes VALUES('Comment','Comment',1,8);
+INSERT INTO t_objecttypes VALUES('Component','Component',1,10);
+INSERT INTO t_objecttypes VALUES('ConditionalNode','ConditionalNode',1,8);
+INSERT INTO t_objecttypes VALUES('Constraint','Constraint',1,8);
+INSERT INTO t_objecttypes VALUES('DataStore','DataStore',1,8);
+INSERT INTO t_objecttypes VALUES('DataType','DataType',1,8);
+INSERT INTO t_objecttypes VALUES('Decision','Decision',0,0);
+INSERT INTO t_objecttypes VALUES('DeploymentSpecification','DeploymentSpecification',1,8);
+INSERT INTO t_objecttypes VALUES('Device','Device',1,8);
+INSERT INTO t_objecttypes VALUES('DiagramFrame','DiagramFrame',1,8);
+INSERT INTO t_objecttypes VALUES('Entity','Entity',0,5);
+INSERT INTO t_objecttypes VALUES('EntryPoint','UML Entry Point',1,8);
+INSERT INTO t_objecttypes VALUES('Enumeration','Enumeration',1,8);
+INSERT INTO t_objecttypes VALUES('Event','Event',0,0);
+INSERT INTO t_objecttypes VALUES('ExceptionHandler','ExceptionHandler',1,8);
+INSERT INTO t_objecttypes VALUES('ExecutionEnvironment','ExecutionEnvironment',1,8);
+INSERT INTO t_objecttypes VALUES('ExitPoint','UML Exit Point',1,8);
+INSERT INTO t_objecttypes VALUES('ExpansionNode','UML Expansion Node',1,8);
+INSERT INTO t_objecttypes VALUES('ExpansionRegion','ExpansionRegion',1,8);
+INSERT INTO t_objecttypes VALUES('Feature','Feature',1,8);
+INSERT INTO t_objecttypes VALUES('GUIElement','User interface object',1,16);
+INSERT INTO t_objecttypes VALUES('InformationItem','InformationItem',1,8);
+INSERT INTO t_objecttypes VALUES('Interaction','Interaction',1,8);
+INSERT INTO t_objecttypes VALUES('InteractionFragment','InteractionFragment',1,8);
+INSERT INTO t_objecttypes VALUES('InteractionOccurrence','InteractionOccurrence',1,8);
+INSERT INTO t_objecttypes VALUES('InteractionState','InteractionState',1,8);
+INSERT INTO t_objecttypes VALUES('Interface','Interface',0,8);
+INSERT INTO t_objecttypes VALUES('InterruptibleActivityRegion','InterruptibleActivityRegion',1,8);
+INSERT INTO t_objecttypes VALUES('Issue','Issue',1,19);
+INSERT INTO t_objecttypes VALUES('Label','Label',0,0);
+INSERT INTO t_objecttypes VALUES('LoopNode','LoopNode',1,8);
+INSERT INTO t_objecttypes VALUES('MergeNode','MergeNode',1,8);
+INSERT INTO t_objecttypes VALUES('MessageEndpoint','MessageEndpoint',1,8);
+INSERT INTO t_objecttypes VALUES('Node','Node',1,9);
+INSERT INTO t_objecttypes VALUES('Note','Note',0,0);
+INSERT INTO t_objecttypes VALUES('Object','Object',0,5);
+INSERT INTO t_objecttypes VALUES('ObjectNode','ObjectNode',1,8);
+INSERT INTO t_objecttypes VALUES('Package','Package',1,4);
+INSERT INTO t_objecttypes VALUES('Parameter','UML Activity Parameter',1,8);
+INSERT INTO t_objecttypes VALUES('Part','Part',1,8);
+INSERT INTO t_objecttypes VALUES('Port','UML Port',1,8);
+INSERT INTO t_objecttypes VALUES('PrimitiveType','PrimitiveType',1,8);
+INSERT INTO t_objecttypes VALUES('ProtocolStateMachine','ProtocolStateMachine',1,8);
+INSERT INTO t_objecttypes VALUES('ProvidedInterface','ProvidedInterface',1,8);
+INSERT INTO t_objecttypes VALUES('Region','Region',1,8);
+INSERT INTO t_objecttypes VALUES('Report','System report',1,17);
+INSERT INTO t_objecttypes VALUES('RequiredInterface','RequiredInterface',1,8);
+INSERT INTO t_objecttypes VALUES('Requirement','Requirement',1,19);
+INSERT INTO t_objecttypes VALUES('Risk','Risk',1,8);
+INSERT INTO t_objecttypes VALUES('Screen','Interface Screen',1,11);
+INSERT INTO t_objecttypes VALUES('Sequence','Sequence',0,0);
+INSERT INTO t_objecttypes VALUES('Signal','Signal',1,8);
+INSERT INTO t_objecttypes VALUES('State','State Chart Object',1,20);
+INSERT INTO t_objecttypes VALUES('StateMachine','StateMachine',1,8);
+INSERT INTO t_objecttypes VALUES('StateNode','Start End State',0,59);
+INSERT INTO t_objecttypes VALUES('Synchronization','Synchronization',0,0);
+INSERT INTO t_objecttypes VALUES('Task','Task',1,8);
+INSERT INTO t_objecttypes VALUES('Text','Text',0,0);
+INSERT INTO t_objecttypes VALUES('TimeLine','TimeLine',1,8);
+INSERT INTO t_objecttypes VALUES('Trigger','Trigger',1,8);
+INSERT INTO t_objecttypes VALUES('UMLDiagram','UML Diagram',1,8);
+INSERT INTO t_objecttypes VALUES('UseCase','UseCase',0,7);
+INSERT INTO t_objecttypes VALUES('User','User',0,0);
+INSERT INTO t_objecttypes VALUES('Defect','Defect',1,8);
+INSERT INTO t_objecttypes VALUES('Test','Test',1,8);
+CREATE TABLE t_ocf
+(
+	ObjectType TEXT NULL COLLATE NOCASE,	-- Type of Object e.g Actor, UseCase, Class
+	ComplexityWeight REAL NULL DEFAULT 0
+);
+INSERT INTO t_ocf VALUES('Actor',1.000000000);
+INSERT INTO t_ocf VALUES('UseCase',5.000000000);
+CREATE TABLE t_operation
+(
+	OperationID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	Object_ID INTEGER NULL DEFAULT 0,
+	Name TEXT NULL COLLATE NOCASE,
+	Scope TEXT NULL COLLATE NOCASE,
+	Type TEXT NULL COLLATE NOCASE,
+	ReturnArray TEXT NULL COLLATE NOCASE,
+	Stereotype TEXT NULL COLLATE NOCASE,
+	IsStatic TEXT NULL COLLATE NOCASE,
+	Concurrency TEXT NULL COLLATE NOCASE,
+	Notes TEXT NULL COLLATE NOCASE,
+	Behaviour TEXT NULL COLLATE NOCASE,
+	Abstract TEXT NULL COLLATE NOCASE,
+	GenOption TEXT NULL COLLATE NOCASE,
+	Synchronized TEXT NULL COLLATE NOCASE,
+	Pos INTEGER NULL,
+	Const INTEGER NULL,
+	Style TEXT NULL COLLATE NOCASE,
+	Pure INTEGER NULL DEFAULT 0,
+	Throws TEXT NULL COLLATE NOCASE,
+	Classifier TEXT NULL COLLATE NOCASE,
+	Code TEXT NULL COLLATE NOCASE,
+	IsRoot INTEGER NULL DEFAULT 0,
+	IsLeaf INTEGER NULL DEFAULT 0,
+	IsQuery INTEGER NULL DEFAULT 0,
+	StateFlags TEXT NULL COLLATE NOCASE,
+	ea_guid TEXT NULL COLLATE NOCASE,
+	StyleEx TEXT NULL COLLATE NOCASE
+);
+CREATE TABLE t_operationparams
+(
+	OperationID INTEGER NOT NULL DEFAULT 0,
+	Name TEXT NOT NULL COLLATE NOCASE,
+	Type TEXT NULL COLLATE NOCASE,
+	'Default' TEXT NULL COLLATE NOCASE,
+	Notes TEXT NULL COLLATE NOCASE,
+	Pos INTEGER NULL DEFAULT 0,
+	Const INTEGER NULL,
+	Style TEXT NULL COLLATE NOCASE,
+	Kind TEXT NULL COLLATE NOCASE,
+	Classifier TEXT NULL COLLATE NOCASE,
+	ea_guid TEXT NULL COLLATE NOCASE,
+	StyleEx TEXT NULL COLLATE NOCASE,
+	CONSTRAINT pk_operationparams PRIMARY KEY (OperationID,Name)
+);
+CREATE TABLE t_operationposts
+(
+	OperationID INTEGER NOT NULL DEFAULT 0,
+	PostCondition TEXT NOT NULL COLLATE NOCASE,
+	Type TEXT NULL COLLATE NOCASE,
+	Notes TEXT NULL COLLATE NOCASE,
+	CONSTRAINT pk_operationposts PRIMARY KEY (OperationID,PostCondition)
+);
+CREATE TABLE t_operationpres
+(
+	OperationID INTEGER NOT NULL DEFAULT 0,
+	PreCondition TEXT NOT NULL COLLATE NOCASE,
+	Type TEXT NULL COLLATE NOCASE,
+	Notes TEXT NULL COLLATE NOCASE,
+	CONSTRAINT pk_operationpres PRIMARY KEY (OperationID,PreCondition)
+);
+CREATE TABLE t_operationtag
+(
+	PropertyID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	ElementID INTEGER NULL DEFAULT 0,
+	Property TEXT NULL COLLATE NOCASE,
+	VALUE TEXT NULL COLLATE NOCASE,
+	NOTES TEXT NULL COLLATE NOCASE,
+	ea_guid TEXT NULL COLLATE NOCASE
+);
+CREATE TABLE t_package
+(
+	Package_ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	Name TEXT NULL COLLATE NOCASE,
+	Parent_ID INTEGER NULL DEFAULT 0,
+	CreatedDate TEXT NULL DEFAULT (datetime('now','localtime')) COLLATE NOCASE,
+	ModifiedDate TEXT NULL DEFAULT (datetime('now','localtime')) COLLATE NOCASE,
+	Notes TEXT NULL COLLATE NOCASE,
+	ea_guid TEXT NULL COLLATE NOCASE,
+	XMLPath TEXT NULL COLLATE NOCASE,
+	IsControlled INTEGER NULL DEFAULT 0,
+	LastLoadDate TEXT NULL COLLATE NOCASE,
+	LastSaveDate TEXT NULL COLLATE NOCASE,
+	Version TEXT NULL COLLATE NOCASE,
+	Protected INTEGER NULL DEFAULT 0,
+	PkgOwner TEXT NULL COLLATE NOCASE,
+	UMLVersion TEXT NULL COLLATE NOCASE,
+	UseDTD INTEGER NULL DEFAULT 0,
+	LogXML INTEGER NULL DEFAULT 0,
+	CodePath TEXT NULL COLLATE NOCASE,
+	Namespace TEXT NULL COLLATE NOCASE,
+	TPos INTEGER NULL,
+	PackageFlags TEXT NULL COLLATE NOCASE,
+	BatchSave INTEGER NULL,
+	BatchLoad INTEGER NULL
+);
+INSERT INTO t_package VALUES(1,'Model',0,'2012-04-17 00:01:01','2012-04-17 00:01:01','','{72F0A3C8-B4A0-47af-B072-F4190DFB28CC}','',0,'2012-04-17 00:01:01','2012-04-17 00:01:01','1.000000000',0,'','',0,0,'','',NULL,'',NULL,NULL);
+INSERT INTO t_package VALUES(2,'Package1',1,'2025-08-27 20:24:58','2025-08-27 20:24:58',NULL,'{E5734173-9F9B-4c4f-B514-96771A5B84DA}',NULL,0,NULL,NULL,'1.000000000',0,NULL,NULL,0,0,NULL,NULL,NULL,'isModel=1;VICON=3;',NULL,NULL);
+CREATE TABLE t_palette
+(
+	PaletteID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	Name TEXT NULL COLLATE NOCASE,
+	Type TEXT NULL COLLATE NOCASE
+);
+CREATE TABLE t_paletteitem
+(
+	PaletteID INTEGER NULL,
+	ItemID INTEGER NULL
+);
+CREATE TABLE t_phase
+(
+	PhaseID TEXT NOT NULL COLLATE NOCASE PRIMARY KEY,
+	PhaseName TEXT NULL COLLATE NOCASE,
+	PhaseNotes TEXT NULL COLLATE NOCASE,
+	PhaseStyle TEXT NULL COLLATE NOCASE,
+	StartDate TEXT NULL COLLATE NOCASE,
+	EndDate TEXT NULL COLLATE NOCASE,
+	PhaseContent TEXT NULL COLLATE NOCASE
+);
+CREATE TABLE t_primitives
+(
+	Datatype TEXT NOT NULL COLLATE NOCASE PRIMARY KEY,
+	Description TEXT NULL COLLATE NOCASE
+);
+CREATE TABLE t_problemtypes
+(
+	ProblemType TEXT NOT NULL COLLATE NOCASE PRIMARY KEY,
+	Description TEXT NULL COLLATE NOCASE,
+	NumericWeight REAL NULL DEFAULT 1,
+	Notes TEXT NULL COLLATE NOCASE
+);
+INSERT INTO t_problemtypes VALUES('HW','Hardware related',1.000000000,'1');
+INSERT INTO t_problemtypes VALUES('Network','Network problems',1.000000000,'Network issues');
+INSERT INTO t_problemtypes VALUES('Perform','Performance',1.500000000,'Performance related problems');
+INSERT INTO t_problemtypes VALUES('SW','Software',2.000000000,'Software related issues');
+INSERT INTO t_problemtypes VALUES('User','User caused problem',1.000000000,'Problems caused by user');
+CREATE TABLE t_projectroles
+(
+	Role TEXT NOT NULL COLLATE NOCASE PRIMARY KEY,	-- Role name
+	Description TEXT NULL COLLATE NOCASE,	-- Description of the Role
+	Notes TEXT NULL COLLATE NOCASE
+);
+INSERT INTO t_projectroles VALUES('Application Analyst','Define and model the application structure','1');
+INSERT INTO t_projectroles VALUES('Business Analyst','Model business processes','1');
+INSERT INTO t_projectroles VALUES('C++ Programmer','Programming in Visual C++','1');
+INSERT INTO t_projectroles VALUES('Developer','Application development','1');
+INSERT INTO t_projectroles VALUES('Java Programmer','Java programming','1');
+INSERT INTO t_projectroles VALUES('Project Manager','Manage schedule','Manage the project schedule ');
+INSERT INTO t_projectroles VALUES('Solution Architect','Lead Technical and Project Architect','Define and communicate application architecture');
+INSERT INTO t_projectroles VALUES('Use Case Modeller','Use Case modelling ','1');
+INSERT INTO t_projectroles VALUES('VB Programmer','Visual Basic Programming','1');
+CREATE TABLE t_propertytypes
+(
+	Property TEXT NOT NULL COLLATE NOCASE PRIMARY KEY,
+	Description TEXT NULL COLLATE NOCASE,
+	Notes TEXT NULL COLLATE NOCASE
+);
+CREATE TABLE t_requiretypes
+(
+	Requirement TEXT NOT NULL COLLATE NOCASE PRIMARY KEY,	-- Requirement Code
+	Description TEXT NULL COLLATE NOCASE,	-- Description of requirement
+	NumericWeight REAL NULL DEFAULT 1,	-- Numeric factor to apply to metric - accepts decimal fractions
+	Notes TEXT NULL COLLATE NOCASE
+);
+INSERT INTO t_requiretypes VALUES('Display','System will display in a specified format',1.000000000,'Information will be displayed in a particular way');
+INSERT INTO t_requiretypes VALUES('Functional','Functional Requirement',1.000000000,'Comments here');
+INSERT INTO t_requiretypes VALUES('Performance','Performance based requirement',1.000000000,'The system must meet some performance criteria');
+INSERT INTO t_requiretypes VALUES('Printing','System printing requirement',1.000000000,'The system will allow the user(s) to print out some artifact as required by the specification. ');
+INSERT INTO t_requiretypes VALUES('Report','The system will roduce a report',1.000000000,'The system will have the facility to produce a report as required');
+INSERT INTO t_requiretypes VALUES('Testing','Testing requirement',1.600000000,'Testing requirement');
+INSERT INTO t_requiretypes VALUES('Validate','Validate a particular rule',1.000000000,'The system will validate a specific rule as supplied in the business requirements');
+CREATE TABLE t_resources
+(
+	Name TEXT NOT NULL COLLATE NOCASE PRIMARY KEY,
+	Organisation TEXT NULL COLLATE NOCASE,
+	Phone1 TEXT NULL COLLATE NOCASE,
+	Phone2 TEXT NULL COLLATE NOCASE,
+	Mobile TEXT NULL COLLATE NOCASE,
+	Fax TEXT NULL COLLATE NOCASE,
+	Email TEXT NULL COLLATE NOCASE,
+	Roles TEXT NULL COLLATE NOCASE,
+	Notes TEXT NULL COLLATE NOCASE
+);
+CREATE TABLE t_risktypes
+(
+	Risk TEXT NOT NULL COLLATE NOCASE PRIMARY KEY,	-- Risk Code
+	Description TEXT NULL COLLATE NOCASE,	-- Description of Risk
+	NumericWeight REAL NULL DEFAULT 0,	-- Numeric factor to apply to metric - accepts decimal fractions
+	Notes TEXT NULL COLLATE NOCASE
+);
+CREATE TABLE t_roleconstraint
+(
+	ConnectorID INTEGER NOT NULL DEFAULT 0,
+	'Constraint' TEXT NOT NULL COLLATE NOCASE,
+	ConnectorEnd TEXT NOT NULL COLLATE NOCASE,
+	ConstraintType TEXT NOT NULL COLLATE NOCASE,
+	Notes TEXT NULL COLLATE NOCASE,
+	CONSTRAINT pk_roleconstraint PRIMARY KEY (ConnectorID,'Constraint',ConnectorEnd,ConstraintType)
+);
+CREATE TABLE t_rtf
+(
+	Type TEXT NULL COLLATE NOCASE,
+	Template TEXT NULL COLLATE NOCASE
+);
+CREATE TABLE t_rtfreport
+(
+	TemplateID TEXT NOT NULL COLLATE NOCASE PRIMARY KEY,
+	RootPackage INTEGER NULL DEFAULT 0,
+	Filename TEXT NULL COLLATE NOCASE,
+	Details INTEGER NULL DEFAULT 0,
+	ProcessChildren INTEGER NULL DEFAULT 0,
+	ShowDiagrams INTEGER NULL DEFAULT 0,
+	Heading TEXT NULL COLLATE NOCASE,
+	Requirements INTEGER NULL DEFAULT 0,
+	Associations INTEGER NULL DEFAULT 0,
+	Scenarios INTEGER NULL DEFAULT 0,
+	ChildDiagrams INTEGER NULL DEFAULT 0,
+	Attributes INTEGER NULL DEFAULT 0,
+	Methods INTEGER NULL DEFAULT 0,
+	ImageType INTEGER NULL DEFAULT 0,
+	Paging INTEGER NULL DEFAULT 0,
+	Intro TEXT NULL COLLATE NOCASE,
+	Resources INTEGER NULL DEFAULT 1,
+	Constraints INTEGER NULL DEFAULT 1,
+	Tagged INTEGER NULL DEFAULT 0,
+	ShowTag INTEGER NULL DEFAULT 0,
+	ShowAlias INTEGER NULL DEFAULT 0,
+	PDATA1 TEXT NULL COLLATE NOCASE,
+	PDATA2 TEXT NULL COLLATE NOCASE,
+	PDATA3 TEXT NULL COLLATE NOCASE,
+	PDATA4 TEXT NULL COLLATE NOCASE
+);
+CREATE TABLE t_rules
+(
+	RuleID TEXT NOT NULL COLLATE NOCASE PRIMARY KEY,
+	RuleName TEXT NULL COLLATE NOCASE,
+	RuleType TEXT NULL COLLATE NOCASE,
+	RuleActive INTEGER NULL DEFAULT 0,
+	ErrorMsg TEXT NULL COLLATE NOCASE,
+	Flags TEXT NULL COLLATE NOCASE,
+	RuleOCL TEXT NULL COLLATE NOCASE,
+	Notes TEXT NULL COLLATE NOCASE,
+	RuleXML TEXT NULL COLLATE NOCASE
+);
+CREATE TABLE t_scenariotypes
+(
+	ScenarioType TEXT NOT NULL COLLATE NOCASE PRIMARY KEY,	-- scenario code
+	Description TEXT NULL COLLATE NOCASE,	-- Description of scenario type
+	NumericWeight REAL NULL DEFAULT 1,	-- Numeric factor to apply to metric - accepts decimal fractions
+	Notes TEXT NULL COLLATE NOCASE
+);
+INSERT INTO t_scenariotypes VALUES('Alternate','Alternate pathway',1.000000000,'Path of execution that includes exceptional conditions.');
+INSERT INTO t_scenariotypes VALUES('Basic Path','Basic execution path',1.000000000,'The standard execution path with no exceptions');
+INSERT INTO t_scenariotypes VALUES('Simple','Standard scenario',1.000000000,'Used to describe ordinary usage');
+CREATE TABLE t_script
+(
+	ScriptID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	ScriptCategory TEXT NULL COLLATE NOCASE,
+	ScriptName TEXT NULL COLLATE NOCASE,
+	ScriptAuthor TEXT NULL COLLATE NOCASE,
+	Notes TEXT NULL COLLATE NOCASE,
+	Script TEXT NULL COLLATE NOCASE
+);
+CREATE TABLE t_secgroup
+(
+	GroupID TEXT NOT NULL COLLATE NOCASE PRIMARY KEY,
+	GroupName TEXT NULL COLLATE NOCASE,
+	Description TEXT NULL COLLATE NOCASE
+);
+CREATE TABLE t_secgrouppermission
+(
+	GroupID TEXT NOT NULL COLLATE NOCASE,
+	PermissionID INTEGER NOT NULL DEFAULT 0,
+	CONSTRAINT pk_secgrouppermission PRIMARY KEY (GroupID,PermissionID)
+);
+CREATE TABLE t_seclocks
+(
+	UserID TEXT NULL COLLATE NOCASE,
+	GroupID TEXT NULL COLLATE NOCASE,
+	EntityType TEXT NULL COLLATE NOCASE,
+	EntityID TEXT NOT NULL COLLATE NOCASE PRIMARY KEY,
+	Timestamp TEXT NULL DEFAULT (datetime('now','localtime')) COLLATE NOCASE,
+	LockType TEXT NULL COLLATE NOCASE
+);
+CREATE TABLE t_secpermission
+(
+	PermissionID INTEGER NOT NULL PRIMARY KEY,
+	PermissionName TEXT NULL COLLATE NOCASE
+);
+CREATE TABLE t_secpolicies
+(
+	Property TEXT NOT NULL COLLATE NOCASE PRIMARY KEY,
+	Value TEXT NULL COLLATE NOCASE
+);
+CREATE TABLE t_secuser
+(
+	UserID TEXT NOT NULL COLLATE NOCASE PRIMARY KEY,
+	UserLogin TEXT NULL COLLATE NOCASE,
+	FirstName TEXT NULL COLLATE NOCASE,
+	Surname TEXT NULL COLLATE NOCASE,
+	Department TEXT NULL COLLATE NOCASE,
+	Password TEXT NULL COLLATE NOCASE
+);
+CREATE TABLE t_secusergroup
+(
+	UserID TEXT NOT NULL COLLATE NOCASE,
+	GroupID TEXT NOT NULL COLLATE NOCASE,
+	CONSTRAINT pk_secusergroup PRIMARY KEY (UserID,GroupID)
+);
+CREATE TABLE t_secuserpermission
+(
+	UserID TEXT NOT NULL COLLATE NOCASE,
+	PermissionID INTEGER NOT NULL DEFAULT 0,
+	CONSTRAINT pk_secuserpermission PRIMARY KEY (UserID,PermissionID)
+);
+CREATE TABLE t_snapshot
+(
+	SnapshotID TEXT NOT NULL COLLATE NOCASE PRIMARY KEY,
+	SeriesID TEXT NULL COLLATE NOCASE,
+	Position INTEGER NULL DEFAULT 0,
+	SnapshotName TEXT NULL COLLATE NOCASE,
+	Notes TEXT NULL COLLATE NOCASE,
+	Style TEXT NULL COLLATE NOCASE,
+	ElementID TEXT NULL COLLATE NOCASE,
+	ElementType TEXT NULL COLLATE NOCASE,
+	StrContent TEXT NULL COLLATE NOCASE,
+	BinContent1 BLOB NULL,
+	BinContent2 BLOB NULL
+);
+CREATE TABLE t_statustypes
+(
+	Status TEXT NOT NULL COLLATE NOCASE PRIMARY KEY,
+	Description TEXT NULL COLLATE NOCASE
+);
+INSERT INTO t_statustypes VALUES('Approved','Item is approved');
+INSERT INTO t_statustypes VALUES('Implemented','Finished');
+INSERT INTO t_statustypes VALUES('Mandatory','Required');
+INSERT INTO t_statustypes VALUES('Proposed','Item has been proposed');
+INSERT INTO t_statustypes VALUES('Validated','Approved and Checked');
+CREATE TABLE t_stereotypes
+(
+	Stereotype TEXT NOT NULL COLLATE NOCASE,
+	AppliesTo TEXT NOT NULL COLLATE NOCASE,
+	Description TEXT NULL COLLATE NOCASE,
+	MFEnabled INTEGER NULL,
+	MFPath TEXT NULL COLLATE NOCASE,
+	Metafile BLOB NULL,
+	Style TEXT NULL COLLATE NOCASE,
+	ea_guid TEXT NULL COLLATE NOCASE,
+	VisualType TEXT NULL COLLATE NOCASE,
+	CONSTRAINT pk_stereotypes PRIMARY KEY (AppliesTo,Stereotype)
+);
+INSERT INTO t_stereotypes VALUES('process','activity','A classifier whose instances represent a flow',0,'',NULL,'','{36387A6E-B0DE-4a8b-BE52-77ABC2693960}','1');
+INSERT INTO t_stereotypes VALUES('subscribe','association','Source class will be notified when an event occurs in target',0,'',NULL,'','{7CDCA37E-522E-436c-9C05-58E0E49FDF9A}','1');
+INSERT INTO t_stereotypes VALUES('column','AttribTable','A column attribute for a table',0,'',NULL,'','{06590D0F-1C9E-4fd6-82E2-155ACB2FCE74}','1');
+INSERT INTO t_stereotypes VALUES('case worker','business class','A worker who directly interacts with actors outside the system',0,'',NULL,'','{E275141E-06C7-4d09-BFE1-6662CB23B0D7}','1');
+INSERT INTO t_stereotypes VALUES('entity','business class','Passive class accessed and manipulated by workers',0,'',NULL,'','{8ED5A89D-7084-49fc-9DD7-17F87D131D39}','1');
+INSERT INTO t_stereotypes VALUES('internal worker','business class','A worker that interacts with other workers and entities inside the system.',0,'',NULL,'','{FB41AF93-66A8-467e-8287-457AE5C3FC8E}','1');
+INSERT INTO t_stereotypes VALUES('worker','business class','An abstraction of a human that works within the system.',0,'',NULL,'','{EFC4B957-B7AA-41a6-B2D6-B14135F958CE}','1');
+INSERT INTO t_stereotypes VALUES('object system','business model','Contains business process objects, work units, organization units and relationships',0,'',NULL,'','{90E8A7CF-649C-4cc7-8952-D8FC24C31F4E}','1');
+INSERT INTO t_stereotypes VALUES('organization unit','business model','Subsystem corresponding to an organizational unit of the actual business',0,'',NULL,'','{D04D138A-C769-4248-B8F3-01179DDF2964}','1');
+INSERT INTO t_stereotypes VALUES('work unit','business model','Subsystem with one or more entities',0,'',NULL,'','{13660BF1-D58C-41f5-992D-E3BD7BD92C75}','1');
+INSERT INTO t_stereotypes VALUES('asp page','class','A Microsoft active server page',0,'',NULL,'','{9E417DF7-08CB-438c-91A6-2C2DA04DFA5D}','1');
+INSERT INTO t_stereotypes VALUES('boundary','class','Specifies an element that is at the system boundary (e.g.. User Interface)',0,'',NULL,'','{96DB5826-0F57-4b3e-9A6E-DEF64A2FDDCC}','1');
+INSERT INTO t_stereotypes VALUES('client page','class','A class that represents a client based web page',0,'',NULL,'','{B76FD658-2F2F-417e-81FC-C447C4C48D8B}','1');
+INSERT INTO t_stereotypes VALUES('clientscript','class','A collection of client-side scripts',0,'',NULL,'','{4D5D313A-D683-415b-A894-644702E5F792}','1');
+INSERT INTO t_stereotypes VALUES('control','class','Specifies an element that controls the work and lifetimes of other objects',0,'',NULL,'','{CAB5FA1B-61F2-42de-BDB2-48B7F6577619}','1');
+INSERT INTO t_stereotypes VALUES('entity','class','Specifies a persistent element mainly concerned with managing its own state',0,'',NULL,'','{1423D069-857D-44c5-A310-841A79441524}','1');
+INSERT INTO t_stereotypes VALUES('enumeration','class','Specifies an enumerated type',0,'',NULL,'','{73851F50-C6F9-4ab5-8023-66233639B3B0}','1');
+INSERT INTO t_stereotypes VALUES('exception','class','An event may be thrown or caught by operation',0,'',NULL,'','{F092555F-420B-4caf-8D61-71C3C2B9A11A}','1');
+INSERT INTO t_stereotypes VALUES('form','class','A class that represents a html form',0,'',NULL,'','{FF3E59E5-A031-4931-9F9B-362492760892}','1');
+INSERT INTO t_stereotypes VALUES('frameset','class','A class that represents a html frame set',0,'',NULL,'','{0595F288-56D8-46be-870C-EC6F33131B40}','1');
+INSERT INTO t_stereotypes VALUES('implementationClass','class','Implementation of a class in some programming language',0,'',NULL,'','{127DA272-84A8-42a0-9F83-DC865F5E889F}','1');
+INSERT INTO t_stereotypes VALUES('interface','class','A collection of operations that specify a service of a class or component',0,'',NULL,'','{E7D7FF58-4D0C-4f8c-9FE4-A604BC8D702F}','1');
+INSERT INTO t_stereotypes VALUES('jsp page','class','A java server page',0,'',NULL,'','{D81564C6-3FF6-4f81-9F97-5138E7E70664}','1');
+INSERT INTO t_stereotypes VALUES('model document','class','Set a class as an RTF "Model Document"',0,'',NULL,'','{2332705A-A107-4539-B811-04C51C406970}','1');
+INSERT INTO t_stereotypes VALUES('powertype','class','A classifier whose objects are all children of a given parent',0,'',NULL,'','{BE87AD8C-C524-49a0-8CFC-1E9360288757}','1');
+INSERT INTO t_stereotypes VALUES('process','class','A classifier whose instances represent a flow',0,'',NULL,'','{95AB1400-F33C-4e75-9476-94E9B5EB0D52}','1');
+INSERT INTO t_stereotypes VALUES('script library','class','A library of subroutines/functions for web pages',0,'',NULL,'','{780F1136-1C84-43b7-80E4-54343BE7BEAE}','1');
+INSERT INTO t_stereotypes VALUES('server page','class','A class that represents a server based web page',0,'',NULL,'','{55210A83-A902-480a-B413-4D01B3964210}','1');
+INSERT INTO t_stereotypes VALUES('servlet','class','A java servlet component',0,'',NULL,'','{29EDD122-5FD2-4b29-A1B4-1C32270B96D4}','1');
+INSERT INTO t_stereotypes VALUES('signal','class','Specifies an asynchronous stimulus communicated amongst instances',0,'',NULL,'','{2B5EF36F-8393-44c2-9E8F-BC42A28D31DD}','1');
+INSERT INTO t_stereotypes VALUES('stereotype','class','The classifier is a stereotype that may be applied to other elements',0,'',NULL,'','{0551F9EB-E639-47c0-9D3C-C61C2467074F}','1');
+INSERT INTO t_stereotypes VALUES('table','class','A class that represents a database table',0,'',NULL,'','{A0880C39-B19D-425d-B498-70383B7EE259}','1');
+INSERT INTO t_stereotypes VALUES('target','class','A class that represents a target',0,'',NULL,'','{FC9E3BC0-72ED-4c16-8C4F-00DFAC437E12}','1');
+INSERT INTO t_stereotypes VALUES('thread','class','A classifier whose instances represent a lightweight flow of control',0,'',NULL,'','{DB45B97B-BD1F-4bbc-9A02-AAC7A8209F5F}','1');
+INSERT INTO t_stereotypes VALUES('type','class','An abstract class specifying the structure but not implementation of a set of objects',0,'',NULL,'','{DD65638C-256B-4cff-97DC-3687FF26D530}','1');
+INSERT INTO t_stereotypes VALUES('utility','class','A class whose attributes and operations are all class-scoped',0,'',NULL,'','{8D1F7937-EA55-4da4-8859-F39ACDABA1D2}','1');
+INSERT INTO t_stereotypes VALUES('web page','class','A html web page',0,'',NULL,'','{707E006F-551D-45de-A49B-4F6D3CBF4E99}','1');
+INSERT INTO t_stereotypes VALUES('metaclass','classifier','A classifier whose objects are all classes',0,'',NULL,'','{6973112C-1EFB-4096-B76D-FD76A4C271AB}','1');
+INSERT INTO t_stereotypes VALUES('requirement','comment','Specifies a desired feature, property or behavior of system',0,'',NULL,'','{15007192-C1EF-4f9f-ACF0-7BA76FA1768A}','1');
+INSERT INTO t_stereotypes VALUES('responsibility','comment','Specifies a contract by or an obligation of a class',0,'',NULL,'','{0627E025-DDFE-4476-A4A2-A6540E0D72FF}','1');
+INSERT INTO t_stereotypes VALUES('document','component','The component represents a document',0,'',NULL,'','{99950915-6F2B-4815-BDDC-429D55B9D148}','1');
+INSERT INTO t_stereotypes VALUES('executable','component','A component may be executed on a node',0,'',NULL,'','{7C2B52E9-0A2C-416b-B7B0-98E33D01174D}','1');
+INSERT INTO t_stereotypes VALUES('file','component','Component represents a document containing source code',0,'',NULL,'','{85383793-7158-4a1c-B76C-3682E59E8E87}','1');
+INSERT INTO t_stereotypes VALUES('library','component','Static or dynamic object library',0,'',NULL,'','{7B37750B-66E9-45bd-B67C-970C5F258F34}','1');
+INSERT INTO t_stereotypes VALUES('table','component','A component that represents a database table',0,'',NULL,'','{BBE87124-1BC9-40d0-9CD5-A3603F3CE8EA}','1');
+INSERT INTO t_stereotypes VALUES('invariant','constraint','Constrain must always hold for associated element',0,'',NULL,'','{B902D3BB-A4CA-4bd6-9E4F-1E5576B83D98}','1');
+INSERT INTO t_stereotypes VALUES('postcondition','constraint','A constraint must hold after the invocation of an element',0,'',NULL,'','{C2CEC816-8189-4ca1-9180-63C59109E69D}','1');
+INSERT INTO t_stereotypes VALUES('precondition','constraint','A constraint that must hold before an element is invoked',0,'',NULL,'','{40D2A504-8E29-43de-8B0F-DF813DD45444}','1');
+INSERT INTO t_stereotypes VALUES('access','dependency','Public contents of target are accessible to namespace of source',0,'',NULL,'','{BDDADCA4-F468-450b-B8AE-173C804C87EF}','1');
+INSERT INTO t_stereotypes VALUES('bind','dependency','Source instantiates target template using given parameters',0,'',NULL,'','{4E9A51AF-B300-4ab6-8387-1DF0FC1FDC3D}','1');
+INSERT INTO t_stereotypes VALUES('call','dependency','Source invokes the target',0,'',NULL,'','{3CABBCA3-E311-4c7b-B36B-05B684DF9112}','1');
+INSERT INTO t_stereotypes VALUES('derive','dependency','Source may be computed from target',0,'',NULL,'','{D7EFB036-BA17-4f73-9073-AD4110F19BEB}','1');
+INSERT INTO t_stereotypes VALUES('friend','dependency','Source is given special visibility of target',0,'',NULL,'','{972ADFDB-D5BF-498a-8720-401484995FD8}','1');
+INSERT INTO t_stereotypes VALUES('import','dependency','Public contents of target are imported into source namespace',0,'',NULL,'','{DE71D4B2-5A16-436d-9B28-FD19CDDA92E5}','1');
+INSERT INTO t_stereotypes VALUES('instanceOf','dependency','The source object is an instance of the target',0,'',NULL,'','{EC69F3C6-DA0D-4db3-9334-15E5C55E9ED0}','1');
+INSERT INTO t_stereotypes VALUES('instantiate','dependency','Operations on the source class create instances of the target class',0,'',NULL,'','{9E5CB15B-65BB-4fa9-BCAF-E65B7466D3E0}','1');
+INSERT INTO t_stereotypes VALUES('powertype','dependency','A classifier whose objects are all children of a given parent',0,'',NULL,'','{188903D3-8A4C-4fa9-9C96-1CCF7EF8E357}','1');
+INSERT INTO t_stereotypes VALUES('refine','dependency','Source is at a finer degree of abstraction than source',0,'',NULL,'','{D0A5616B-BEEE-4830-8D32-C04825869A8F}','1');
+INSERT INTO t_stereotypes VALUES('send','dependency','The source sends the target an event',0,'',NULL,'','{ECF5A889-A498-4ccf-B16D-EB9621B20A83}','1');
+INSERT INTO t_stereotypes VALUES('trace','dependency','The target is an historical ancestor of source',0,'',NULL,'','{C94C1245-2D9A-4cff-B1A8-6E0647DE331E}','1');
+INSERT INTO t_stereotypes VALUES('use','dependency','The semantics of the source depend on the public part of the target',0,'',NULL,'','{893B65E3-EE99-4b29-9280-F4B0A1C8A024}','1');
+INSERT INTO t_stereotypes VALUES('implementation','generalization','Child inherits implementation of parent but does not support its interfaces',0,'',NULL,'','{0E95C73A-22F8-4760-AC09-E77D093235DB}','1');
+INSERT INTO t_stereotypes VALUES('button','GUIElement','A button GUI element',0,'',NULL,'','{B9D61394-D555-4737-81B2-0DF195FE1024}','1');
+INSERT INTO t_stereotypes VALUES('checkbox','GUIElement','A checkbox GUI element',0,'',NULL,'','{61C94A26-F64A-49a8-9D9E-5AD92B401DF6}','1');
+INSERT INTO t_stereotypes VALUES('combobox','GUIElement','A combo box GUI element',0,'',NULL,'','{2951D61B-BBDC-4a83-8C31-E698B67B078F}','1');
+INSERT INTO t_stereotypes VALUES('date','GUIElement','A GUI element for date entry',0,'',NULL,'','{696B2D1F-7737-4f4c-95A4-99C8A714ED77}','1');
+INSERT INTO t_stereotypes VALUES('dialog','GUIElement','A GUI screen',0,'',NULL,'','{DE8EDB89-48EF-4961-BAD3-330B5191FC1D}','1');
+INSERT INTO t_stereotypes VALUES('dropdown','GUIElement','A GUI element that forces user selection',0,'',NULL,'','{82C6B1FF-58F1-4a25-9E11-DE46FADB87C1}','1');
+INSERT INTO t_stereotypes VALUES('form','GUIElement','A GUI screen',0,'',NULL,'','{4D720C06-9F1A-420d-BCF1-8A38141F3257}','1');
+INSERT INTO t_stereotypes VALUES('hline','GUIElement','1',0,'',NULL,'','{EB65225F-E9C1-4b97-8D38-12F21B009BB2}','1');
+INSERT INTO t_stereotypes VALUES('list','GUIElement','A List of Information',0,'',NULL,'','{1B884779-9A20-4c98-8909-2FEB5D386D09}','1');
+INSERT INTO t_stereotypes VALUES('listview','GUIElement','A stand list view control',0,'',NULL,'','{C8BA3B05-B2C2-497a-8E0A-8F46725D3E0A}','1');
+INSERT INTO t_stereotypes VALUES('panel','GUIElement','A GUI element for grouping other controls',0,'',NULL,'','{3461329A-238F-43cc-9BED-C2024DF79A29}','1');
+INSERT INTO t_stereotypes VALUES('radio','GUIElement','A radio button GUI element',0,'',NULL,'','{C14082E9-9206-48e3-931F-67C2982BDA40}','1');
+INSERT INTO t_stereotypes VALUES('report','GUIElement','A List of Information with an expandable text field',0,'',NULL,'','{8BFA7100-C7E1-404f-94FB-FC9770DDE255}','1');
+INSERT INTO t_stereotypes VALUES('tab','GUIElement','A tab control GUI element',0,'',NULL,'','{5EF68AC1-DAF0-4046-8E3D-6CBCF23A0A4B}','1');
+INSERT INTO t_stereotypes VALUES('textbox','GUIElement','A GUI element for user text entry',0,'',NULL,'','{2AB1E1DE-4B16-4241-B8EE-EE44B36A2890}','1');
+INSERT INTO t_stereotypes VALUES('time','GUIElement','A GUI element for time entry',0,'',NULL,'','{DFEB33F0-99C4-4460-B49F-E6AA0D406FD7}','1');
+INSERT INTO t_stereotypes VALUES('treelist','GUIElement','A List of Information with a tree structure',0,'',NULL,'','{FB536059-99B7-4cd8-8E8D-ADB483876185}','1');
+INSERT INTO t_stereotypes VALUES('vline','GUIElement','1',0,'',NULL,'','{025E1827-274F-4a75-8E36-D90A90F4BF03}','1');
+INSERT INTO t_stereotypes VALUES('global','link end','Corresponding object is visible because of enclosing scope',0,'',NULL,'','{80C22669-C9A0-4597-A0BA-6DA5FA14C51B}','1');
+INSERT INTO t_stereotypes VALUES('local','link end','The corresponding object is visible in local scope',0,'',NULL,'','{D48106AD-4F1B-4ada-BC9A-C7345E00EAC0}','1');
+INSERT INTO t_stereotypes VALUES('parameter','link end','The corresponding element is visible because it is a parameter',0,'',NULL,'','{1D3C5765-4188-4cc7-98E3-0D1AC0B371EB}','1');
+INSERT INTO t_stereotypes VALUES('self','link end','The corresponding object is visible because it is the dispatcher',0,'',NULL,'','{C3287259-EB8A-4a8e-BD39-4317FA8B59F7}','1');
+INSERT INTO t_stereotypes VALUES('become','message','Target is same as source but later in time',0,'',NULL,'','{17AF3D13-7947-4bd9-8B08-B5396A6EE33B}','1');
+INSERT INTO t_stereotypes VALUES('copy','message','Target is exact but independent copy of source',0,'',NULL,'','{F3B827D1-CDCD-43a1-ADDC-0FB5AE0EDE6D}','1');
+INSERT INTO t_stereotypes VALUES('create','message','Target is created by event or message',0,'',NULL,'','{E1E6474F-1161-4b3b-9D75-386CD498F36C}','1');
+INSERT INTO t_stereotypes VALUES('destroy','message','Target is destroyed by event or message',0,'',NULL,'','{2ADAF48D-56B4-466e-85DF-9AEA77B8886A}','1');
+INSERT INTO t_stereotypes VALUES('analysis system','model','Contains analysis classes - entities, boundaries and control elements',0,'',NULL,'','{6C8B1CE5-28C6-4afb-8C47-F59CD5BCC71E}','1');
+INSERT INTO t_stereotypes VALUES('design system','model','Contains design elements',0,'',NULL,'','{22CDDF47-5609-4c88-8694-E7082739838F}','1');
+INSERT INTO t_stereotypes VALUES('implementation system','model','Contains implementation subsystems and/or components and relationships',0,'',NULL,'','{6252CCDD-5424-48b9-9B95-237E615C44C8}','1');
+INSERT INTO t_stereotypes VALUES('use case system','model','Specifies the services offered to the users',0,'',NULL,'','{7734FF28-584B-4795-8A18-401342C75E86}','1');
+INSERT INTO t_stereotypes VALUES('cd-rom','node','A class that represents a CDRom drive',0,'',NULL,'','{9C118391-FBBF-4787-B043-9256011DF423}','1');
+INSERT INTO t_stereotypes VALUES('cdrom','node','A class that represents a CDRom drive',0,'',NULL,'','{20983239-5484-4e8b-80FF-3B6E41B57E13}','1');
+INSERT INTO t_stereotypes VALUES('computer','node','A class that represents a computer',0,'',NULL,'','{47383109-B266-4537-BDE5-EE8C24AB1D6C}','1');
+INSERT INTO t_stereotypes VALUES('disk array','node','A class that represents a disk array',0,'',NULL,'','{46D3DCBC-042F-4efc-BDA1-94FB05CC8F4D}','1');
+INSERT INTO t_stereotypes VALUES('pc','node','A class that represents a personal computer',0,'',NULL,'','{A46A5A20-059D-4a0b-95F3-19A1C7C20128}','1');
+INSERT INTO t_stereotypes VALUES('pc client','node','A class that represents a clients PC',0,'',NULL,'','{48794CCC-A3BB-4aa3-9B7C-3766317BA9C2}','1');
+INSERT INTO t_stereotypes VALUES('pc server','node','A class that represents a PC server',0,'',NULL,'','{1F9383A8-3ED4-4d9f-8752-5D21CA3BA343}','1');
+INSERT INTO t_stereotypes VALUES('secure','node','A class that represents aet',0,'',NULL,'','{058450FD-BEF8-469a-A5F4-E94D63217840}','1');
+INSERT INTO t_stereotypes VALUES('server','node','A class that represents a server',0,'',NULL,'','{ACA85650-5B84-4c9a-A331-C160EB96F9B3}','1');
+INSERT INTO t_stereotypes VALUES('storage','node','A class that represents a storage device',0,'',NULL,'','{A95348CA-2D80-4583-94F6-3BF3CDBAC326}','1');
+INSERT INTO t_stereotypes VALUES('unix server','node','A class that represents a Unix server',0,'',NULL,'','{C27D204D-0E12-4138-A689-14950815A176}','1');
+INSERT INTO t_stereotypes VALUES('user pc','node','A class that represents a users PC',0,'',NULL,'','{6803C86D-8A21-4418-8443-625D21592DD9}','1');
+INSERT INTO t_stereotypes VALUES('check','OpTable','A Check constraint to enforce domain integrity',0,'',NULL,'','{55D5DA48-F91B-45c2-8DBE-321FF504C840}','1');
+INSERT INTO t_stereotypes VALUES('FK','OpTable','A Foreign Key',0,'',NULL,'','{95054998-0690-42d1-9C87-AB09F0D9DB02}','1');
+INSERT INTO t_stereotypes VALUES('index','OpTable','An index of one or more columns',0,'',NULL,'','{676263DD-C173-4b96-854F-2AD2F58B7FAC}','1');
+INSERT INTO t_stereotypes VALUES('PK','OpTable','A Primary Key',0,'',NULL,'','{87AC94C2-C4ED-479e-9227-B8CAA4C1019C}','1');
+INSERT INTO t_stereotypes VALUES('proc','OpTable','A stored procedure',0,'',NULL,'','{032DEF94-9F55-4893-9A02-7EC0AACFAD09}','1');
+INSERT INTO t_stereotypes VALUES('trigger','OpTable','A trigger which executes automatically when an UPDATE, INSERT, or DELETE statement is issued',0,'',NULL,'','{0A9A36DC-68A5-4091-84FD-62296256F54B}','1');
+INSERT INTO t_stereotypes VALUES('unique','OpTable','A Unique constraint to enforce the integrity of a database automatically',0,'',NULL,'','{D518615E-5FCA-4901-B7E8-3F1D781648DD}','1');
+INSERT INTO t_stereotypes VALUES('facade','package','Package is a view of another concrete package',0,'',NULL,'','{A2302BFF-E48F-4303-9915-D966EB74640C}','1');
+INSERT INTO t_stereotypes VALUES('framework','package','Package consists mainly of patterns',0,'',NULL,'','{52DEB849-9321-4a5c-BD47-61F882CF8DB5}','1');
+INSERT INTO t_stereotypes VALUES('model','package','A semantically closed abstraction of a system',0,'',NULL,'','{5C71E9AA-BA36-47cd-93B8-717B538935C8}','1');
+INSERT INTO t_stereotypes VALUES('stub','package','A package serves as a proxy for the public contents of another package',0,'',NULL,'','{6B6987E9-91A5-4f4e-8566-3288D6257934}','1');
+INSERT INTO t_stereotypes VALUES('subsystem','package','A grouping of elements that constitute a specification of behavior offered by other contained elements',0,'',NULL,'','{616F4A2A-C51E-44cc-B14F-31D9AACF5975}','1');
+INSERT INTO t_stereotypes VALUES('system','package','A package representing the entire system being modeled',0,'',NULL,'','{874C69B0-7F5C-4256-8F41-836D85B65927}','1');
+INSERT INTO t_stereotypes VALUES('communicate','uses','Communication between actor and use case',0,'',NULL,'','{B8A54353-0617-4845-8D2C-0A35E3984EED}','1');
+INSERT INTO t_stereotypes VALUES('extend','uses','Target use case extends the source at a given extension point',0,'',NULL,'','{CA297053-416F-40f4-B38F-5E1953C45E7C}','1');
+INSERT INTO t_stereotypes VALUES('include','uses','Source use case explicitly includes the behavior of target',0,'',NULL,'','{C1764862-F0CE-4e7f-BE25-D93AF241C85C}','1');
+CREATE TABLE t_taggedvalue
+(
+	PropertyID TEXT NOT NULL COLLATE NOCASE PRIMARY KEY,
+	ElementID TEXT NULL COLLATE NOCASE,
+	BaseClass TEXT NULL COLLATE NOCASE,
+	TagValue TEXT NULL COLLATE NOCASE,
+	Notes TEXT NULL COLLATE NOCASE
+);
+CREATE TABLE t_tasks
+(
+	TaskID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	Name TEXT NULL COLLATE NOCASE,
+	TaskType TEXT NULL COLLATE NOCASE,
+	NOTES TEXT NULL COLLATE NOCASE,
+	Priority TEXT NULL COLLATE NOCASE,
+	Status TEXT NULL COLLATE NOCASE,
+	Owner TEXT NULL COLLATE NOCASE,
+	StartDate TEXT NULL COLLATE NOCASE,
+	EndDate TEXT NULL COLLATE NOCASE,
+	Phase TEXT NULL COLLATE NOCASE,
+	History TEXT NULL COLLATE NOCASE,
+	Percent INTEGER NULL,
+	TotalTime INTEGER NULL,
+	ActualTime INTEGER NULL,
+	AssignedTo TEXT NULL COLLATE NOCASE
+);
+CREATE TABLE t_tcf
+(
+	TCFID TEXT NOT NULL COLLATE NOCASE PRIMARY KEY,	-- Technical Factor Code
+	Description TEXT NULL COLLATE NOCASE,	-- Description of TCF
+	Weight REAL NULL DEFAULT 1,	-- Weighting
+	Value REAL NULL DEFAULT 0,
+	Notes TEXT NULL COLLATE NOCASE	-- Comment
+);
+INSERT INTO t_tcf VALUES('TCF01','Distributed System',2.000000000,5.000000000,'1');
+INSERT INTO t_tcf VALUES('TCF02','Response or throughput performance objectives',1.000000000,4.000000000,'1');
+INSERT INTO t_tcf VALUES('TCF03','End user efficiency (online)',1.000000000,2.000000000,'1');
+INSERT INTO t_tcf VALUES('TCF04','Complex internal processing',1.000000000,4.000000000,'1');
+INSERT INTO t_tcf VALUES('TCF05','Code must be re-usable',1.000000000,2.000000000,'1');
+INSERT INTO t_tcf VALUES('TCF06','Easy to install',0.500000000,5.000000000,'1');
+INSERT INTO t_tcf VALUES('TCF07','Easy to use',0.500000000,3.000000000,'1');
+INSERT INTO t_tcf VALUES('TCF08','Portable',2.000000000,3.000000000,'1');
+INSERT INTO t_tcf VALUES('TCF09','Easy to change',1.000000000,3.000000000,'1');
+INSERT INTO t_tcf VALUES('TCF10','Concurrent',1.000000000,2.000000000,'1');
+INSERT INTO t_tcf VALUES('TCF11','Includ special security features',1.000000000,2.000000000,'1');
+INSERT INTO t_tcf VALUES('TCF12','Provide direct access for third parties',1.000000000,5.000000000,'1');
+INSERT INTO t_tcf VALUES('TCF13','Special user training faciities are required',1.000000000,3.000000000,'1');
+CREATE TABLE t_template
+(
+	TemplateID TEXT NOT NULL COLLATE NOCASE PRIMARY KEY,
+	TemplateType TEXT NULL COLLATE NOCASE,
+	TemplateName TEXT NULL COLLATE NOCASE,
+	Notes TEXT NULL COLLATE NOCASE,
+	Style TEXT NULL COLLATE NOCASE,
+	Template TEXT NULL COLLATE NOCASE
+);
+CREATE TABLE t_testclass
+(
+	TestClass TEXT NOT NULL COLLATE NOCASE PRIMARY KEY,
+	Description TEXT NULL COLLATE NOCASE
+);
+CREATE TABLE t_testplans
+(
+	PlanID TEXT NOT NULL COLLATE NOCASE PRIMARY KEY,
+	Category TEXT NULL COLLATE NOCASE,
+	Name TEXT NULL COLLATE NOCASE,
+	Author TEXT NULL COLLATE NOCASE,
+	Notes TEXT NULL COLLATE NOCASE,
+	TestPlan TEXT NULL COLLATE NOCASE
+);
+CREATE TABLE t_testtypes
+(
+	TestType TEXT NOT NULL COLLATE NOCASE PRIMARY KEY,	-- Test Type code
+	Description TEXT NULL COLLATE NOCASE,
+	NumericWeight REAL NULL DEFAULT 1,	-- Numeric factor to apply to metric - accepts decimal fractions
+	Notes TEXT NULL COLLATE NOCASE
+);
+INSERT INTO t_testtypes VALUES('Load','Performance under load',1.000000000,'Stress testing');
+INSERT INTO t_testtypes VALUES('Regression','Regression Testing',1.000000000,'Regression');
+INSERT INTO t_testtypes VALUES('Standard','Simple Test procedure',1.000000000,'Used to test basic path');
+CREATE TABLE t_trxtypes
+(
+	Description TEXT NULL COLLATE NOCASE,	-- Description of transaction type
+	NumericWeight REAL NULL DEFAULT 1,	-- Numeric factor to apply to metric - accepts decimal fractions
+	Notes TEXT NULL COLLATE NOCASE,
+	TRX TEXT NULL COLLATE NOCASE,
+	TRX_ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,	-- Transaction ID
+	Style TEXT NULL COLLATE NOCASE
+);
+CREATE TABLE t_umlpattern
+(
+	PatternID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	PatternCategory TEXT NULL COLLATE NOCASE,
+	PatternName TEXT NULL COLLATE NOCASE,
+	Style TEXT NULL COLLATE NOCASE,
+	Notes TEXT NULL COLLATE NOCASE,
+	PatternXML TEXT NULL COLLATE NOCASE,
+	Version TEXT NULL COLLATE NOCASE
+);
+CREATE TABLE t_version
+(
+	ElementID TEXT NOT NULL COLLATE NOCASE,
+	VersionID TEXT NOT NULL COLLATE NOCASE,
+	ElementType TEXT NULL COLLATE NOCASE,
+	Flags TEXT NULL COLLATE NOCASE,
+	ExternalFile TEXT NULL COLLATE NOCASE,
+	Notes TEXT NULL COLLATE NOCASE,
+	Owner TEXT NULL COLLATE NOCASE,
+	VersionDate TEXT NULL DEFAULT (datetime('now','localtime')) COLLATE NOCASE,
+	Branch TEXT NULL COLLATE NOCASE,
+	ElementXML TEXT NULL COLLATE NOCASE,
+	CONSTRAINT pk_version PRIMARY KEY (ElementID,VersionID)
+);
+CREATE TABLE t_xref
+(
+	XrefID TEXT NOT NULL COLLATE NOCASE PRIMARY KEY,
+	Name TEXT NULL COLLATE NOCASE,
+	Type TEXT NULL COLLATE NOCASE,
+	Visibility TEXT NULL COLLATE NOCASE,
+	Namespace TEXT NULL COLLATE NOCASE,
+	Requirement TEXT NULL COLLATE NOCASE,
+	'Constraint' TEXT NULL COLLATE NOCASE,
+	Behavior TEXT NULL COLLATE NOCASE,
+	'Partition' TEXT NULL COLLATE NOCASE,
+	Description TEXT NULL COLLATE NOCASE,
+	Client TEXT NULL COLLATE NOCASE,
+	Supplier TEXT NULL COLLATE NOCASE,
+	Link TEXT NULL COLLATE NOCASE
+);
+CREATE TABLE t_xrefsystem
+(
+	XrefID TEXT NOT NULL COLLATE NOCASE PRIMARY KEY,
+	ToolID TEXT NULL COLLATE NOCASE,
+	Name TEXT NULL COLLATE NOCASE,
+	Type TEXT NULL COLLATE NOCASE,
+	Visibility TEXT NULL COLLATE NOCASE,
+	Namespace TEXT NULL COLLATE NOCASE,
+	Requirement TEXT NULL COLLATE NOCASE,
+	'Constraint' TEXT NULL COLLATE NOCASE,
+	Behavior TEXT NULL COLLATE NOCASE,
+	'Partition' TEXT NULL COLLATE NOCASE,
+	Description TEXT NULL COLLATE NOCASE,
+	Client TEXT NULL COLLATE NOCASE,
+	Supplier TEXT NULL COLLATE NOCASE,
+	Link TEXT NULL COLLATE NOCASE
+);
+INSERT INTO t_xrefsystem VALUES('{6E5FED3A-DF6C-40db-BEEC-4528AB8C8A2E}','1','Model Views','PView','1','8','1','1','1','1','1','0','ModelRoot','NULL');
+CREATE TABLE t_xrefuser
+(
+	XrefID TEXT NOT NULL COLLATE NOCASE PRIMARY KEY,
+	ToolID TEXT NULL COLLATE NOCASE,
+	Name TEXT NULL COLLATE NOCASE,
+	Type TEXT NULL COLLATE NOCASE,
+	Visibility TEXT NULL COLLATE NOCASE,
+	Namespace TEXT NULL COLLATE NOCASE,
+	Requirement TEXT NULL COLLATE NOCASE,
+	'Constraint' TEXT NULL COLLATE NOCASE,
+	Behavior TEXT NULL COLLATE NOCASE,
+	'Partition' TEXT NULL COLLATE NOCASE,
+	Description TEXT NULL COLLATE NOCASE,
+	Client TEXT NULL COLLATE NOCASE,
+	Supplier TEXT NULL COLLATE NOCASE,
+	Link TEXT NULL COLLATE NOCASE
+);
+CREATE TABLE usys_schema
+(
+	V1558 TEXT NOT NULL COLLATE NOCASE PRIMARY KEY
+);
+CREATE TABLE usys_system
+(
+	Property TEXT NOT NULL COLLATE NOCASE PRIMARY KEY,
+	Value TEXT NULL COLLATE NOCASE
+);
+INSERT INTO usys_system VALUES('310_Category','1');
+INSERT INTO usys_system VALUES('310_Columns','1');
+INSERT INTO usys_system VALUES('310_FileTable','1');
+INSERT INTO usys_system VALUES('310_Generalization','1');
+INSERT INTO usys_system VALUES('310_Images','1');
+INSERT INTO usys_system VALUES('310_Metafile','2');
+INSERT INTO usys_system VALUES('310_Palette','1');
+INSERT INTO usys_system VALUES('310_QObject','1');
+INSERT INTO usys_system VALUES('310_TableList','1');
+INSERT INTO usys_system VALUES('310_TableList2','1');
+INSERT INTO usys_system VALUES('310_Tasks','1');
+INSERT INTO usys_system VALUES('310_XREF','1');
+INSERT INTO usys_system VALUES('350_AttGUID','1');
+INSERT INTO usys_system VALUES('350_DataTypes','1');
+INSERT INTO usys_system VALUES('350_DiagramConnectorID','1');
+INSERT INTO usys_system VALUES('350_DiagramObjectID','1');
+INSERT INTO usys_system VALUES('350_DocumentEX','1');
+INSERT INTO usys_system VALUES('350_FeaturePos','1');
+INSERT INTO usys_system VALUES('350_Flags','1');
+INSERT INTO usys_system VALUES('350_IssueEx','1');
+INSERT INTO usys_system VALUES('350_OpGUID','1');
+INSERT INTO usys_system VALUES('350_Package','1');
+INSERT INTO usys_system VALUES('350_ParamGUID','1');
+INSERT INTO usys_system VALUES('350_Phases','1');
+INSERT INTO usys_system VALUES('350_ResourceHours','1');
+INSERT INTO usys_system VALUES('350_ResourceTables','1');
+INSERT INTO usys_system VALUES('350_RoleExtra','1');
+INSERT INTO usys_system VALUES('350_Scenario','1');
+INSERT INTO usys_system VALUES('350_Snapshot','1');
+INSERT INTO usys_system VALUES('350_Stereotype','1');
+INSERT INTO usys_system VALUES('350_Styles','1');
+INSERT INTO usys_system VALUES('350_SystemTaggedValues','1');
+INSERT INTO usys_system VALUES('350_TableList','1');
+INSERT INTO usys_system VALUES('350_TableListEx','1');
+INSERT INTO usys_system VALUES('350_Tables','1');
+INSERT INTO usys_system VALUES('350_TestTables','1');
+INSERT INTO usys_system VALUES('350_TRXTypes','1');
+INSERT INTO usys_system VALUES('350_UserSecurity','1');
+INSERT INTO usys_system VALUES('Association','1');
+INSERT INTO usys_system VALUES('AttID','1');
+INSERT INTO usys_system VALUES('CheckObjectTypes','1');
+INSERT INTO usys_system VALUES('Classifier','1');
+INSERT INTO usys_system VALUES('ClassifierGUID','1');
+INSERT INTO usys_system VALUES('CodeGen','1');
+INSERT INTO usys_system VALUES('Const','1');
+INSERT INTO usys_system VALUES('DDL','1');
+INSERT INTO usys_system VALUES('DiagramLink','1');
+INSERT INTO usys_system VALUES('DiagramObjectStyle','1');
+INSERT INTO usys_system VALUES('EA1000Updates','1');
+INSERT INTO usys_system VALUES('EA300Classifier','1');
+INSERT INTO usys_system VALUES('EA300MSAccessDT','1');
+INSERT INTO usys_system VALUES('EA300VBDT','1');
+INSERT INTO usys_system VALUES('EA3FieldSizes','3');
+INSERT INTO usys_system VALUES('EA3TableNames','1');
+INSERT INTO usys_system VALUES('EA600Updates','1');
+INSERT INTO usys_system VALUES('EA610Updates','1');
+INSERT INTO usys_system VALUES('EA650Updates','1');
+INSERT INTO usys_system VALUES('EA800Updates','1');
+INSERT INTO usys_system VALUES('EA900Updates','1');
+INSERT INTO usys_system VALUES('EAGUID','1');
+INSERT INTO usys_system VALUES('Elem300','1');
+INSERT INTO usys_system VALUES('FileDir','$EAPDIR');
+INSERT INTO usys_system VALUES('Gen25Fixes','1');
+INSERT INTO usys_system VALUES('GenericDataType','1');
+INSERT INTO usys_system VALUES('GUID','2');
+INSERT INTO usys_system VALUES('IsNavigable','1');
+INSERT INTO usys_system VALUES('LangDT25','1');
+INSERT INTO usys_system VALUES('LastUpdate','3B58F782F406:123456789012');
+INSERT INTO usys_system VALUES('Namespace','1');
+INSERT INTO usys_system VALUES('NodeStereo','1');
+INSERT INTO usys_system VALUES('ObjectParent','1');
+INSERT INTO usys_system VALUES('ObjectScope','1');
+INSERT INTO usys_system VALUES('OperationCode','1');
+INSERT INTO usys_system VALUES('OpPos','1');
+INSERT INTO usys_system VALUES('OpsClean','1');
+INSERT INTO usys_system VALUES('Orphans30','1');
+INSERT INTO usys_system VALUES('PackageControl','3');
+INSERT INTO usys_system VALUES('Packages','1');
+INSERT INTO usys_system VALUES('ParamIDX','1');
+INSERT INTO usys_system VALUES('QDF_25','1');
+INSERT INTO usys_system VALUES('QueryDefs_116','1');
+INSERT INTO usys_system VALUES('RoleConstraints','1');
+INSERT INTO usys_system VALUES('RTFFIELDS','1');
+INSERT INTO usys_system VALUES('RunState','1');
+INSERT INTO usys_system VALUES('Seq_Gap','35');
+INSERT INTO usys_system VALUES('Stereotypes','1');
+INSERT INTO usys_system VALUES('Styles','1');
+INSERT INTO usys_system VALUES('TaggedVals','1');
+INSERT INTO usys_system VALUES('TPos','2');
+INSERT INTO usys_system VALUES('Version','4.010000000');
+INSERT INTO usys_system VALUES('VersionDate','Jan-31-2004');
+INSERT INTO usys_system VALUES('WebStereo','1');
+INSERT INTO usys_system VALUES('ProjectGUID','{2C095BE6-4454-4425-93AD-3D0A1940AD18}');
+INSERT INTO usys_system VALUES('EA1310Updates','1');
+CREATE TABLE usysOldTables
+(
+	TableName TEXT NULL COLLATE NOCASE,
+	NewName TEXT NULL COLLATE NOCASE,
+	RelOrder INTEGER NULL DEFAULT 0,
+	FixCode INTEGER NULL
+);
+CREATE TABLE usysQueries
+(
+	QueryName TEXT NULL COLLATE NOCASE,
+	NewName TEXT NULL COLLATE NOCASE,
+	FixCode INTEGER NULL
+);
+CREATE TABLE usysTables
+(
+	TableName TEXT NOT NULL COLLATE NOCASE PRIMARY KEY,
+	RelOrder INTEGER NULL DEFAULT 0,
+	DisplayName TEXT NULL COLLATE NOCASE,
+	FromVer TEXT NULL COLLATE NOCASE,
+	ToVer TEXT NULL COLLATE NOCASE
+);
+INSERT INTO usysTables VALUES('t_attribute',6,'Object Attributes','1.100000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_attributeconstraints',7,'Attribute Constraints','1.100000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_attributetag',7,'Attribute Tag','3.000000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_authors',1,'Project Authors','1.100000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_cardinality',1,'Object Cardinality','1.100000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_category',1,'Category','3.500000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_clients',1,'Project Clients','1.100000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_complexitytypes',1,'Complexity Types','1.100000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_connector',6,'Connectors','1.100000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_connectorconstraint',7,'Connector Constraints','1.100000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_connectortag',7,'Connector Tag','3.000000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_connectortypes',1,'Connector Types','3.500000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_constants',1,'Constants','1.100000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_constrainttypes',1,'Constraint Types','1.100000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_datatypes',1,'Data Types','1.100000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_diagram',5,'Diagrams','1.100000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_diagramlinks',6,'Diagram Links','1.100000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_diagramobjects',6,'Diagram Objects','1.100000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_diagramtypes',2,'Diagram Types','1.100000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_document',7,'Document','3.500000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_ecf',1,'ECF Values','1.100000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_efforttypes',1,'Effort Types','1.100000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_files',7,'Files','3.500000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_genopt',1,'Generation Options','1.100000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_glossary',2,'Glossary','1.100000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_html',7,'HTML','3.500000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_image',7,'Images','3.100000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_implement',2,'Implementation Details','1.100000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_issues',6,'Issue Details','1.100000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_lists',1,'Lists','3.500000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_mainttypes',1,'Maintenance Types','1.100000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_method',5,'Methods','1.100000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_metrictypes',1,'Metric Types','1.100000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_object',3,'Object Details','1.100000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_objectconstraint',5,'Object Constraints','1.100000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_objecteffort',5,'Object Effort','1.100000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_objectfiles',5,'Object Files','1.100000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_objectmetrics',5,'Object Metrics','1.100000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_objectproblems',5,'Object Problems','1.100000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_objectproperties',5,'Object Properties','1.100000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_objectrequires',5,'Object Requires','1.100000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_objectresource',5,'Object Resources','1.100000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_objectrisks',5,'Object Risks','1.100000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_objectscenarios',5,'Object Scenarios','1.100000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_objecttests',5,'Object Tests','1.100000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_objecttrx',5,'Object TRX','1.100000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_objecttypes',1,'Object Types','3.500000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_ocf',1,'OCF Values','1.100000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_operation',5,'Operations','1.100000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_operationparams',6,'Operation Parameters','1.100000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_operationposts',6,'Operation Post Conditions','1.100000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_operationpres',6,'Operation Pre Conditions','1.100000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_operationtag',7,'Operation Tag','3.000000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_package',1,'Packages','1.100000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_palette',5,'Palettes','3.100000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_paletteitem',7,'Palette Items','3.100000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_phase',7,'Phases','3.500000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_problemtypes',1,'Problem Types','1.100000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_projectroles',1,'Project Roles','1.100000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_propertytypes',1,'Property Types','1.100000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_requiretypes',1,'Require Types','1.100000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_resources',1,'Resources','1.100000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_risktypes',1,'Risk Types','1.100000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_roleconstraint',0,'Role Constraints','1.100000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_rtf',7,'RTF','3.500000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_rtfreport',1,'RTF Reports','1.100000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_rules',7,'Rules','3.500000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_scenariotypes',1,'Scenario Types','1.100000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_script',7,'Scripts','3.500000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_secgroup',3,'Security Groups','3.500000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_secgrouppermission',7,'Group Permissions','3.500000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_seclocks',7,'Security Locks','3.500000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_secpermission',3,'Permissions','3.500000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_secpolicies',1,'Security Policies','3.500000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_secuser',3,'Security User','3.500000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_secusergroup',7,'User Group','3.500000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_secuserpermission',7,'User Permissions','3.500000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_snapshot',7,'Snapshots','3.500000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_statustypes',1,'Status Types','1.100000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_stereotypes',1,'Stereotypes','1.100000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_taggedvalue',7,'Model Tagged Values','3.500000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_tasks',7,'To Do List','3.100000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_tcf',1,'TCF Values','1.100000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_template',7,'Templates','3.500000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_testclass',1,'Test Classes','1.100000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_testplans',7,'Test Plans','3.500000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_testtypes',1,'Test Types','1.100000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_trxtypes',1,'TRX Types','1.100000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_umlpattern',7,'UML Patterns','3.500000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_version',7,'Files','3.500000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_xref',7,'XRef','3.100000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_xrefsystem',7,'System XRef','3.500000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('t_xrefuser',7,'User XRef','3.500000000.0','9.900000000.9');
+INSERT INTO usysTables VALUES('usys_system',7,'System Settings','3.100000000.0','9.900000000.9');
+CREATE INDEX ix_attribute_classifier
+ ON t_attribute (Classifier ASC);
+CREATE INDEX ix_attribute_name
+ ON t_attribute (Name ASC);
+CREATE INDEX ix_attribute_objectid
+ ON t_attribute (Object_ID ASC);
+CREATE INDEX ix_attribute_type
+ ON t_attribute (Type ASC);
+CREATE UNIQUE INDEX uq_attribute_eaguid
+ ON t_attribute (ea_guid ASC);
+CREATE INDEX ix_attributeconstraints_objid
+ ON t_attributeconstraints (Object_ID ASC);
+CREATE INDEX ix_attributetag_eaguid
+ ON t_attributetag (ea_guid ASC);
+CREATE INDEX ix_attributetag_elementid
+ ON t_attributetag (ElementID ASC);
+CREATE INDEX ix_attributetag_elementidprop
+ ON t_attributetag (ElementID ASC,Property ASC);
+CREATE INDEX ix_attributetag_property
+ ON t_attributetag (Property ASC);
+CREATE INDEX ix_attributetag_value
+ ON t_attributetag (VALUE ASC);
+CREATE INDEX ix_complexitytypes_numweight
+ ON t_complexitytypes (NumericWeight ASC);
+CREATE INDEX ix_connector_connectortype
+ ON t_connector (Connector_Type ASC);
+CREATE INDEX ix_connector_diagramid
+ ON t_connector (DiagramID ASC);
+CREATE INDEX ix_connector_endobjectid
+ ON t_connector (End_Object_ID ASC);
+CREATE INDEX ix_connector_endobjidconnid
+ ON t_connector (End_Object_ID ASC,Connector_ID ASC);
+CREATE INDEX ix_connector_pdata1
+ ON t_connector (PDATA1 ASC);
+CREATE INDEX ix_connector_pdata3
+ ON t_connector (PDATA3 ASC);
+CREATE INDEX ix_connector_pdata5
+ ON t_connector (PDATA5 ASC);
+CREATE INDEX ix_connector_seqno
+ ON t_connector (SeqNo ASC);
+CREATE INDEX ix_connector_startobjectid
+ ON t_connector (Start_Object_ID ASC);
+CREATE INDEX ix_connector_startobjidconnid
+ ON t_connector (Start_Object_ID ASC,Connector_ID ASC);
+CREATE INDEX ix_connector_subtype
+ ON t_connector (SubType ASC);
+CREATE UNIQUE INDEX uq_connector_eaguid
+ ON t_connector (ea_guid ASC);
+CREATE INDEX ix_connectorconstraint_connid
+ ON t_connectorconstraint (ConnectorID ASC);
+CREATE INDEX ix_connectorconstraint_constr
+ ON t_connectorconstraint ('Constraint' ASC);
+CREATE INDEX ix_connectortag_eaguid
+ ON t_connectortag (ea_guid ASC);
+CREATE INDEX ix_connectortag_elementid
+ ON t_connectortag (ElementID ASC);
+CREATE INDEX ix_connectortag_property
+ ON t_connectortag (Property ASC);
+CREATE INDEX ix_connectortag_value
+ ON t_connectortag (VALUE ASC);
+CREATE INDEX ix_datatypes_datatype
+ ON t_datatypes (DataType ASC);
+CREATE INDEX ix_datatypes_productname
+ ON t_datatypes (ProductName ASC);
+CREATE INDEX ix_diagram_diagramtype
+ ON t_diagram (Diagram_Type ASC);
+CREATE INDEX ix_diagram_packageid
+ ON t_diagram (Package_ID ASC);
+CREATE INDEX ix_diagram_parentid
+ ON t_diagram (ParentID ASC);
+CREATE UNIQUE INDEX uq_diagram_eaguid
+ ON t_diagram (ea_guid ASC);
+CREATE INDEX ix_diagramlinks_connectorid
+ ON t_diagramlinks (ConnectorID ASC);
+CREATE INDEX ix_diagramlinks_diagramid
+ ON t_diagramlinks (DiagramID ASC);
+CREATE INDEX ix_diagramobjects_diagramid
+ ON t_diagramobjects (Diagram_ID ASC);
+CREATE INDEX ix_diagramobjects_objectid
+ ON t_diagramobjects (Object_ID ASC);
+CREATE INDEX ix_diagramobjects_sequence
+ ON t_diagramobjects (Sequence ASC);
+CREATE INDEX ix_diagramtypes_packageid
+ ON t_diagramtypes (Package_ID ASC);
+CREATE INDEX ix_document_author
+ ON t_document (Author ASC);
+CREATE INDEX ix_document_doctype
+ ON t_document (DocType ASC);
+CREATE INDEX ix_document_elementid
+ ON t_document (ElementID ASC);
+CREATE INDEX ix_document_style
+ ON t_document (Style ASC);
+CREATE INDEX ix_document_version
+ ON t_document (Version ASC);
+CREATE INDEX ix_ecf_weight
+ ON t_ecf (Weight ASC);
+CREATE INDEX ix_efforttypes_numericweight
+ ON t_efforttypes (NumericWeight ASC);
+CREATE INDEX ix_files_appliesto
+ ON t_files (AppliesTo ASC);
+CREATE INDEX ix_files_appliestoname
+ ON t_files (AppliesTo ASC,Name ASC);
+CREATE INDEX ix_files_appliestonamedatesize
+ ON t_files (AppliesTo ASC,Name ASC,FileDate ASC,FileSize ASC);
+CREATE INDEX ix_files_appliestonamesize
+ ON t_files (AppliesTo ASC,Name ASC,FileSize ASC);
+CREATE INDEX ix_files_category
+ ON t_files (Category ASC);
+CREATE INDEX ix_files_filesize
+ ON t_files (FileSize ASC);
+CREATE INDEX ix_files_name
+ ON t_files (Name ASC);
+CREATE INDEX ix_glossary_term
+ ON t_glossary (Term ASC);
+CREATE INDEX ix_glossary_type
+ ON t_glossary (Type ASC);
+CREATE INDEX ix_mainttypes_numericweight
+ ON t_mainttypes (NumericWeight ASC);
+CREATE INDEX ix_method_objectid
+ ON t_method (Object_ID ASC);
+CREATE INDEX ix_metrictypes_numericweight
+ ON t_metrictypes (NumericWeight ASC);
+CREATE INDEX ix_object_classifier
+ ON t_object (Classifier ASC);
+CREATE INDEX ix_object_classifierguid
+ ON t_object (Classifier_guid ASC);
+CREATE INDEX ix_object_eaguidclassifier
+ ON t_object (ea_guid ASC,Classifier ASC);
+CREATE INDEX ix_object_eventflags
+ ON t_object (EventFlags ASC);
+CREATE INDEX ix_object_name
+ ON t_object (Name ASC);
+CREATE INDEX ix_object_ntype
+ ON t_object (NType ASC);
+CREATE INDEX ix_object_objecttype
+ ON t_object (Object_Type ASC);
+CREATE INDEX ix_object_packageid
+ ON t_object (Package_ID ASC);
+CREATE INDEX ix_object_pdata1
+ ON t_object (PDATA1 ASC);
+CREATE INDEX ix_object_pdata2
+ ON t_object (PDATA2 ASC);
+CREATE INDEX ix_object_pdata3
+ ON t_object (PDATA3 ASC);
+CREATE INDEX ix_object_pdata4
+ ON t_object (PDATA4 ASC);
+CREATE INDEX ix_object_pdata5
+ ON t_object (PDATA5 ASC);
+CREATE INDEX ix_object_pkgidpdata1class
+ ON t_object (Package_ID ASC,PDATA1 ASC,Classifier ASC);
+CREATE UNIQUE INDEX uq_object_eaguid
+ ON t_object (ea_guid ASC);
+CREATE INDEX ix_objectconstraint_constr
+ ON t_objectconstraint ('Constraint' ASC);
+CREATE INDEX ix_objectconstraint_objectid
+ ON t_objectconstraint (Object_ID ASC);
+CREATE INDEX ix_objecteffort_objectid
+ ON t_objecteffort (Object_ID ASC);
+CREATE INDEX ix_objectmetrics_metric
+ ON t_objectmetrics (Metric ASC);
+CREATE INDEX ix_objectmetrics_metrictype
+ ON t_objectmetrics (MetricType ASC);
+CREATE INDEX ix_objectmetrics_objectid
+ ON t_objectmetrics (Object_ID ASC);
+CREATE INDEX ix_objectproblems_objectid
+ ON t_objectproblems (Object_ID ASC);
+CREATE INDEX ix_objectproblems_problem
+ ON t_objectproblems (Problem ASC);
+CREATE INDEX ix_objectproperties_eaguid
+ ON t_objectproperties (ea_guid ASC);
+CREATE INDEX ix_objectproperties_objectid
+ ON t_objectproperties (Object_ID ASC);
+CREATE INDEX ix_objectproperties_objidprop
+ ON t_objectproperties (Object_ID ASC,Property ASC);
+CREATE INDEX ix_objectproperties_property
+ ON t_objectproperties (Property ASC);
+CREATE INDEX ix_objectproperties_value
+ ON t_objectproperties (Value ASC);
+CREATE INDEX ix_objectrequires_objectid
+ ON t_objectrequires (Object_ID ASC);
+CREATE INDEX ix_objectrequires_reqid
+ ON t_objectrequires (ReqID ASC);
+CREATE INDEX ix_objectrequires_requirement
+ ON t_objectrequires (Requirement ASC);
+CREATE INDEX ix_objectresource_objectid
+ ON t_objectresource (Object_ID ASC);
+CREATE INDEX ix_objectrisks_objectid
+ ON t_objectrisks (Object_ID ASC);
+CREATE INDEX ix_objectscenarios_objectid
+ ON t_objectscenarios (Object_ID ASC);
+CREATE INDEX ix_objectscenarios_oidevalscen
+ ON t_objectscenarios (Object_ID ASC,EValue ASC,Scenario ASC);
+CREATE INDEX ix_objecttests_objectid
+ ON t_objecttests (Object_ID ASC);
+CREATE INDEX ix_objecttests_objidtclassstat
+ ON t_objecttests (Object_ID ASC,TestClass ASC,Status ASC);
+CREATE INDEX ix_objecttrx_objectid
+ ON t_objecttrx (Object_ID ASC);
+CREATE INDEX ix_objecttrx_trx
+ ON t_objecttrx (TRX ASC);
+CREATE INDEX ix_objecttypes_imageid
+ ON t_objecttypes (ImageID ASC);
+CREATE INDEX ix_operation_classifier
+ ON t_operation (Classifier ASC);
+CREATE INDEX ix_operation_name
+ ON t_operation (Name ASC);
+CREATE INDEX ix_operation_objectid
+ ON t_operation (Object_ID ASC);
+CREATE INDEX ix_operation_objectidopid
+ ON t_operation (Object_ID ASC,OperationID ASC);
+CREATE INDEX uq_operation_eaguid
+ ON t_operation (ea_guid ASC);
+CREATE INDEX ix_operationparams_classifier
+ ON t_operationparams (Classifier ASC);
+CREATE INDEX ix_operationparams_operationid
+ ON t_operationparams (OperationID ASC);
+CREATE INDEX ix_operationparams_opidpos
+ ON t_operationparams (OperationID ASC,Pos ASC);
+CREATE UNIQUE INDEX uq_operationparams_eaguid
+ ON t_operationparams (ea_guid ASC);
+CREATE INDEX ix_operationposts_operationid
+ ON t_operationposts (OperationID ASC);
+CREATE INDEX ix_operationpres_operationid
+ ON t_operationpres (OperationID ASC);
+CREATE INDEX ix_operationtag_eaguid
+ ON t_operationtag (ea_guid ASC);
+CREATE INDEX ix_operationtag_elementid
+ ON t_operationtag (ElementID ASC);
+CREATE INDEX ix_operationtag_elementidprop
+ ON t_operationtag (ElementID ASC,Property ASC);
+CREATE INDEX ix_operationtag_property
+ ON t_operationtag (Property ASC);
+CREATE INDEX ix_operationtag_value
+ ON t_operationtag (VALUE ASC);
+CREATE INDEX ix_package_name
+ ON t_package (Name ASC);
+CREATE INDEX ix_package_packageid
+ ON t_package (Package_ID ASC);
+CREATE INDEX ix_package_parentid
+ ON t_package (Parent_ID ASC);
+CREATE UNIQUE INDEX uq_package_eaguid
+ ON t_package (ea_guid ASC);
+CREATE INDEX ix_problemtypes_numericweight
+ ON t_problemtypes (NumericWeight ASC);
+CREATE INDEX ix_requiretypes_numericweight
+ ON t_requiretypes (NumericWeight ASC);
+CREATE INDEX ix_risktypes_numericweight
+ ON t_risktypes (NumericWeight ASC);
+CREATE INDEX ix_roleconstraint_connectorid
+ ON t_roleconstraint (ConnectorID ASC);
+CREATE INDEX ix_roleconstraint_constraint
+ ON t_roleconstraint ('Constraint' ASC);
+CREATE INDEX ix_scenariotypes_numericweight
+ ON t_scenariotypes (NumericWeight ASC);
+CREATE INDEX ix_script_scriptcategory
+ ON t_script (ScriptCategory ASC);
+CREATE INDEX ix_seclocks_entityidtype
+ ON t_seclocks (EntityID ASC,EntityType ASC);
+CREATE INDEX ix_seclocks_entityiduserid
+ ON t_seclocks (EntityID ASC,UserID ASC);
+CREATE INDEX ix_seclocks_entityidusrtype
+ ON t_seclocks (EntityID ASC,UserID ASC,EntityType ASC);
+CREATE INDEX ix_seclocks_groupid
+ ON t_seclocks (GroupID ASC);
+CREATE INDEX ix_seclocks_groupiduserid
+ ON t_seclocks (GroupID ASC,UserID ASC);
+CREATE INDEX ix_snapshot_position
+ ON t_snapshot (Position ASC);
+CREATE INDEX ix_snapshot_seriesid
+ ON t_snapshot (SeriesID ASC);
+CREATE INDEX ix_stereotypes_eaguid
+ ON t_stereotypes (ea_guid ASC);
+CREATE INDEX ix_stereotypes_stereotype
+ ON t_stereotypes (Stereotype ASC);
+CREATE INDEX ix_taggedvalue_elementid
+ ON t_taggedvalue (ElementID ASC);
+CREATE INDEX ix_tcf_weight
+ ON t_tcf (Weight ASC);
+CREATE INDEX ix_testtypes_numericweight
+ ON t_testtypes (NumericWeight ASC);
+CREATE INDEX ix_trxtypes_description
+ ON t_trxtypes (Description ASC);
+CREATE INDEX ix_trxtypes_numericweight
+ ON t_trxtypes (NumericWeight ASC);
+CREATE INDEX ix_trxtypes_trx
+ ON t_trxtypes (TRX ASC);
+CREATE INDEX ix_version_elementid
+ ON t_version (ElementID ASC);
+CREATE INDEX ix_xref_client
+ ON t_xref (Client ASC);
+CREATE INDEX ix_xref_name
+ ON t_xref (Name ASC);
+CREATE INDEX ix_xref_nametype
+ ON t_xref (Name ASC,Type ASC);
+CREATE INDEX ix_xref_supplier
+ ON t_xref (Supplier ASC);
+CREATE INDEX ix_xref_type
+ ON t_xref (Type ASC);
+CREATE INDEX ix_xrefsystem_client
+ ON t_xrefsystem (Client ASC);
+CREATE INDEX ix_xrefsystem_supplier
+ ON t_xrefsystem (Supplier ASC);
+CREATE INDEX ix_xrefsystem_type
+ ON t_xrefsystem (Type ASC);
+CREATE INDEX ix_xrefuser_client
+ ON t_xrefuser (Client ASC);
+CREATE INDEX ix_xrefuser_supplier
+ ON t_xrefuser (Supplier ASC);
+CREATE INDEX ix_xrefuser_type
+ ON t_xrefuser (Type ASC);
+CREATE INDEX 'ix_xref_clientname'
+ ON 't_xref' ('Client' ASC,'Name' ASC);
+COMMIT;
