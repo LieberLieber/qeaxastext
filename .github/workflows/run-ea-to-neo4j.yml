@@ -40,11 +40,14 @@ jobs:
         with:
           name: qeaxastext-cypher-output
           path: qeaxastext.cypher
-
       - name: Load Cypher into Neo4j (in container)
         run: |
-          docker exec -i neo4j cypher-shell -u neo4j -p "12345678" < qeaxastext.cypher
+          docker exec -i ${{ job.services.neo4j.id }} \
+            cypher-shell -u neo4j -p "12345678" < qeaxastext.cypher
       - name: Print Neo4j labels and counts
         run: |
-          docker exec -i neo4j cypher-shell -u neo4j -p "12345678" "CALL db.labels() YIELD label RETURN label, count(*)"
+          docker exec -i ${{ job.services.neo4j.id }} \
+            cypher-shell -u neo4j -p "12345678" \
+            "CALL db.labels() YIELD label RETURN label, count(*)"
+
 
