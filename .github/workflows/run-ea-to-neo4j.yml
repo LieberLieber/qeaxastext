@@ -1,0 +1,50 @@
+name: Run EA_to_Neo4j and Publish Cypher Output
+
+on:
+  push:
+    branches:
+      - main
+      - feature/create_neo4j
+
+jobs:
+  run-ea-to-neo4j:
+    runs-on: ubuntu-latest
+    services:
+      neo4j:
+        image: neo4j:5.19
+        ports:
+          - 7474:7474
+          - 7687:7687
+        env:
+          NEO4J_AUTH: neo4j/12345678
+          NEO4J_server_default__listen__address: 0.0.0.0
+          NEO4J_server_http_advertised__address: localhost:7474
+          NEO4J_server_bolt_advertised__address: localhost:7687
+        options: >-
+          --health-cmd="bash -c 'exec 3<>/dev/tcp/127.0.0.1/7687'" --health-interval=10s --health-timeout=5s --health-retries=30
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+      - name: Run EA_to_Neo4j.py
+        run: |
+          python EA_to_Neo4j.py qeaxastext.qeax qeaxastext.cypher
+      - name: Upload Cypher output as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: qeaxastext-cypher-output
+          path: qeaxastext.cypher
+
+      - name: Load Cypher into Neo4j (in container)
+        run: |
+          docker exec -i neo4j cypher-shell -u neo4j -p "12345678" < qeaxastext.cypher
+      - name: Print Neo4j labels and counts
+        run: |
+          docker exec -i neo4j cypher-shell -u neo4j -p "12345678" "CALL db.labels() YIELD label RETURN label, count(*)"
+
